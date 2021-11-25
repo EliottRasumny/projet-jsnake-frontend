@@ -14,7 +14,7 @@ import { Navbar as BootstrapNavbar} from "bootstrap";
 const Navbar = () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
   let navbar = `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Add your brand here</a>
           <button
