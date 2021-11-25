@@ -22,7 +22,7 @@ export default class BombSpawner {
         : Phaser.Math.Between(0, 400);
 
     const bomb = this.group.create(x, 16, this.key);
-    bomb.setBounce(1);
+    bomb.setBounce(4);
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
