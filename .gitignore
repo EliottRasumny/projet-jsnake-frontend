@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ignore all node_modules folders and nested folders & files
 node_modules
 # ignore the specific VS Code configuration parameters
@@ -10,3 +11,14 @@ package-lock.json
 dist/*
 # but (re)include specific dist directory files, e.g.
 #!frontend-essentials/step-1/dist
+=======
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+>>>>>>> 64634041723d10c36c26aea621b92469a184279f
