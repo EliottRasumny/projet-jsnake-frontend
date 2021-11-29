@@ -19,7 +19,7 @@ const HomePage = () => {
     </div>
   </div>
   <div class="container ">
-    <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
+    <button id="btnToSingle" class="btn p-3 m-5">1Player</button>
     <button id="btnToDual" class="btn p-3 m-5">2Player</button>
   </div>`;
   const submitSingle = document.querySelector("#btnToSingle");
