@@ -48,6 +48,7 @@ const Router = () => {
       );
 
     componentToRender();
+    
   });
 
   // Route the right component when the user use the browsing history
@@ -55,6 +56,7 @@ const Router = () => {
     const componentToRender = routes[window.location.pathname];
     componentToRender();
   });
+
 };
 
 /**

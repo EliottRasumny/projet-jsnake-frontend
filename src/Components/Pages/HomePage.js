@@ -1,6 +1,7 @@
 import blue_snake from "../../img/blue_snake.png";
 import blue_snake_inverse from "../../img/blue_snake_inverse.png";
 import red_snake from "../../img/red_snake.png";
+import { Redirect } from "../Router/Router";
 
 /**
  * Render the HomePage
@@ -18,9 +19,15 @@ const HomePage = () => {
     </div>
   </div>
   <div class="container ">
-    <button id="btn" class="btn p-3 m-5" data-uri="/single">1Player</button>
-    <button id="btn" class="btn p-3 m-5">2Player</button>
+    <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
+    <button id="btnToDual" class="btn p-3 m-5">2Player</button>
   </div>`;
+  const submit = document.querySelector("#btnToSingle");
+  submit.addEventListener("click", () => {
+    Redirect("/single");
+  });
+  pageDiv.appendChild(submit);
 };
+
 
 export default HomePage;
