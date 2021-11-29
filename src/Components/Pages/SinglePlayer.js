@@ -13,7 +13,7 @@ function SinglePLayer() {
   const submit = document.createElement("input");
   submit.value = "Go back to HomePage";
   // Example on how to use Bootstrap to style a Button
-  submit.className = "btn btn-secondary mt-3";
+  submit.className = 'btn btn-secondary mt-3 data-uri="/"';
   // Example on how to add an event handler : when the button is clicked, redirect
   // to the HomePage
   submit.addEventListener("click", () => {
