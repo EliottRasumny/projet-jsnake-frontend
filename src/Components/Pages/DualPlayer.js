@@ -7,29 +7,41 @@ import { Redirect } from "../Router/Router";
 function DualPlayer() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
-  <h1 class="m-5">JSnake</h1>
-  <div class="d-inline-flex p-1 ">
-    <img src="${blue_snake}" class="rounded float-start" alt="Blue Snake" style="width:8vw ;heigth:auto" >
-    <div class="container">
-      <img src="${red_snake}" class="rounded float-start" alt="Red Snake" style="width:8vw ;heigth:auto">
-      <img src="${blue_snake_inverse}" class="rounded float-start"alt="Blue Snake" style="width:8vw ;heigth:auto">
-    </div>
+  <h1 class="m-5">2 Players</h1>
+  <div>
+    <button id="btnToCOOP" class="btn p-3 m-5"">COOP</button>
+    <button id="btnToScoreboardCoop" class="btn p-3 m-5">Scoreboard</button>
   </div>
-  <div class="container ">
-    <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
-    <button id="btnToDual" class="btn p-3 m-5">2Player</button>
+  <div>
+    <button id="btnToBattle" class="btn p-3 m-5">BATTLE</button>
+  </div>
+  <div>
+    <button id="btnToSettings" class="btn p-3 m-5"">Settings</button>
   </div>`;
-  const submitSingle = document.querySelector("#btnToSingle");
-  submitSingle.addEventListener("click", () => {
-    Redirect("/single");
+  //button to launch game in COOP mode
+  const submitCoop = document.querySelector("#btnToCOOP");
+  submitCoop.addEventListener("click", () => {
+    Redirect("/coop");
   });
-  pageDiv.appendChild(submitSingle);
-
-  const submitDual = document.querySelector("#btnToDual");
-  submitDual.addEventListener("click", () => {
-    Redirect("/dual");
+  pageDiv.appendChild(submitCoop);
+  //button to get scoreboard for COOP
+  const submitScoreBoardCoop = document.querySelector("#btnToScoreboardCoop");
+  submitScoreBoardCoop.addEventListener("click", () => {
+    Redirect("/scoreboardCoop");
   });
-  pageDiv.appendChild(submitDual);
+  pageDiv.appendChild(submitScoreBoardCoop);
+  //button to launch game in BATTLE mode
+  const submitBattle = document.querySelector("#btnToBattle");
+  submitBattle.addEventListener("click", () => {
+    Redirect("/battle");
+  });
+  pageDiv.appendChild(submitBattle);
+  //button to get settings for two players
+  const submitSettings = document.querySelector("#btnToSettings");
+  submitSettings.addEventListener("click", () => {
+    Redirect("/settingsTwoPlayers");
+  });
+  pageDiv.appendChild(submitSettings);
 }
 
 export default DualPlayer;
