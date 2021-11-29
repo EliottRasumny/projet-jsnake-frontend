@@ -22,11 +22,17 @@ const HomePage = () => {
     <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
     <button id="btnToDual" class="btn p-3 m-5">2Player</button>
   </div>`;
-  const submit = document.querySelector("#btnToSingle");
-  submit.addEventListener("click", () => {
+  const submitSingle = document.querySelector("#btnToSingle");
+  submitSingle.addEventListener("click", () => {
     Redirect("/single");
   });
-  pageDiv.appendChild(submit);
+  pageDiv.appendChild(submitSingle);
+
+  const submitDual = document.querySelector("#btnToDual");
+  submitDual.addEventListener("click", () => {
+    Redirect("/dual");
+  });
+  pageDiv.appendChild(submitDual);
 };
 
 
