@@ -16,7 +16,7 @@ const Navbar = () => {
   let navbar = `
   <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">JSnake</a>
+          <a class="navbar-brand" href="#" data-uri="/">JSnake</a>
           <button
             class="navbar-toggler"
             type="button"

@@ -24,7 +24,7 @@ export default class BombSpawner {
     const bomb = this.group.create(x, 16, this.key);
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
-    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 1);
 
     return bomb;
   }

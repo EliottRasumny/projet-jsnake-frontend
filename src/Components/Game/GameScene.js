@@ -130,12 +130,12 @@ class GameScene extends Phaser.Scene {
   createStars() {
     const stars = this.physics.add.group({
       key: STAR_KEY,
-      repeat: 11,
-      setXY: { x: 12, y: 0, stepX: 70 },
+      repeat: 1100,
+      setXY: { x: 12, y: 0, stepX: 0.7 },
     });
 
     stars.children.iterate((child) => {
-      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+      child.setBounceY(1.1*Phaser.Math.FloatBetween(0.4, 0.8));
     });
 
     return stars;
@@ -151,7 +151,6 @@ class GameScene extends Phaser.Scene {
       });
     }
 
-    this.bombSpawner.spawn(player.x);
   }
 
   createScoreLabel(x, y, score) {
