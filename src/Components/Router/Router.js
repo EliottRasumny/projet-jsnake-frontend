@@ -2,6 +2,10 @@ import HomePage from "../Pages/HomePage";
 import SinglePlayer from "../Pages/SinglePlayer";
 import DualPlayer from "../Pages/DualPlayer";
 import GamePage from "../Pages/GamePage";
+import PlayPage from "../Pages/PlayPage.js";
+import ScoreboardSinglePage from "../Pages/ScoreboardSinglePage";
+import SettingsPage from "../Pages/SettingsPage.js";
+
 
 // Configure your routes here
 const routes = {
@@ -9,6 +13,9 @@ const routes = {
   "/game": GamePage,
   "/single": SinglePlayer,
   "/dual": DualPlayer,
+  "/play": PlayPage,
+  "/scoreboardSingle": ScoreboardSinglePage,
+  "/settings": SettingsPage
 };
 
 /**

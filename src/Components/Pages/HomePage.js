@@ -18,8 +18,8 @@ const HomePage = () => {
       <img src="${blue_snake_inverse}" class="rounded float-start"alt="Blue Snake" style="width:8vw ;heigth:auto">
     </div>
   </div>
-  <div>
-    <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
+  <div class="container ">
+    <button id="btnToSingle" class="btn p-3 m-5">1Player</button>
     <button id="btnToDual" class="btn p-3 m-5">2Player</button>
   </div>`;
   const submitSingle = document.querySelector("#btnToSingle");

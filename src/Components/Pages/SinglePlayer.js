@@ -6,20 +6,29 @@ import { Redirect } from "../Router/Router";
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
 function SinglePLayer() {
-  // Deal with your NewPage content here
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = "";
-  // create a login form
-  const submit = document.createElement("input");
-  submit.value = "Go back to HomePage";
-  // Example on how to use Bootstrap to style a Button
-  submit.className = 'btn btn-secondary mt-3 data-uri="/"';
-  // Example on how to add an event handler : when the button is clicked, redirect
-  // to the HomePage
-  submit.addEventListener("click", () => {
-    Redirect("/");
+  pageDiv.innerHTML = `
+  <h1 class="m-5">1Player</h1>
+    <button id="btnToPlay" class="btn p-3 m-5">Play</button>
+    <button id="btnToScoreboard" class="btn p-3 m-5">ScoreBoard</button>
+    <button id="btnToSettings" class="btn p-3 m-5">Settings</button>  `;
+  const submitPlay = document.querySelector("#btnToPlay");
+  submitPlay.addEventListener("click", () => {
+    Redirect("/play");
   });
-  pageDiv.appendChild(submit);
+  pageDiv.appendChild(submitPlay);
+
+  const submitScoreboard = document.querySelector("#btnToScoreboard");
+  submitScoreboard.addEventListener("click", () => {
+    Redirect("/scoreboardSingle");
+  });
+  pageDiv.appendChild(submitScoreboard);
+
+  const submitSettings = document.querySelector("#btnToSettings");
+  submitSettings.addEventListener("click", () => {
+    Redirect("/settings");
+  });
+  pageDiv.appendChild(submitSettings);
 }
 
 export default SinglePLayer;
