@@ -39,29 +39,6 @@ const Router = () => {
       }
     }
   });
-  /* Manage click on the Button to link */
-  let buttonWrapper = document.querySelector("#btnUri");
-  buttonWrapper.addEventListener("click", (e) => {
-    // To get a data attribute through the dataset object, get the property by the part of the attribute name after data- (note that dashes are converted to camelCase).
-    let uri = e.target.dataset.uri;
-
-    if (uri) {
-      e.preventDefault();
-      /* use Web History API to add current page URL to the user's navigation history 
-       & set right URL in the browser (instead of "#") */
-      window.history.pushState({}, uri, window.location.origin + uri);
-      /* render the requested component
-      NB : for the components that include JS, we want to assure that the JS included 
-      is not runned when the JS file is charged by the browser
-      therefore, those components have to be either a function or a class*/
-      const componentToRender = routes[uri];
-      if (routes[uri]) {
-        componentToRender();
-      } else {
-        throw Error("The " + uri + " ressource does not exist");
-      }
-    }
-  });
 
   window.addEventListener("load", (e) => {
     const componentToRender = routes[window.location.pathname];
@@ -71,6 +48,7 @@ const Router = () => {
       );
 
     componentToRender();
+    
   });
 
   // Route the right component when the user use the browsing history
@@ -78,6 +56,7 @@ const Router = () => {
     const componentToRender = routes[window.location.pathname];
     componentToRender();
   });
+
 };
 
 /**
