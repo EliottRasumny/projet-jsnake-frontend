@@ -1,5 +1,6 @@
 import HomePage from "../Pages/HomePage";
 import SinglePlayer from "../Pages/SinglePlayer";
+import DualPlayer from "../Pages/DualPlayer";
 import GamePage from "../Pages/GamePage";
 
 // Configure your routes here
@@ -7,6 +8,7 @@ const routes = {
   "/": HomePage,
   "/game": GamePage,
   "/single": SinglePlayer,
+  "/dual": DualPlayer,
 };
 
 /**
