@@ -13,7 +13,7 @@ const HomePage = () => {
   <h1 class="m-5">JSnake</h1>
   <div class="d-inline-flex p-1 ">
     <img src="${blue_snake}" class="rounded float-start" alt="Blue Snake" style="width:8vw ;heigth:auto" >
-    <div class="container">
+    <div>
       <img src="${red_snake}" class="rounded float-start" alt="Red Snake" style="width:8vw ;heigth:auto">
       <img src="${blue_snake_inverse}" class="rounded float-start"alt="Blue Snake" style="width:8vw ;heigth:auto">
     </div>

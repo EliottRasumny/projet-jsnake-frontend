@@ -2,24 +2,34 @@ import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 
 /**
- * Render the NewPage :
- * Just an example to demonstrate how to use the router to "redirect" to a new page
+ * Render the Two Player Page :
  */
 function DualPlayer() {
-  // Deal with your NewPage content here
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = "";
-  // create a login form
-  const submit = document.createElement("input");
-  submit.value = "Go back to HomePage";
-  // Example on how to use Bootstrap to style a Button
-  submit.className = "btn btn-secondary mt-3";
-  // Example on how to add an event handler : when the button is clicked, redirect
-  // to the HomePage
-  submit.addEventListener("click", () => {
-    Redirect("/");
+  pageDiv.innerHTML = `
+  <h1 class="m-5">JSnake</h1>
+  <div class="d-inline-flex p-1 ">
+    <img src="${blue_snake}" class="rounded float-start" alt="Blue Snake" style="width:8vw ;heigth:auto" >
+    <div class="container">
+      <img src="${red_snake}" class="rounded float-start" alt="Red Snake" style="width:8vw ;heigth:auto">
+      <img src="${blue_snake_inverse}" class="rounded float-start"alt="Blue Snake" style="width:8vw ;heigth:auto">
+    </div>
+  </div>
+  <div class="container ">
+    <button id="btnToSingle" class="btn p-3 m-5" data-uri="/single">1Player</button>
+    <button id="btnToDual" class="btn p-3 m-5">2Player</button>
+  </div>`;
+  const submitSingle = document.querySelector("#btnToSingle");
+  submitSingle.addEventListener("click", () => {
+    Redirect("/single");
   });
-  pageDiv.appendChild(submit);
+  pageDiv.appendChild(submitSingle);
+
+  const submitDual = document.querySelector("#btnToDual");
+  submitDual.addEventListener("click", () => {
+    Redirect("/dual");
+  });
+  pageDiv.appendChild(submitDual);
 }
 
 export default DualPlayer;
