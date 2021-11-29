@@ -4,11 +4,19 @@ body {
 .navbar {
     background-color: #e3caac;
 }
-#btn{
+#btnToSingle{
     background-color: #a3d977;
     
 }
-#btn:hover{
+#btnToSingle:hover{
+    background-color: #e3caac;
+}
+
+#btnToDual{
+    background-color: #a3d977;
+    
+}
+#btnToDual:hover{
     background-color: #e3caac;
 }
 
