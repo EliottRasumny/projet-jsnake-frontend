@@ -30,7 +30,7 @@ const HomePage = () => {
 
   const submitDual = document.querySelector("#btnToDual");
   submitDual.addEventListener("click", () => {
-    Redirect("/dual");
+    Redirect("/twoPlayer");
   });
   pageDiv.appendChild(submitDual);
 };

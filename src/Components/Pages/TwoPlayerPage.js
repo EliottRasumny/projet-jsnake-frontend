@@ -4,11 +4,11 @@ import { Redirect } from "../Router/Router";
 /**
  * Render the Two Player Page :
  */
-function DualPlayer() {
+function TwoPlayer() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
   <h1 class="m-5">2 Players</h1>
-  <div>
+  <div cl>
     <button id="btnToCOOP" class="btn p-3 m-5"">COOP</button>
     <button id="btnToScoreboardCoop" class="btn p-3 m-5">Scoreboard</button>
   </div>
@@ -39,9 +39,9 @@ function DualPlayer() {
   //button to get settings for two players
   const submitSettings = document.querySelector("#btnToSettings");
   submitSettings.addEventListener("click", () => {
-    Redirect("/settingsTwoPlayers");
+    Redirect("/settings");
   });
   pageDiv.appendChild(submitSettings);
 }
 
-export default DualPlayer;
+export default TwoPlayer;

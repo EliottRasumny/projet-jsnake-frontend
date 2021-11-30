@@ -46,4 +46,28 @@ body {
 #btnToSettings:hover{
     background-color: #e3caac;
 }
-
+/* ========================= Buttons of the TwoPlayer page ========================= */
+/* COOP button */
+#btnToCOOP{
+    background-color: #a3d977;
+    
+}
+#btnToCOOP:hover{
+    background-color: #e3caac;
+}
+/* Battle button */
+#btnToBattle{
+    background-color: #a3d977;
+    
+}
+#btnToBattle:hover{
+    background-color: #e3caac;
+}
+/* Scoreboard button */
+#btnToScoreboardCoop{
+    background-color: #a3d977;
+    
+}
+#btnToScoreboardCoop:hover{
+    background-color: #e3caac;
+}
