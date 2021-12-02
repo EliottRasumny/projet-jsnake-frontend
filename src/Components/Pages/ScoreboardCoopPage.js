@@ -11,7 +11,7 @@ function ScoreboardCoopPage() {
   pageDiv.innerHTML = "";
   // create a login form
   const submit = document.createElement("input");
-  submit.value = "Go back to HomePage";
+  submit.value = "Go back to Two Player";
   // Example on how to use Bootstrap to style a Button
   submit.className = "btn btn-secondary mt-3";
   // Example on how to add an event handler : when the button is clicked, redirect

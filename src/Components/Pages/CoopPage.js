@@ -1,7 +1,6 @@
-import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 import Phaser from "phaser";
-import GameScene from "../Game/GameScene";
+import CoopScene from "../Game/CoopScene";
 
 var game;
 
@@ -24,7 +23,8 @@ function CoopPage() {
         debug: false,
       },
     },
-    scene: [GameScene],
+    function: {preload: preload, create: create, update: update},
+    scene: [CoopScene],
     //  parent DOM element into which the canvas created by the renderer will be injected.
     parent: "gameDiv",
   };
@@ -36,7 +36,7 @@ function CoopPage() {
 
   // create a login form
   const submit = document.createElement("input");
-  submit.value = "Go back to HomePage";
+  submit.value = "Go back to Two Player";
   // Example on how to use Bootstrap to style a Button
   submit.className = "btn btn-secondary mt-3";
   // Example on how to add an event handler : when the button is clicked, redirect
