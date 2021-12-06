@@ -19,11 +19,10 @@ function CoopPage() {
     physics: {
       default: "arcade",
       arcade: {
-        gravity: { y: 300 },
+        gravity: { y: 0 },
         debug: false,
       },
     },
-    function: {preload: preload, create: create, update: update},
     scene: [CoopScene],
     //  parent DOM element into which the canvas created by the renderer will be injected.
     parent: "gameDiv",
@@ -31,8 +30,9 @@ function CoopPage() {
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
+  console.log(game);
   game = new Phaser.Game(config);
-
+  console.log("game");
 
   // create a login form
   const submit = document.createElement("input");

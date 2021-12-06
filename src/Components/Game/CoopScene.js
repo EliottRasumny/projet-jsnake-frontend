@@ -1,38 +1,73 @@
 import Phaser from "phaser";
+import skyAsset from "../../assets/sky.png";
+import snake1Asset from "../../assets/snakeGreen.png";
 const SNAKE_1_KEY = "snake1";
-const SNAKE_2_KEY = "snake2";
 //import groundAsset from ''; TODO
 
 class CoopScene extends Phaser.Scene {
 
     //Prepare necessary variables
     constructor() {
-        super(game-scene);
+        super("game-scene");
         this.snake1 = undefined;
-        this.food1 = undefined;
-        this.snake2 = undefined;
-        this.food2 = undefined;
+        this.cursors = undefined;
+        this.isGameOver = false;
     };
 
     //Load required assets
     preload() {
-        this.load.image("ground", groundAsset);
-        this.load.spritesheet(SNAKE_1_KEY, '...');
-        this.load.spritesheet(SNAKE_2_KEY,'...');
+        this.load.image("ground", skyAsset);
+
+        this.load.spritesheet(SNAKE_1_KEY, snake1Asset , {
+            frameWidth: 64,
+            frameHeight: 64,
+        });
         //TODO
     }
 
     //Creating the game stage
     create() {
-        this.snake1 = this.createSnakes();
-        this.food1 = this.createFood();
-        this.snake2 = this.createSnakes();
-        this.food2 = this.createFood();
+        this.add.image(400, 300, "ground");
+        this.snake1 = this.createSnake(snake1Asset);
+
+        this.physics.add.collider(
+            this.snake1,
+            null,
+            this
+        );
+        this.physics.add.overlap(
+            this.snake1,
+            null,
+            this
+          );
+
+        this.cursors = this.input.keyboard.createCursorKeys();
     }
 
     //Update the scene for each frame
     update() {
-        //TODO
+        if (this.isGameOver) return;
+
+        //left
+        if (this.cursors.left.isDown) {
+            this.player.setVelocityX(-160);
+            this.player.anims.play("left", true);
+        //right
+        } else if (this.cursors.right.isDown) {
+            this.player.setVelocityX(160);
+            this.player.anims.play("right", true);
+        //down
+        } else if (this.cursors.down.isDown) {
+            this.player.setVelocityY(-160);
+            this.player.anims.play("down", true);
+        //up
+        } else if (this.cursors.up.isDown) {
+            this.player.setVelocityY(160);
+            this.player.anims.play("up");
+        } else {
+            this.player.setVelocityX(160);
+            this.player.anims.play("right", true);
+        }
     }
 
     //Postrendering the scene
@@ -46,10 +81,38 @@ class CoopScene extends Phaser.Scene {
     }
 
     //Creating players snakes
-    createSnakes() {
-        //const snake;
-        //TODO
-        //return snake;
+    createSnake(spritesheet) {
+        const snake = this.physics.add.sprite(100, 450, spritesheet);
+        player.setCollideWorldBounds(true);
+        
+        this.anims.create({
+            key: "left",
+            frames: [{ key: SNAKE_1_KEY, frame: 8 }],
+            frameRate: 10,
+            repeat: -1,
+          });
+      
+          this.anims.create({
+            key: "up",
+            frames: [{ key: SNAKE_1_KEY, frame: 4 }],
+            frameRate: 20,
+            repeat: -1,
+          });
+
+          this.anims.create({
+            key: "down",
+            frames: [{ key: SNAKE_1_KEY, frame: 4 }],
+            frameRate: 20,
+            repeat: -1,
+          });
+      
+          this.anims.create({
+            key: "right",
+            frames: [{ key: SNAKE_1_KEY, frame: [0][4] }],
+            frameRate: 10,
+            repeat: -1,
+          });
+          return snake
     }
 
     //Creating food for snakes
