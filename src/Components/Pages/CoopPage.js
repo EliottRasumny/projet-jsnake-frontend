@@ -30,9 +30,7 @@ function CoopPage() {
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
-  console.log(game);
   game = new Phaser.Game(config);
-  console.log("game");
 
   // create a login form
   const submit = document.createElement("input");
