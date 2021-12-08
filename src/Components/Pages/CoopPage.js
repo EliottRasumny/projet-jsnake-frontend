@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
 import UIScore from "../Game/UIScore";
 
-var game = undefined;
+var game;
 
 function CoopPage() {
   const pageDiv = document.querySelector("#page");

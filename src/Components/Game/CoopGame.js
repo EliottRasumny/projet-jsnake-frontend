@@ -68,10 +68,10 @@ class CoopGame extends Phaser.Scene
     this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'left', SNAKE2_KEY);
     //Creating collider with food
-    this.physics.add.collider(this.snake1, this.apple);
-    this.physics.add.collider(this.snake2, this.apple);
+    //FIXME:this.physics.add.collider(this.snake1, this.apple);
+    //FIXME:this.physics.add.collider(this.snake2, this.apple);
     //Creating collider between snakes
-    this.physics.add.collider(this.snake1, this.snake2);
+    //FIXME:this.physics.add.collider(this.snake1, this.snake2);
     //Creating food
     this.apple = this.createFood();
     //TODO: Eating food
@@ -116,10 +116,8 @@ class CoopGame extends Phaser.Scene
       this.direction1 = this.nextDirection1;
       this.nextDirection1 = null;
       //update the snake's body parts coordinates
-      this.snake1.updateCoordinates(this.direction1);
-      //TODO:
-      //update snake's body parts
-      //TODO:
+      //FIXME:snake1.updateCoordinates(this.direction1);
+      //FIXME:snake1.updatePosition(this.direction1);
     }    
 
     //Collision with itself -> end game
@@ -154,7 +152,7 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE).createSnakeBody(X, Y, direction);
+    return new Snake(this, asset, SQUARE_SIZE).createSnake(X, Y, direction);
   };
 
 

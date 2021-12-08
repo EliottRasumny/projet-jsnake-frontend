@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export default class bodyParts
+export default class BodyParts
 {
 	/**
 	 * @param {Phaser.Scene} scene: where it needs to be displayed
@@ -10,6 +10,7 @@ export default class bodyParts
 	{
 		this.scene = scene;
     this.asset = asset;
+    this.bodyParts = ['head']; //for loop convenience
 		this._group = this.scene.physics.add.group();
 	}
 
@@ -36,8 +37,15 @@ export default class bodyParts
     }
     bodyPart.setCollideWorldBounds(true);
     this.createBodyAnimation(bodyPart);
+    this.bodyParts.push(bodyPart);
 		return bodyPart;
 	}
+
+
+  getBodyParts()
+  {
+    return this.bodyParts;
+  }
 
 
   /**

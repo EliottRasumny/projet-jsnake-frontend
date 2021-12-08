@@ -17,6 +17,7 @@ export default class Snake
     this.SQUARE_SIZE = squareSize;
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
     this.bodyCoordinates = [];
+    this.size = null;
     this.head = undefined;
     this.tail = undefined;
     //body parts
@@ -38,7 +39,7 @@ export default class Snake
    * @param {number} Y: coordinate of the position on the grid
    * @param {string} direction: it's orientation 
    */
-  createSnakeBody(X, Y, direction)
+  createSnake(X, Y, direction)
   {
     //Defining the starting orientation
     let orientation;
@@ -57,6 +58,7 @@ export default class Snake
     //generating it's tail
     this.bodyCoordinates[2] = (X + (orientation * 2), Y + (orientation * 2));
     this.setTail(X + (orientation * 2), Y, direction, this.asset);
+    this.size = 3;
   }
 
 
@@ -71,13 +73,16 @@ export default class Snake
     if (direction === 'right')
     {
       this.head = this.group.create(X, Y, this.asset, 0, true, true);
-    } else if (direction === 'left')
+    }
+    else if (direction === 'left')
     {
       this.head = this.group.create(X, Y, this.asset, 2, true, true);
-    } else if (direction === 'up')
+    }
+    else if (direction === 'up')
     {
       this.head = this.group.create(X, Y, this.asset, 3, true, true);
-    } else if (direction === 'down')
+    }
+    else if (direction === 'down')
     {
       this.head = this.group.create(X, Y, this.asset, 1, true, true);
     }
@@ -108,13 +113,16 @@ export default class Snake
     if (direction === 'right')
     {
       this.tail = this.group.create(X, Y, this.asset, 10, true, true);
-    } else if (direction === 'left')
+    }
+    else if (direction === 'left')
     {
       this.tail = this.group.create(X, Y, this.asset, 11, true, true);
-    } else if (direction === 'up')
+    }
+    else if (direction === 'up')
     {
       this.tail = this.group.create(X, Y, this.asset, 12, true, true);
-    } else if (direction === 'down')
+    }
+    else if (direction === 'down')
     {
       this.tail = this.group.create(X, Y, this.asset, 13, true, true);
     }
@@ -125,11 +133,11 @@ export default class Snake
   /**
    * Create head animation
    */
-  createHeadAnimation()
+  createHeadAnimation() //TODO: utilite?
   {
     this.head.anims.create(
       {
-        key: 'headUp',
+        key: 'up',
         frames: [ { key: this.asset, frame: 3 } ],
         frameRate: this.SQUARE_SIZE,
         repeat: -1
@@ -137,7 +145,7 @@ export default class Snake
     );
     this.head.anims.create(
       {
-        key: 'headDown',
+        key: 'down',
         frames: [ { key: this.asset, frame: 1 } ],
         frameRate: this.SQUARE_SIZE,
         repeat: -1
@@ -145,7 +153,7 @@ export default class Snake
     );
 		this.head.anims.create(
       {
-        key: 'headRight',
+        key: 'right',
         frames: [ { key: this.asset, frame: 0 } ],
         frameRate: this.SQUARE_SIZE,
         repeat: -1
@@ -153,7 +161,7 @@ export default class Snake
     );
 		this.head.anims.create(
       {
-        key: 'headLeft',
+        key: 'left',
         frames: [ { key: this.asset, frame: 2 } ],
         frameRate: this.SQUARE_SIZE,
         repeat: -1
@@ -169,7 +177,7 @@ export default class Snake
   {
     this.tail.anims.create(
       {
-        key: 'tailUp',
+        key: 'up',
         frames: [ { key: this.asset, frame: 13 } ],
         frameRate: 32,
         repeat: -1
@@ -177,7 +185,7 @@ export default class Snake
     );
     this.tail.anims.create(
       {
-        key: 'tailDown',
+        key: 'down',
         frames: [ { key: this.asset, frame: 12 } ],
         frameRate: 32,
         repeat: -1
@@ -185,7 +193,7 @@ export default class Snake
     );
     this.tail.anims.create(
       {
-        key: 'tailRight',
+        key: 'right',
         frames: [ { key: this.asset, frame: 10 } ],
         frameRate: 32,
         repeat: -1
@@ -193,7 +201,7 @@ export default class Snake
     );
     this.tail.anims.create(
       {
-        key: 'tailLeft',
+        key: 'left',
         frames: [ { key: this.asset, frame: 11 } ],
         frameRate: 32,
         repeat: -1
@@ -212,24 +220,55 @@ export default class Snake
     //The old head becomes the first body part
     //The last body part becomes the new tail
     this.bodyCoordinates.unshift(this.bodyCoordinates.pop());
-    if (direction === 'down') {
+    if (direction === 'down')
+    {
       this.bodyCoordinates[0] = [this.bodyCoordinates[1][0], this.bodyCoordinates[1][0] + this.SQUARE_SIZE];
     }
-    else if (direction === 'up') {
+    else if (direction === 'up')
+    {
       this.bodyCoordinates[0] = [this.bodyCoordinates[1][0], this.bodyCoordinates[1][0] - this.SQUARE_SIZE];
     }
-    else if (direction === 'left') {
+    else if (direction === 'left')
+    {
       this.bodyCoordinates[0] = [this.bodyCoordinates[1][0] - this.SQUARE_SIZE, this.bodyCoordinates[1][0]];
     }
-    else if (direction === 'right') {
+    else if (direction === 'right')
+    {
       this.bodyCoordinates[0] = [this.bodyCoordinates[1][0] + this.SQUARE_SIZE, this.bodyCoordinates[1][0]];
     }
   }
 
 
-  move()
+  updatePosition(direction)
   {
-
+    //head
+    this.setHead(this.bodyCoordinates[0][0], this.bodyCoordinates[0][1], direction);
+    //each body parts
+    let allBodyParts = this.bodyParts.getBodyParts(); //allBodyParts.lenght = this.bodyCoordinates.lenght - 1
+    for (let i = 1; i < this.size - 1; i++)
+    {
+      if (this.bodyCoordinates[i][0] === this.bodyCoordinates[i - 1][0]) //moves verticaly
+      {
+        if (this.bodyCoordinates[i][1] > this.bodyCoordinates[i - 1][1]) //goes up
+        {
+          //TODO:allBodyParts[i].move(param);
+        }
+        else //goes down
+        {
+          //TODO:allBodyParts[i].move(param);
+        }
+      }
+      else if (this.bodyCoordinates[i][0] > this.bodyCoordinates[i - 1][0]) //goes left
+      {
+        //TODO:allBodyParts[i].move(param);
+      }
+      else //goes right
+      {
+        //TODO:allBodyParts[i].move(param);
+      }
+    }
+    //tail
+    this.setTail(this.bodyCoordinates[this.size - 1][0], this.bodyCoordinates[this.size - 1][1], direction);
   }
 
 
