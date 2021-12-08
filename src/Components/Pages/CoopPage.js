@@ -1,36 +1,38 @@
 import { Redirect } from "../Router/Router";
-import Phaser from "phaser";
-import CoopScene from "../Game/CoopScene";
+import Phaser from 'phaser';
+import CoopGame from '../Game/CoopGame';
+import UIScore from "../Game/UIScore";
 
 var game;
 
-/**
- * Render the CoopPage :
- * Just an example to demonstrate how to use the router to "redirect" to a new page
- */
 function CoopPage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div id="gameDiv" class="d-flex justify-content-center my-3"></div>`;
+  pageDiv.innerHTML = `<div id="coopGame" class="container justify-content-center my-3"></div>`;
 
-  let config = {
+  const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     physics: {
-      default: "arcade",
-      arcade: {
-        gravity: { y: 0 },
-        debug: false,
-      },
+      default: 'arcade',
+      arcade: {y: 0}
     },
-    scene: [CoopScene],
-    //  parent DOM element into which the canvas created by the renderer will be injected.
-    parent: "gameDiv",
+    parent: "coopGame",
+    scene: [CoopGame, UIScore]
   };
+
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
+
   game = new Phaser.Game(config);
+  
+  /*
+  game.state.add('Menu', Menu);     
+  // Adding the Game state.
+  game.state.add('Game', CoopGame);
+  game.state.start('Menu');
+  */
 
   // create a login form
   const submit = document.createElement("input");
