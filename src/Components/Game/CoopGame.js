@@ -76,7 +76,7 @@ class CoopGame extends Phaser.Scene
     this.apple = this.createFood();
     //TODO: Eating food
     //....
-    //UIScene for scores
+    //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
