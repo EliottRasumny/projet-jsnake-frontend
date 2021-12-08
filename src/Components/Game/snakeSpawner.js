@@ -8,19 +8,17 @@ export default class SnakeSpawner
 {
 	/**
 	 * @param {Phaser.Scene} scene: where it needs to be displayed
-   * @param {Phaser.asset} asset: it's sprites
-   * @param {string} direction: orientation at the start
-	 */
-	constructor(scene, asset, direction)
+	 * @param {Phaser.asset} asset: it's sprites
+   */
+	constructor(scene, asset)
 	{
 		this.scene = scene;
-		this.asset = asset;
+    this.asset = asset;
     this.head = undefined;
     this.tail = undefined;
     //body parts
-    this.bodyParts = new BodyPartSpawner(this.scene, asset);
+    this.bodyParts = new BodyPartSpawner(this.scene, this.asset);
     //direction taken by the head
-    this.direction = direction;
     //TODO: Create collider between head and body parts
     //this.physics.add.overlap(this.head, this.bodyParts.group, this.eatItself, null, this);
 		this._group = this.scene.physics.add.group();
@@ -37,18 +35,18 @@ export default class SnakeSpawner
    * @param {number} Y: coordinate of the position on the grid
    * @param {string} direction: it's orientation
    */
-  setHead(X, Y)
+  setHead(X, Y, direction)
   {
-    if (this.direction === 'right')
+    if (direction === 'right')
     {
       this.head = this.group.create(X, Y, this.asset, 0, true, true);
-    } else if (this.direction === 'left')
+    } else if (direction === 'left')
     {
       this.head = this.group.create(X, Y, this.asset, 2, true, true);
-    } else if (this.direction === 'up')
+    } else if (direction === 'up')
     {
       this.head = this.group.create(X, Y, this.asset, 3, true, true);
-    } else if (this.direction === 'down')
+    } else if (direction === 'down')
     {
       this.head = this.group.create(X, Y, this.asset, 1, true, true);
     }

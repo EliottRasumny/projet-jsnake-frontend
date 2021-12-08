@@ -5,12 +5,11 @@ export default class bodyPartSpawner
 	/**
 	 * @param {Phaser.Scene} scene: where it needs to be displayed
      * @param {Phaser.asset} asset: it's sprites
-	 */
+     */
 	constructor(scene, asset)
 	{
 		this.scene = scene;
-		this.asset = asset;
-
+        this.asset = asset;
 		this._group = this.scene.physics.add.group();
 	}
 

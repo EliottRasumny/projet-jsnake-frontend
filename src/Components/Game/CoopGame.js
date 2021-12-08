@@ -8,9 +8,10 @@ import groundAsset from '../../assets/sky.png';
 import gridAsset from '../../assets/Grid32_1024x768.png'
 import appleAsset from '../../assets/RedApple.png';
 import greenSnakeAsset from '../../assets/GreenSnake32.png';
+import orangeSnakeAsset from '../../assets/OrangeSnake32.png'
 
 //Constants for DRY principle
-const GROUND_KEY = 'ground', GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SQUARE_SIZE = 32;
+const GROUND_KEY = 'ground', GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
 //Global variables
 let direction, nextDirection;
 
@@ -22,6 +23,7 @@ class CoopGame extends Phaser.Scene
     super('game-scene');
     //Players
     this.snake1 = undefined;
+    this.snake2 = undefined;
     //directions
     this.direction = 'right';
     this.newDirection = null;
@@ -50,6 +52,9 @@ class CoopGame extends Phaser.Scene
     this.load.spritesheet(SNAKE1_KEY,
       greenSnakeAsset,
       {frameWidth: SQUARE_SIZE, frameHeight: SQUARE_SIZE});
+    this.load.spritesheet(SNAKE2_KEY,
+      orangeSnakeAsset,
+      {frameWidth: SQUARE_SIZE, frameHeight: SQUARE_SIZE});
   }
 
 
@@ -63,8 +68,10 @@ class CoopGame extends Phaser.Scene
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
+    this.snake2 = this.createSnake((25 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'left', SNAKE2_KEY);
     //Creating all collider
     this.physics.add.collider(this.snake1, this.apple);
+    this.physics.add.collider(this.snake2, this.apple);
     //Creating food
     this.apple = this.createFood();
     //TODO: Eating food
@@ -147,14 +154,22 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
+    //Defining the orientation
+    let orientation;
+    if (direction === 'right')
+    {
+      orientation = -SQUARE_SIZE;
+    } else {
+      orientation = SQUARE_SIZE;
+    }
     //creating snake
-    const snake = new SnakeSpawner(this, asset, 'right');
+    let snake = new SnakeSpawner(this, asset);
     //generating it's head
-    snake.setHead(X, Y, direction);
+    snake.setHead(X, Y, direction, asset);
     //generating it's body
-    snake.addBodyPart(X - SQUARE_SIZE, Y, direction);   //TODO: -32 depends on the direction
-    //generating it's tail                              //
-    snake.setTail(X - (SQUARE_SIZE * 2), Y, direction); // idem
+    snake.addBodyPart(X + orientation, Y, direction, asset);
+    //generating it's tail
+    snake.setTail(X + (orientation * 2), Y, direction, asset);
 
     //TODO: Implementing the movements
     /*
