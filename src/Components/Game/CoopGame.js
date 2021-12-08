@@ -5,11 +5,12 @@ import eventsCenter from './EventCenter';
 import SnakeSpawner from './snakeSpawner';
 //import assets
 import groundAsset from '../../assets/sky.png';
+import gridAsset from '../../assets/Grid32_1024x768.png'
 import appleAsset from '../../assets/RedApple.png';
 import greenSnakeAsset from '../../assets/GreenSnake32.png';
 
 //Constants for DRY principle
-const GROUND_KEY = 'ground', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SQUARE_SIZE = 32;
+const GROUND_KEY = 'ground', GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SQUARE_SIZE = 32;
 //Global variables
 let direction, nextDirection;
 
@@ -44,6 +45,7 @@ class CoopGame extends Phaser.Scene
   preload()
   {
     this.load.image(GROUND_KEY, groundAsset);
+    this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
     this.load.spritesheet(SNAKE1_KEY,
       greenSnakeAsset,
@@ -56,12 +58,12 @@ class CoopGame extends Phaser.Scene
    */
   create()
   {
-    //Creating terrain
-    this.add.image(500, 400, GROUND_KEY).setScale(1.5);
-    
-    //Creating snakes
-    this.snake1 = this.createSnake(6 * SQUARE_SIZE, 12 * SQUARE_SIZE, 'right', SNAKE1_KEY);
-    //Creating collider
+
+    //Creating the grid
+    this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
+    //Creating the snakes
+    this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
+    //Creating all collider
     this.physics.add.collider(this.snake1, this.apple);
     //Creating food
     this.apple = this.createFood();
@@ -86,22 +88,18 @@ class CoopGame extends Phaser.Scene
     if (direction != 'down' && this.controls1.up.isDown)
     {
       nextDirection = 'up';
-      //foreach body part, check direction/position and use it
     }
     else if (direction != 'up' && this.controls1.down.isDown)
     {
       nextDirection = 'down';
-      //foreach body part, check direction/position and use it
     }
     else if (direction != 'left' && this.controls1.right.isDown)
     {
       nextDirection = 'right';
-      //foreach body part, check direction/position and use it
     }
     else if (direction != 'right' && this.controls1.left.isDown)
     {
       nextDirection = 'left';
-      //foreach body part, check direction/position and use it
     }
 
     //Check if the snake reach a new square. If yes, allows it to change direction
@@ -217,10 +215,10 @@ class CoopGame extends Phaser.Scene
   createFood()
   {
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 8) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 8) * SQUARE_SIZE;
+    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     //Genereting apple
-    const apple = this.physics.add.image(randomX, randomY, APPLE_KEY).setScale(0.5);
+    const apple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY).setScale(0.5);
     apple.enableBody = true;
     return apple;
   }

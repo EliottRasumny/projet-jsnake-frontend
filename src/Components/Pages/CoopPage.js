@@ -11,8 +11,9 @@ function CoopPage() {
 
   const config = {
     type: Phaser.AUTO,
-    width: 1000,
-    height: 800,
+    width: 1024,
+    height: 768,
+    backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
       arcade: {y: 0}
@@ -28,7 +29,7 @@ function CoopPage() {
   game = new Phaser.Game(config);
   
   /*
-  game.state.add('Menu', Menu);     
+  game.stage.add('Menu', Menu);     
   // Adding the Game state.
   game.state.add('Game', CoopGame);
   game.state.start('Menu');
