@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 //import classes
-import BodyPart from './BodyParts';
+import BodyParts from './BodyParts';
 //import scenes & events
 import eventsCenter from './EventCenter';
 
