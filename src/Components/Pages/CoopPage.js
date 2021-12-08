@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
 import UIScore from "../Game/UIScore";
 
-var game;
+var game = undefined;
 
 function CoopPage() {
   const pageDiv = document.querySelector("#page");
@@ -25,7 +25,7 @@ function CoopPage() {
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
-
+  //FIXME:
   game = new Phaser.Game(config);
   
   /*
