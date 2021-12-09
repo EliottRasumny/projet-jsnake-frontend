@@ -8,6 +8,11 @@ import SettingsPage from "../Pages/SettingsPage.js";
 import CoopPage from "../Pages/CoopPage";
 import BattlePage from "../Pages/BattlePage";
 import ScoreboardCoopPage from "../Pages/ScoreboardCoopPage";
+import LoginPage from "../Pages/LoginPage";
+import RegisterPage from "../Pages/RegisterPage";
+import ScoreboardPage from "../Pages/ScoreboardPage";
+
+
 
 // Configure your routes here
 const routes = {
@@ -20,7 +25,10 @@ const routes = {
   "/settings": SettingsPage,
   "/coop": CoopPage,
   "/battle": BattlePage,
-  "/scoreboardCoop": ScoreboardCoopPage
+  "/scoreboardCoop": ScoreboardCoopPage,
+  "/scoreboard": ScoreboardPage,
+  "/login": LoginPage,
+  "/register": RegisterPage,
 };
 
 /**

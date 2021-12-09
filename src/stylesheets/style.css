@@ -4,6 +4,16 @@ body {
 .navbar {
     background-color: #e3caac;
 }
+
+#text-green{
+    color: #a3d977;
+}
+
+#btn{
+    background-color: #a3d977;
+    color: white;
+}
+
 #btnToSingle{
     background-color: #a3d977;
     

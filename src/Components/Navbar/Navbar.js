@@ -14,21 +14,40 @@ import { Navbar as BootstrapNavbar} from "bootstrap";
 const Navbar = () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
   let navbar = `
-  <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#" data-uri="/">JSnake</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+  <nav class="navbar navbar-expand-lg navbar-ligh">
+    <div class="container ">
+        <a class="navbar-brand text-white" href="/">JSnake</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse  text-white" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link active  text-white" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  text-white" href="/single">Single Player</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle  text-white" href="/" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Two Players
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" id="text-green" href="/coop">Coop</a></li>
+                        <li><a class="dropdown-item" id="text-green" href="/battle">Battle</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <a class="nav-link" href="/login"><button class="btn btn-light ms-3">Login</button></a>
+                <a class="nav-link" href="/register"><button class="btn btn-light ms-3">Register</button></a>
+            </div>
         </div>
-      </nav>
+    </div>
+</nav>
   `;  
   navbarWrapper.innerHTML = navbar;
 };
