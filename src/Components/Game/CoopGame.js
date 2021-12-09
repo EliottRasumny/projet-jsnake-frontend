@@ -4,14 +4,13 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
-import groundAsset from '../../assets/sky.png';
 import gridAsset from '../../assets/Grid32_1024x768.png'
 import appleAsset from '../../assets/RedApple.png';
 import magentaSnakeAsset from '../../assets/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/OrangeSnake32.png'
 
 //Constants for DRY principle
-const GROUND_KEY = 'ground', GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
 
 class CoopGame extends Phaser.Scene
 {
@@ -45,7 +44,6 @@ class CoopGame extends Phaser.Scene
    */
   preload()
   {
-    this.load.image(GROUND_KEY, groundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
     this.load.spritesheet(SNAKE1_KEY,
@@ -109,16 +107,21 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % SQUARE_SIZE === 0 && this.nextDirection1) {
+    if (this.keyFrameValue % SQUARE_SIZE === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
-      //Update the direction of the snake
-      this.direction1 = this.nextDirection1;
-      this.nextDirection1 = null;
+      if (this.nextDirection1 != null)
+      {
+        //Update the direction of the snake
+        this.direction1 = this.nextDirection1;
+        this.nextDirection1 = null;
+      }
       //update the snake's body parts coordinates
-      //FIXME:snake1.updateCoordinates(this.direction1);
-      //FIXME:snake1.updatePosition(this.direction1);
-    }    
+      this.snake1.updateCoordinates(this.direction1);
+      console.log(this.snake1.bodyCoordinates);
+      //Moving the snake
+      this.snake1.move(this.direction1);
+    }
 
     //Collision with itself -> end game
     //collision with a wall -> end game
@@ -152,7 +155,9 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE).createSnake(X, Y, direction);
+    let newSnake = new Snake(this, asset, SQUARE_SIZE);
+    newSnake.createSnake(X, Y, direction);
+    return newSnake;
   };
 
 

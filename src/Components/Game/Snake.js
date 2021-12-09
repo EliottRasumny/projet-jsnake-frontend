@@ -50,13 +50,13 @@ export default class Snake
       orientation = this.SQUARE_SIZE;
     }
     //generating it's head
-    this.bodyCoordinates[0] = (X, Y);
+    this.bodyCoordinates[0] = [X, Y];
     this.setHead(X, Y, direction, this.asset);
     //generating it's body
-    this.bodyCoordinates[1] = (X + orientation, Y + orientation);
+    this.bodyCoordinates[1] = [X + orientation, Y + orientation];
     this.addBodyPart(X + orientation, Y, direction, this.asset);
     //generating it's tail
-    this.bodyCoordinates[2] = (X + (orientation * 2), Y + (orientation * 2));
+    this.bodyCoordinates[2] = [X + (orientation * 2), Y + (orientation * 2)];
     this.setTail(X + (orientation * 2), Y, direction, this.asset);
     this.size = 3;
   }
@@ -239,9 +239,10 @@ export default class Snake
   }
 
 
-  updatePosition(direction)
+  move(direction)
   {
     //head
+    this.head = undefined;
     this.setHead(this.bodyCoordinates[0][0], this.bodyCoordinates[0][1], direction);
     //each body parts
     let allBodyParts = this.bodyParts.getBodyParts(); //allBodyParts.lenght = this.bodyCoordinates.lenght - 1
