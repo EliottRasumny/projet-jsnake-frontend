@@ -1,12 +1,26 @@
 import HomePage from "../Pages/HomePage";
-import NewPage from "../Pages/NewPage";
+import SinglePlayer from "../Pages/SinglePlayer";
+import TwoPlayer from "../Pages/TwoPlayerPage";
 import GamePage from "../Pages/GamePage";
+import PlayPage from "../Pages/PlayPage.js";
+import ScoreboardSinglePage from "../Pages/ScoreboardSinglePage";
+import SettingsPage from "../Pages/SettingsPage.js";
+import CoopPage from "../Pages/CoopPage";
+import BattlePage from "../Pages/BattlePage";
+import ScoreboardCoopPage from "../Pages/ScoreboardCoopPage";
 
 // Configure your routes here
 const routes = {
   "/": HomePage,
   "/game": GamePage,
-  "/new": NewPage,
+  "/single": SinglePlayer,
+  "/twoPlayer": TwoPlayer,
+  "/play": PlayPage,
+  "/scoreboardSingle": ScoreboardSinglePage,
+  "/settings": SettingsPage,
+  "/coop": CoopPage,
+  "/battle": BattlePage,
+  "/scoreboardCoop": ScoreboardCoopPage
 };
 
 /**
@@ -40,7 +54,6 @@ const Router = () => {
     }
   });
 
-  /* Route the right component when the page is loaded / refreshed */
   window.addEventListener("load", (e) => {
     const componentToRender = routes[window.location.pathname];
     if (!componentToRender)
@@ -49,6 +62,7 @@ const Router = () => {
       );
 
     componentToRender();
+    
   });
 
   // Route the right component when the user use the browsing history
@@ -56,6 +70,7 @@ const Router = () => {
     const componentToRender = routes[window.location.pathname];
     componentToRender();
   });
+
 };
 
 /**

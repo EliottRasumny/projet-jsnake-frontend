@@ -5,7 +5,7 @@ import { Redirect } from "../Router/Router";
  * Render the NewPage :
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
-function NewPage() {
+function PlayPage() {
   // Deal with your NewPage content here
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = "";
@@ -22,4 +22,4 @@ function NewPage() {
   pageDiv.appendChild(submit);
 }
 
-export default NewPage;
+export default PlayPage;
