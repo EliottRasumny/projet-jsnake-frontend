@@ -1,6 +1,4 @@
 import Phaser from 'phaser';
-//import classes
-import BodyParts from './BodyParts';
 //import scenes & events
 import eventsCenter from './EventCenter';
 
@@ -16,15 +14,13 @@ export default class Snake
     this.asset = asset;
     this.SQUARE_SIZE = squareSize;
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
-    this.bodyCoordinates = [];
     this.size = null;
-    this.head = undefined;
-    this.tail = undefined;
-    //body parts
-    this.bodyParts = new BodyParts(this.scene, this.asset);
+    this.coordinates = [];
+    //Contains all the sprites of the snake
+    this.snake = [];
     //Create collider between head and body parts
-    //FIXME:this.scene.physics.add.overlap(this.head, this.bodyParts.group, this.eatItself, null, this);
     this._group = this.scene.physics.add.group();
+    this._group.addMultiple(this.snake);
 	}
 
 	get group()
@@ -33,12 +29,6 @@ export default class Snake
 	}
 
 
-  /**
-   * Create the body of the snake
-   * @param {number} X: coordinate of the position on the grid
-   * @param {number} Y: coordinate of the position on the grid
-   * @param {string} direction: it's orientation 
-   */
   createSnake(X, Y, direction)
   {
     //Defining the starting orientation
@@ -49,164 +39,24 @@ export default class Snake
     } else {
       orientation = this.SQUARE_SIZE;
     }
-    //generating it's head
-    this.bodyCoordinates[0] = [X, Y];
-    this.setHead(X, Y, direction, this.asset);
-    //generating it's body
-    this.bodyCoordinates[1] = [X + orientation, Y + orientation];
-    this.addBodyPart(X + orientation, Y, direction, this.asset);
-    //generating it's tail
-    this.bodyCoordinates[2] = [X + (orientation * 2), Y + (orientation * 2)];
-    this.setTail(X + (orientation * 2), Y, direction, this.asset);
+    //Create head
+    this.coordinates[0] = [X, Y];
+    this.snake[0] = this.scene.physics.add.sprite(this.coordinates[0][0], this.coordinates[0][1], this.asset);
+    //Create body
+    this.coordinates[1] = [X + orientation, Y];
+    this.snake[1] = this.scene.physics.add.sprite(this.coordinates[1][0], this.coordinates[1][1], this.asset).setFrame(4);
+    //Create tail
+    this.coordinates[2] = [X + (orientation * 2), Y];
+    this.snake[2] = this.scene.physics.add.sprite(this.coordinates[2][0], this.coordinates[2][1], this.asset);
+    //Set the correct Frame
+    if (direction === 'right')
+    {
+      this.snake[2].setFrame(10);
+    } else {
+      this.snake[0].setFrame(2);
+      this.snake[2].setFrame(11);
+    }
     this.size = 3;
-  }
-
-
-  /**
-   * Create/define the head of the snake
-   * @param {number} X: coordinate of the position on the grid
-   * @param {number} Y: coordinate of the position on the grid
-   * @param {string} direction: it's orientation
-   */
-  setHead(X, Y, direction)
-  {
-    if (direction === 'right')
-    {
-      this.head = this.group.create(X, Y, this.asset, 0, true, true);
-    }
-    else if (direction === 'left')
-    {
-      this.head = this.group.create(X, Y, this.asset, 2, true, true);
-    }
-    else if (direction === 'up')
-    {
-      this.head = this.group.create(X, Y, this.asset, 3, true, true);
-    }
-    else if (direction === 'down')
-    {
-      this.head = this.group.create(X, Y, this.asset, 1, true, true);
-    }
-    this.head.setCollideWorldBounds(true);
-    this.createHeadAnimation();
-  }
-
-  /**
-   * Create a new body part for the snake
-   * @param {number} X coordinate of the position on the grid
-   * @param {number} Y coordinate of the position on the grid
-   * @param {string} direction it's orientation
-   */
-	addBodyPart(X, Y, direction)
-	{
-    this.bodyParts.addBodyPart(X, Y, direction);
-	}
-
-
-  /**
-   * Create/define the tail of the snake
-   * @param {number} X: coordinate of the position on the grid
-   * @param {number} Y: coordinate of the position on the grid
-   * @param {string} direction: it's orientation
-   */
-  setTail(X, Y, direction)
-  {
-    if (direction === 'right')
-    {
-      this.tail = this.group.create(X, Y, this.asset, 10, true, true);
-    }
-    else if (direction === 'left')
-    {
-      this.tail = this.group.create(X, Y, this.asset, 11, true, true);
-    }
-    else if (direction === 'up')
-    {
-      this.tail = this.group.create(X, Y, this.asset, 12, true, true);
-    }
-    else if (direction === 'down')
-    {
-      this.tail = this.group.create(X, Y, this.asset, 13, true, true);
-    }
-    this.tail.setCollideWorldBounds(true);
-  }
-
-
-  /**
-   * Create head animation
-   */
-  createHeadAnimation() //TODO: utilite?
-  {
-    this.head.anims.create(
-      {
-        key: 'up',
-        frames: [ { key: this.asset, frame: 3 } ],
-        frameRate: this.SQUARE_SIZE,
-        repeat: -1
-      }
-    );
-    this.head.anims.create(
-      {
-        key: 'down',
-        frames: [ { key: this.asset, frame: 1 } ],
-        frameRate: this.SQUARE_SIZE,
-        repeat: -1
-      }
-    );
-		this.head.anims.create(
-      {
-        key: 'right',
-        frames: [ { key: this.asset, frame: 0 } ],
-        frameRate: this.SQUARE_SIZE,
-        repeat: -1
-		  }
-    );
-		this.head.anims.create(
-      {
-        key: 'left',
-        frames: [ { key: this.asset, frame: 2 } ],
-        frameRate: this.SQUARE_SIZE,
-        repeat: -1
-		  }
-    );
-  }
-
-
-  /**
-   * Create tail animation
-   */
-  createTailAnimation()
-  {
-    this.tail.anims.create(
-      {
-        key: 'up',
-        frames: [ { key: this.asset, frame: 13 } ],
-        frameRate: 32,
-        repeat: -1
-      }
-    );
-    this.tail.anims.create(
-      {
-        key: 'down',
-        frames: [ { key: this.asset, frame: 12 } ],
-        frameRate: 32,
-        repeat: -1
-      }
-    );
-    this.tail.anims.create(
-      {
-        key: 'right',
-        frames: [ { key: this.asset, frame: 10 } ],
-        frameRate: 32,
-        repeat: -1
-      }
-    );
-    this.tail.anims.create(
-      {
-        key: 'left',
-        frames: [ { key: this.asset, frame: 11 } ],
-        frameRate: 32,
-        repeat: -1
-      }
-    );
   }
 
 
@@ -216,62 +66,168 @@ export default class Snake
    */
   updateCoordinates(direction)
   {
+    //Verify with the world border
+    if (this.coordinates[0][0] >= 1024 - (this.SQUARE_SIZE/2) || this.coordinates[0][1] >= 1024 - (this.SQUARE_SIZE/2) ||
+      this.coordinates[0][0] <= 0 + (this.SQUARE_SIZE/2) || this.coordinates[0][1] <= 0 + (this.SQUARE_SIZE/2)) return;
     //Put the old tail as the new head
     //The old head becomes the first body part
     //The last body part becomes the new tail
-    this.bodyCoordinates.unshift(this.bodyCoordinates.pop());
-    if (direction === 'down')
+    this.coordinates.unshift(this.coordinates.pop());
+    switch(direction)
     {
-      this.bodyCoordinates[0] = [this.bodyCoordinates[1][0], this.bodyCoordinates[1][0] + this.SQUARE_SIZE];
-    }
-    else if (direction === 'up')
-    {
-      this.bodyCoordinates[0] = [this.bodyCoordinates[1][0], this.bodyCoordinates[1][0] - this.SQUARE_SIZE];
-    }
-    else if (direction === 'left')
-    {
-      this.bodyCoordinates[0] = [this.bodyCoordinates[1][0] - this.SQUARE_SIZE, this.bodyCoordinates[1][0]];
-    }
-    else if (direction === 'right')
-    {
-      this.bodyCoordinates[0] = [this.bodyCoordinates[1][0] + this.SQUARE_SIZE, this.bodyCoordinates[1][0]];
+      case 'down':
+        this.coordinates[0] = [this.coordinates[1][0], this.coordinates[1][1] + this.SQUARE_SIZE];
+        break;
+      case 'up':
+        this.coordinates[0] = [this.coordinates[1][0], this.coordinates[1][1] - this.SQUARE_SIZE];
+        break;
+      case 'left':
+        this.coordinates[0] = [this.coordinates[1][0] - this.SQUARE_SIZE, this.coordinates[1][1]];
+        break;
+      case 'right':
+        this.coordinates[0] = [this.coordinates[1][0] + this.SQUARE_SIZE, this.coordinates[1][1]];
+        break;
     }
   }
-
 
   move(direction)
   {
-    //head
-    this.head = undefined;
-    this.setHead(this.bodyCoordinates[0][0], this.bodyCoordinates[0][1], direction);
-    //each body parts
-    let allBodyParts = this.bodyParts.getBodyParts(); //allBodyParts.lenght = this.bodyCoordinates.lenght - 1
+    this.moveHead(direction);
+    this.moveBody();
+    this.moveTail();
+  }
+  moveHead(direction)
+  {
+    this.snake[0].setPosition(this.coordinates[0][0], this.coordinates[0][1]);
+    switch(direction)
+    {
+      case 'right':
+        this.snake[0].setFrame(0);
+        break;
+      case 'down':
+        this.snake[0].setFrame(1);
+        break;
+      case 'left':
+        this.snake[0].setFrame(2);
+        break;
+      case 'up':
+        this.snake[0].setFrame(3);
+        break;
+    }
+  }
+  moveBody()
+  {
     for (let i = 1; i < this.size - 1; i++)
     {
-      if (this.bodyCoordinates[i][0] === this.bodyCoordinates[i - 1][0]) //moves verticaly
+      //Set position
+      this.snake[i].setPosition(this.coordinates[i][0], this.coordinates[i][1]);
+      //Defining direction
+      if (this.coordinates[i][1] === this.coordinates[i - 1][1])
       {
-        if (this.bodyCoordinates[i][1] > this.bodyCoordinates[i - 1][1]) //goes up
+        //If horizontal
+        if (this.coordinates[i][1] === this.coordinates[i + 1][1])
         {
-          //TODO:allBodyParts[i].move(param);
+          this.snake[i].setFrame(4);
         }
-        else //goes down
+        //Comming from left
+        else if (this.coordinates[i][0] < this.coordinates[i - 1][0])
         {
-          //TODO:allBodyParts[i].move(param);
+          //And below
+          if (this.coordinates[i][1] < this.coordinates[i + 1][1])
+          {
+            this.snake[i].setFrame(8);
+          }
+          //And above
+          else
+          {
+            this.snake[i].setFrame(9);
+          }
+        }
+        //Comming from right
+        else
+        {
+          //And below
+          if (this.coordinates[i][1] < this.coordinates[i + 1][1])
+          {
+            this.snake[i].setFrame(6);
+          }
+          //And above
+          else
+          {
+            this.snake[i].setFrame(7);
+          }
         }
       }
-      else if (this.bodyCoordinates[i][0] > this.bodyCoordinates[i - 1][0]) //goes left
+      else
       {
-        //TODO:allBodyParts[i].move(param);
-      }
-      else //goes right
-      {
-        //TODO:allBodyParts[i].move(param);
+        //If vertical
+        if (this.coordinates[i][0] === this.coordinates[i + 1][0])
+        {
+          this.snake[i].setFrame(5);
+        }
+        //Comming from below
+        else if (this.coordinates[i][1] > this.coordinates[i - 1][1])
+        {
+          //And right
+          if (this.coordinates[i][0] > this.coordinates[i + 1][0])
+          {
+            this.snake[i].setFrame(7);
+          }
+          //And above
+          else
+          {
+            this.snake[i].setFrame(9);
+          }
+        }
+        //Comming from above
+        else
+        {
+          //And right
+          if (this.coordinates[i][0] > this.coordinates[i + 1][0])
+          {
+            this.snake[i].setFrame(6);
+          }
+          //And left
+          else
+          {
+            this.snake[i].setFrame(8);
+          }
+        }
       }
     }
-    //tail
-    this.setTail(this.bodyCoordinates[this.size - 1][0], this.bodyCoordinates[this.size - 1][1], direction);
   }
-
+  moveTail()
+  {
+    this.snake[this.size - 1].setPosition(this.coordinates[this.size - 1][0], this.coordinates[this.size - 1][1]);
+    //Horizontal
+    if (this.coordinates[this.size - 1][1] === this.coordinates[this.size - 2][1])
+    {
+      //Going right
+      if (this.coordinates[this.size - 1][0] < this.coordinates[this.size - 2][0])
+      {
+        this.snake[this.size - 1].setFrame(10);
+      }
+      //Going left
+      else
+      {
+        this.snake[this.size - 1].setFrame(11);
+      }
+    }
+    //Vertical
+    else
+    {
+      //Going up
+      if (this.coordinates[this.size - 1][1] > this.coordinates[this.size - 2][1])
+      {
+        this.snake[this.size - 1].setFrame(12);
+      }
+      //Going down
+      else
+      {
+        this.snake[this.size - 1].setFrame(13);
+      }
+    }
+  }
 
   eatItself()
   {
