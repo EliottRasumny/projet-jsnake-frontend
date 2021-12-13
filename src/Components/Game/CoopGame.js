@@ -65,14 +65,11 @@ class CoopGame extends Phaser.Scene
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'left', SNAKE2_KEY);
-    //Creating colliders
-    //FIXME: see what to put in...
-    this.physics.add.collider(this.snake1._group, this.apple);
-    this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), true, true);
-    this.physics.add.collider(this.snake2, this.apple);
-    this.physics.add.collider(this.snake1, this.snake2);
     //Creating food
     this.apple = this.createFood();
+    //Creating colliders
+    //FIXME: see what to put in...
+    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), null, this);
     //TODO: Eating food
     //....
     //FIXME:UIScene for scores
@@ -168,32 +165,25 @@ class CoopGame extends Phaser.Scene
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     //Genereting apple
-    const apple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY).setScale(0.5);
-    apple.enableBody = true;
-    return apple;
+    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY).setScale(0.5);
+    newApple.enableBody = true;
+    return newApple;
   };
 
 
   //TODO:eating food
-  eatFood(player)
-  { return () => {
+  eatFood(player) {
      //Deleting old apple
      this.apple.disableBody(true, true);
      //Updating score
-     if (player === 1)
-     {
-       score1++;
-       eventsCenter.emit('update-score', score1, 1);
-     }
+     if (player == this.snake1)
+       this.score1++;
      else
-     {
-       score2++;
-       eventsCenter.emit('update-score', score2, 2);
-     }
+       this.score2++;
+     eventsCenter.emit('update-score', this.score1, this.score2);
      //Creating new apple
      this.apple = this.createFood();
-   };
-  }
+   }
    
 }
 export default CoopGame;

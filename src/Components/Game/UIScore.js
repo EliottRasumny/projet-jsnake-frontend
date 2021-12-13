@@ -17,7 +17,7 @@ export default class UIScore extends Phaser.Scene
 	create()
 	{
 		//Creating score's text to display
-		this.label = this.add.text(X, Y, `Player${this.player}: 0`, {
+		this.label = this.add.text(X, Y, `Player 1: 0 \nPlayer 2: 0`, {
 			fontSize: 16
 		});
 		//Listen to an event
@@ -29,8 +29,8 @@ export default class UIScore extends Phaser.Scene
 		});
 	}
 
-	updateScore(score, player)
+	updateScore(score1, score2)
 	{
-		this.label.text = `Player${player}: ${score}`;		
+		this.label.text = `Player 1: ${score1} \nPlayer 2: ${score2}`;		
 	}
 }
