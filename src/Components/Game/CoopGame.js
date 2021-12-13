@@ -68,7 +68,7 @@ class CoopGame extends Phaser.Scene
     //Creating colliders
     //FIXME: see what to put in...
     this.physics.add.collider(this.snake1._group, this.apple);
-    this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood, true, true);
+    this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), true, true);
     this.physics.add.collider(this.snake2, this.apple);
     this.physics.add.collider(this.snake1, this.snake2);
     //Creating food
@@ -108,7 +108,7 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % SQUARE_SIZE === 0) {
+    if (this.keyFrameValue % (SQUARE_SIZE / 4) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
@@ -176,22 +176,24 @@ class CoopGame extends Phaser.Scene
 
   //TODO:eating food
   eatFood(player)
-  {
-    //Deleting old apple
-    this.apple.disableBody(true, true);
-    //Updating score
-    if (player === 1)
-    {
-      score1++;
-      eventsCenter.emit('update-score', score1, 1);
-    }
-    else
-    {
-      score2++;
-      eventsCenter.emit('update-score', score2, 2);
-    }
-    //Creating new apple
-    this.apple = this.createFood();
-  };
+  { return () => {
+     //Deleting old apple
+     this.apple.disableBody(true, true);
+     //Updating score
+     if (player === 1)
+     {
+       score1++;
+       eventsCenter.emit('update-score', score1, 1);
+     }
+     else
+     {
+       score2++;
+       eventsCenter.emit('update-score', score2, 2);
+     }
+     //Creating new apple
+     this.apple = this.createFood();
+   };
+  }
+   
 }
 export default CoopGame;

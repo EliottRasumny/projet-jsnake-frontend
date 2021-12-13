@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, { GameObjects } from 'phaser';
 //import scenes & events
 import eventsCenter from './EventCenter';
 
@@ -20,7 +20,7 @@ export default class Snake
     this.snake = [];
     //Create collider between head and body parts
     this._group = this.scene.physics.add.group();
-    this._group.addMultiple(this.snake);
+    
 	}
 
 	get group()
@@ -48,6 +48,9 @@ export default class Snake
     //Create tail
     this.coordinates[2] = [X + (orientation * 2), Y];
     this.snake[2] = this.scene.physics.add.sprite(this.coordinates[2][0], this.coordinates[2][1], this.asset);
+
+    this._group.addMultiple(this.snake);
+
     //Set the correct Frame
     if (direction === 'right')
     {
