@@ -9,7 +9,7 @@ function ScoreboardSinglePage() {
   // Deal with your NewPage content here
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = "";
-  fetch("http://localhost:3000/bestscoressingle") // fetch return a promise => we wait for the response
+  fetch("api/single/bestscoressingle") // fetch return a promise => we wait for the response
   .then((response) => {
     if (!response.ok)
       throw new Error(
@@ -23,7 +23,7 @@ function ScoreboardSinglePage() {
     tableWrapper.className = "table-responsive pt-5";
     // create an HTMLTableElement dynamically, based on the scores data (Array of Objects)
     const table = document.createElement("table");
-    table.className = "table table-danger";
+    table.className = "table";
     tableWrapper.appendChild(table);
     // deal with header
     const thead = document.createElement("thead");
@@ -31,8 +31,10 @@ function ScoreboardSinglePage() {
     thead.appendChild(header);
     const header1 = document.createElement("th");
     header1.innerText = "Score";
+    header1.scope="col";
     const header2 = document.createElement("th");
     header2.innerText = "Player";
+    header1.scope="col";
     header.appendChild(header1);
     header.appendChild(header2);
     table.appendChild(thead);
@@ -40,12 +42,13 @@ function ScoreboardSinglePage() {
     const tbody = document.createElement("tbody");
     scores.forEach((score) => {
       const line = document.createElement("tr");
+      line.scope="row";
       const scoreCell = document.createElement("td");
       scoreCell.innerText = score.score;
       line.appendChild(scoreCell);
       const playerCell = document.createElement("td");
-      scoreCell.innerText = score.id;
-      line.appendChild(scoreCell);
+      playerCell.innerText = score.idPlayer;
+      line.appendChild(playerCell);
       tbody.appendChild(line);
     });
     table.appendChild(tbody);
