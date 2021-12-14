@@ -148,6 +148,7 @@ class CoopGame extends Phaser.Scene
     //TODO:
   };
 
+
   /**
    * Create and return a snake
    * @param {number} X coordinate of the position on the grid
@@ -158,8 +159,7 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    let newSnake = new Snake(this, asset, SQUARE_SIZE);
-    newSnake.createSnake(X, Y, direction);
+    let newSnake = new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
     return newSnake;
   };
 
