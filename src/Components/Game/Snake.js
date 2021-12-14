@@ -23,7 +23,11 @@ export default class Snake
     this.coordinates = [];
     //Create container and sprites of the snake
     this.snake = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    this.snake.addToDisplayList();
     this.createSnake(X, Y, direction);
+
+    //FIXME: debug
+    console.log(this.snake);
 	}
 
 	get group()
