@@ -10,7 +10,7 @@ import { setSessionObject } from "../../utils/session";
 function LoginPage() {
   // reset #page div
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<h3 class="mt-3"> Welcome back, please log you in !</h3>`;
+  pageDiv.innerHTML = `<h3 class="mt-3"> Please log the second player in !</h3>`;
   // create a login form
   const form = document.createElement("form");
   form.className = "p-5";
@@ -65,10 +65,10 @@ function LoginPage() {
       const user = await response.json(); // json() returns a promise => we wait for the data
       console.log("user authenticated", user);
       // save the user into the localStorage
-      setSessionObject("user1", user);
+      setSessionObject("user2", user);
 
       // Rerender the navbar for an authenticated user : temporary step prior to deal with token
-      Navbar({ isAuthenticated1: true });
+      Navbar({ isAuthenticated2: true });
 
       // call the HomePage via the Router
       Redirect("/");

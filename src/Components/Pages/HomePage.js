@@ -1,6 +1,4 @@
-import blue_snake from "../../img/blue_snake.png";
-import blue_snake_inverse from "../../img/blue_snake_inverse.png";
-import red_snake from "../../img/red_snake.png";
+
 import oneSnake from "../../img/oneSnake.png";
 import twoSnakes from "../../img/twoSnakes.png";
 import { Redirect } from "../Router/Router";
@@ -16,7 +14,7 @@ const HomePage = () => {
   <div class="wrapper">
     <div class="row">
       <div class="col-md-6 "> 
-        <img src="${oneSnake}" class="rounded" alt="Blue Snake" style="width:100% ;heigth:auto" >  <br>
+        <img src="${oneSnake}" class="rounded" alt="Blue Snake" style="width:100% ;heigth:auto" >
         <a id="btnToSingle" class="btn p-3 m-5 text-center" href="/single">Single Player</a>
       </div>
 
