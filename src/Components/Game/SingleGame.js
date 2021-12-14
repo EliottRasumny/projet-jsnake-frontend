@@ -144,8 +144,7 @@ class SingleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    let newSnake = new Snake(this, asset, SQUARE_SIZE);
-    newSnake.createSnake(X, Y, direction);
+    let newSnake = new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
     return newSnake;
   };
 
