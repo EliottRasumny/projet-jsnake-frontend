@@ -47,7 +47,7 @@ function ScoreboardSinglePage() {
       scoreCell.innerText = score.score;
       line.appendChild(scoreCell);
       const playerCell = document.createElement("td");
-      playerCell.innerText = score.idPlayer;
+      playerCell.innerText = score.username;
       line.appendChild(playerCell);
       tbody.appendChild(line);
     });

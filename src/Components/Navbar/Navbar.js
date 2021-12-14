@@ -14,7 +14,7 @@ import { Navbar as BootstrapNavbar} from "bootstrap";
 const Navbar = () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
   let navbar = `
-  <nav class="navbar navbar-expand-lg navbar-ligh">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container ">
         <a class="navbar-brand text-white" href="/">JSnake</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,15 +28,10 @@ const Navbar = () => {
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/single">Single Player</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle  text-white" href="/" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Two Players
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" id="text-green" href="/coop">Coop</a></li>
-                        <li><a class="dropdown-item" id="text-green" href="/battle">Battle</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
                 </li>
