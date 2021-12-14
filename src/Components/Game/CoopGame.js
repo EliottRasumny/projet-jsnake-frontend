@@ -63,14 +63,14 @@ class CoopGame extends Phaser.Scene
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating the snakes
-    this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
-    this.snake2 = this.createSnake((25 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'left', SNAKE2_KEY);
+    this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
+    this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //Creating colliders
     //FIXME: see what to put in...
-    this.physics.add.collider(this.snake1._group, this.apple);
-    this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), true, true);
-    this.physics.add.collider(this.snake2, this.apple);
-    this.physics.add.collider(this.snake1, this.snake2);
+    //this.physics.add.collider(this.snake1._group, this.apple);
+    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
+    //this.physics.add.collider(this.snake2, this.apple);
+    //this.physics.add.collider(this.snake1, this.snake2);
     //Creating food
     this.apple = this.createFood();
     //TODO: Eating food
@@ -118,9 +118,9 @@ class CoopGame extends Phaser.Scene
         this.nextDirection1 = null;
       }
       //update the snake's body parts coordinates
-      this.snake1.updateCoordinates(this.direction1);
+      //this.snake1.updateCoordinates(this.direction1);
       //Moving the snake
-      this.snake1.move(this.direction1);
+      //this.snake1.move(this.direction1);
     }
 
     //Collision with itself -> end game

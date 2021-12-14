@@ -4,11 +4,16 @@ import eventsCenter from './EventCenter';
 
 export default class Snake
 {
-	/**
-	 * @param {Phaser.Scene} scene: where it needs to be displayed
-	 * @param {Phaser.asset} asset: it's sprites
+  /**
+   * Create a snake
+   * @param {Phaser.Scene} scene 
+   * @param {Phaser.asset} asset 
+   * @param {number} squareSize 
+   * @param {number} X 
+   * @param {number} Y 
+   * @param {string} direction 
    */
-	constructor(scene, asset, squareSize)
+	constructor(scene, asset, squareSize, X, Y, direction)
 	{
 		this.scene = scene;
     this.asset = asset;
@@ -16,11 +21,9 @@ export default class Snake
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
     this.size = null;
     this.coordinates = [];
-    //Contains all the sprites of the snake
-    this.snake = [];
-    //Create collider between head and body parts
-    this._group = this.scene.physics.add.group();
-    
+    //Create container and sprites of the snake
+    this.snake = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    this.createSnake(X, Y, direction);
 	}
 
 	get group()
@@ -29,6 +32,12 @@ export default class Snake
 	}
 
 
+  /**
+   * Create coordinates and sprites of the snake
+   * @param {number} X 
+   * @param {number} Y 
+   * @param {number} direction 
+   */
   createSnake(X, Y, direction)
   {
     //Defining the starting orientation
@@ -40,24 +49,22 @@ export default class Snake
       orientation = this.SQUARE_SIZE;
     }
     //Create head
-    this.coordinates[0] = [X, Y];
-    this.snake[0] = this.scene.physics.add.sprite(this.coordinates[0][0], this.coordinates[0][1], this.asset);
+    this.coordinates.push([X, Y]);
+    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
     //Create body
-    this.coordinates[1] = [X + orientation, Y];
-    this.snake[1] = this.scene.physics.add.sprite(this.coordinates[1][0], this.coordinates[1][1], this.asset).setFrame(4);
+    this.coordinates.push([X + orientation, Y]);
+    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
     //Create tail
-    this.coordinates[2] = [X + (orientation * 2), Y];
-    this.snake[2] = this.scene.physics.add.sprite(this.coordinates[2][0], this.coordinates[2][1], this.asset);
-
-    this._group.addMultiple(this.snake);
+    this.coordinates.push([X + (orientation * 2), Y]);
+    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
 
     //Set the correct Frame
     if (direction === 'right')
     {
-      this.snake[2].setFrame(10);
+      this.snake.getAt(2).setFrame(10);
     } else {
-      this.snake[0].setFrame(2);
-      this.snake[2].setFrame(11);
+      this.snake.getAt(0).setFrame(2);
+      this.snake.getAt(2).setFrame(11);
     }
     this.size = 3;
   }
