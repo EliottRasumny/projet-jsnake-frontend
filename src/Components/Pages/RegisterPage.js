@@ -1,4 +1,9 @@
 import HomePage from "./HomePage";
+import { Redirect } from "../Router/Router";
+import Navbar from "../Navbar/Navbar";
+import { setSessionObject } from "../../utils/session";
+import { getSessionObject } from "../../utils/session"; // destructuring assignment ("{}": see MDN for more info ; )
+
 /**
  * View the Register form :
  * render a register page into the #page div
@@ -7,7 +12,7 @@ import HomePage from "./HomePage";
 function RegisterPage() {
   // reset #page div
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = "";
+  pageDiv.innerHTML = `<h3 class="mt-3"> Nice to meet you !</h3>`;
   // create a login form
   const form = document.createElement("form");
   form.className = "p-5";
@@ -32,6 +37,53 @@ function RegisterPage() {
   form.appendChild(password);
   form.appendChild(submit);
   pageDiv.appendChild(form);
+  form.addEventListener("submit", onSubmit);
+  pageDiv.appendChild(form);
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    console.log("credentials", username.value, password.value);
+    try {
+      const options = {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        body: JSON.stringify({
+          username: username.value,
+          password: password.value,
+        }), // body data type must match "Content-Type" header
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await fetch("/api/auths/register", options); // fetch return a promise => we wait for the response
+
+      if (!response.ok) {
+        throw new Error(
+          "fetch error : " + response.status + " : " + response.statusText
+        );
+      }
+      const user = await response.json(); // json() returns a promise => we wait for the data
+      console.log("user authenticated", user);
+      
+      // save the user into the localStorage
+      // AND rerender the navbar for an authenticated user : temporary step prior to deal with token
+      let user1 = getSessionObject("user1");
+      if(!user1){
+        setSessionObject("user1", user);
+        Navbar({ isAuthenticated1: true });
+      } else {
+        setSessionObject("user2", user);
+        Navbar({ isAuthenticated2: true });
+      }
+
+      // call the HomePage via the Router
+      Redirect("/");
+    } catch (error) {
+      console.error("RegisterPage::error: ", error);
+    }
+  }
 }
 
 export default RegisterPage;
