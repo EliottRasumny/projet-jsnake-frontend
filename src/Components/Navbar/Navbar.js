@@ -3,6 +3,8 @@
 // Here, because our JS component 'Navbar' has the same name as Navbar Bootstrap's component
 // we change the name of the imported Bootstrap's 'Navbar' component
 import { Navbar as BootstrapNavbar} from "bootstrap";
+import { getSessionObject } from "../../utils/session"; // destructuring assignment ("{}": see MDN for more info ; )
+
 
 /**
  * Render the Navbar which is styled by using Bootstrap
@@ -13,14 +15,19 @@ import { Navbar as BootstrapNavbar} from "bootstrap";
 
 const Navbar = () => {
   const navbarWrapper = document.querySelector("#navbarWrapper");
-  let navbar = `
-  <nav class="navbar navbar-expand-lg navbar-ligh">
+  let user1 = getSessionObject("user1");
+  let user2 = getSessionObject("user2");
+  let navbar;
+
+  if (!user1) {
+    navbar = `
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container ">
         <a class="navbar-brand text-white" href="/">JSnake</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse  text-white" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
                     <a class="nav-link active  text-white" href="/">Home</a>
@@ -28,15 +35,10 @@ const Navbar = () => {
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/single">Single Player</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle  text-white" href="/" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Two Players
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" id="text-green" href="/coop">Coop</a></li>
-                        <li><a class="dropdown-item" id="text-green" href="/battle">Battle</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
                 </li>
+                
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
                 </li>
@@ -49,6 +51,73 @@ const Navbar = () => {
     </div>
 </nav>
   `;  
+  } else if (!user2) {
+    navbar = `
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container ">
+          <a class="navbar-brand text-white" href="/">JSnake</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
+              <ul class="navbar-nav mx-auto">
+                  <li class="nav-item">
+                      <a class="nav-link active  text-white" href="/">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/single">Single Player</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
+                  </li>
+              </ul>
+              <div class="d-flex">
+                  <a class="nav-link" href="/login2"><button class="btn btn-light ms-3">Login The Second Player</button></a>
+                  <a class="nav-link" href="/register"><button class="btn btn-light ms-3">Register</button></a>
+              </div>
+          </div>
+      </div>
+  </nav>
+    `;  
+  } else {
+    navbar = `
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container ">
+          <a class="navbar-brand text-white" href="/">JSnake</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
+              <ul class="navbar-nav mx-auto">
+                  <li class="nav-item">
+                      <a class="nav-link active  text-white" href="/">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/single">Single Player</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
+                  </li>
+              </ul>
+              <div class="d-flex">
+                  <a class="nav-link" href="/logout"><button class="btn btn-light ms-3">Logout</button></a>
+              </div>
+          </div>
+      </div>
+  </nav>
+    `;  
+  }
+
+
+  
   navbarWrapper.innerHTML = navbar;
 };
 

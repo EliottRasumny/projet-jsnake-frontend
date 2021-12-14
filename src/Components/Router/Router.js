@@ -11,7 +11,8 @@ import ScoreboardCoopPage from "../Pages/ScoreboardCoopPage";
 import LoginPage from "../Pages/LoginPage";
 import RegisterPage from "../Pages/RegisterPage";
 import ScoreboardPage from "../Pages/ScoreboardPage";
-
+import LoginPage2 from "../Pages/LoginPage2";
+import Lougout from "../Logout/Logout";
 
 
 // Configure your routes here
@@ -28,7 +29,9 @@ const routes = {
   "/scoreboardCoop": ScoreboardCoopPage,
   "/scoreboard": ScoreboardPage,
   "/login": LoginPage,
+  "/login2": LoginPage2,
   "/register": RegisterPage,
+  "/logout": Lougout,
 };
 
 /**

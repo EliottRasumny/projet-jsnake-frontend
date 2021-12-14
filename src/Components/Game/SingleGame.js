@@ -7,33 +7,29 @@ import Snake from './Snake';
 import gridAsset from '../../assets/Grid32_1024x768.png'
 import appleAsset from '../../assets/RedApple.png';
 import magentaSnakeAsset from '../../assets/MagentaSnake32.png';
-import orangeSnakeAsset from '../../assets/OrangeSnake32.png'
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
 
-class CoopGame extends Phaser.Scene
+
+class SingleGame extends Phaser.Scene
 {
   constructor()
   {
     super('game-scene');
     //Players
-    this.snake1 = undefined;
-    this.snake2 = undefined;
+    this.snake = undefined;
     //directions
-    this.direction1 = 'right';
-    this.nextDirection1 = null;
-    //TODO: direction2 & newDirection2
+    this.direction = 'right';
+    this.nextDirection = null;
     //Food
     this.apple = undefined;
     //Enable to render the snake properly
     this.keyFrameValue = 0;
     //Score of players
-    this.score1 = 0;
-    this.score2 = 0;
+    this.score = 0;
     //Players controls
-    this.controls1 = undefined;
-    //TODO: controls2
+    this.controls = undefined;
     //State of the game
     this.gameOver = false;
   };
@@ -46,11 +42,8 @@ class CoopGame extends Phaser.Scene
   {
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
-    this.load.spritesheet(SNAKE1_KEY,
+    this.load.spritesheet(SNAKE_KEY,
       magentaSnakeAsset,
-      {frameWidth: SQUARE_SIZE, frameHeight: SQUARE_SIZE});
-    this.load.spritesheet(SNAKE2_KEY,
-      orangeSnakeAsset,
       {frameWidth: SQUARE_SIZE, frameHeight: SQUARE_SIZE});
   };
 
@@ -63,14 +56,7 @@ class CoopGame extends Phaser.Scene
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating the snakes
-    this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
-    this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
-    //Creating colliders
-    //FIXME: see what to put in...
-    //this.physics.add.collider(this.snake1._group, this.apple);
-    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
-    //this.physics.add.collider(this.snake2, this.apple);
-    //this.physics.add.collider(this.snake1, this.snake2);
+    this.snake = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE_KEY);
     //Creating food
     this.apple = this.createFood();
     //Creating colliders
@@ -79,9 +65,9 @@ class CoopGame extends Phaser.Scene
     //TODO: Eating food
     //....
     //FIXME:UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player1');
+    this.scene.run('ui-score', 10, 10, 'Player');
     //Enabling keyboard inputs
-    this.controls1 = this.input.keyboard.createCursorKeys();
+    this.controls = this.input.keyboard.createCursorKeys();
   };
 
 
@@ -93,37 +79,37 @@ class CoopGame extends Phaser.Scene
     //Update the key frame value
     this.keyFrameValue++;
     //Registering new movement
-    if (this.direction1 != 'down' && this.controls1.up.isDown)
+    if (this.direction != 'down' && this.controls.up.isDown)
     {
-      this.nextDirection1 = 'up';
+      this.nextDirection = 'up';
     }
-    else if (this.direction1 != 'up' && this.controls1.down.isDown)
+    else if (this.direction != 'up' && this.controls.down.isDown)
     {
-      this.nextDirection1 = 'down';
+      this.nextDirection = 'down';
     }
-    else if (this.direction1 != 'left' && this.controls1.right.isDown)
+    else if (this.direction != 'left' && this.controls.right.isDown)
     {
-      this.nextDirection1 = 'right';
+      this.nextDirection = 'right';
     }
-    else if (this.direction1 != 'right' && this.controls1.left.isDown)
+    else if (this.direction != 'right' && this.controls.left.isDown)
     {
-      this.nextDirection1 = 'left';
+      this.nextDirection = 'left';
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
     if (this.keyFrameValue % (SQUARE_SIZE / 4) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
-      if (this.nextDirection1 != null)
+      if (this.nextDirection != null)
       {
         //Update the direction of the snake
-        this.direction1 = this.nextDirection1;
-        this.nextDirection1 = null;
+        this.direction = this.nextDirection;
+        this.nextDirection = null;
       }
       //update the snake's body parts coordinates
-      //this.snake1.updateCoordinates(this.direction1);
+      this.snake.updateCoordinates(this.direction);
       //Moving the snake
-      //this.snake1.move(this.direction1);
+      this.snake.move(this.direction);
     }
 
     //Collision with itself -> end game
@@ -181,15 +167,11 @@ class CoopGame extends Phaser.Scene
   eatFood(player) {
      //Deleting old apple
      this.apple.disableBody(true, true);
-     //Updating score
-     if (player == this.snake1)
-       this.score1++;
-     else
-       this.score2++;
-     eventsCenter.emit('update-score', this.score1, this.score2);
+     this.score++;
+     eventsCenter.emit('update-score', this.score, 0);
      //Creating new apple
      this.apple = this.createFood();
    }
    
 }
-export default CoopGame;
+export default SingleGame;
