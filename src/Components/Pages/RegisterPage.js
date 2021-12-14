@@ -33,13 +33,17 @@ function RegisterPage() {
   submit.type = "submit";
   submit.className = "btn";
   submit.id = "btn";
+
+  // create the notification
+  var notification = document.createElement("p");
+  pageDiv.appendChild(notification);
+
   form.appendChild(username);
   form.appendChild(password);
   form.appendChild(submit);
   pageDiv.appendChild(form);
   form.addEventListener("submit", onSubmit);
   pageDiv.appendChild(form);
-
   async function onSubmit(e) {
     e.preventDefault();
     const username = document.getElementById("username");
@@ -60,9 +64,8 @@ function RegisterPage() {
       const response = await fetch("/api/auths/register", options); // fetch return a promise => we wait for the response
 
       if (!response.ok) {
-        throw new Error(
-          "fetch error : " + response.status + " : " + response.statusText
-        );
+        notification.className = "alert alert-danger";
+        notification.innerText = "This pseudo already exist, please choose another one."
       }
       const user = await response.json(); // json() returns a promise => we wait for the data
       console.log("user authenticated", user);
