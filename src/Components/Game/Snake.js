@@ -23,9 +23,9 @@ export default class Snake
     this.coordinates = [];
     //Create container and sprites of the snake
     this.snake = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    //ajoute a la DisplayList de la scene
     this.snake.addToDisplayList();
-    this.createSnake(X, Y, direction);
-
+    this.create(X, Y, direction);
     //FIXME: debug
     console.log(this.snake);
 	}
@@ -42,7 +42,7 @@ export default class Snake
    * @param {number} Y 
    * @param {number} direction 
    */
-  createSnake(X, Y, direction)
+  create(X, Y, direction)
   {
     //Defining the starting orientation
     let orientation;
@@ -54,13 +54,13 @@ export default class Snake
     }
     //Create head
     this.coordinates.push([X, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
+    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset).setName('head'));
     //Create body
     this.coordinates.push([X + orientation, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
+    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4).setName('body'));
     //Create tail
     this.coordinates.push([X + (orientation * 2), Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
+    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset).setName('tail'));
 
     //Set the correct Frame
     if (direction === 'right')
