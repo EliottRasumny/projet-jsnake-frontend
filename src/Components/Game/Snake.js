@@ -70,8 +70,8 @@ export default class Snake
   updateCoordinates(direction)
   {
     //Verify with the world border
-    if (this.coordinates[0][0] >= 1024 - (this.SQUARE_SIZE/2) || this.coordinates[0][1] >= 1024 - (this.SQUARE_SIZE/2) ||
-      this.coordinates[0][0] <= 0 + (this.SQUARE_SIZE/2) || this.coordinates[0][1] <= 0 + (this.SQUARE_SIZE/2)) return;
+    if (this.coordinates[0][0] >= 1024 + (this.SQUARE_SIZE/2) || this.coordinates[0][1] >= 768 + (this.SQUARE_SIZE/2) ||
+      this.coordinates[0][0] <= 0 - (this.SQUARE_SIZE/2) || this.coordinates[0][1] <= 0 - (this.SQUARE_SIZE/2)) return;
     //Put the old tail as the new head
     //The old head becomes the first body part
     //The last body part becomes the new tail
