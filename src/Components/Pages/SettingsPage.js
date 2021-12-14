@@ -1,14 +1,24 @@
 import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 
-import arrowRight from "../../img/arrowRight.png";
+import arrowUp from "../../img/upArrowKey.png";
+import arrowRight from "../../img/rightArrowKey.png";
+import arrowDown from "../../img/downArrowKey.png";
+import arrowLeft from "../../img/leftArrowKey.png";
 
 /**
  * Render the NewPage :
  * Just an example to demonstrate how to use the router to "redirect" to a new page
  */
 function SettingsPage() {
-  // Deal with your NewPage content here
+  //find keys already saved
+  let upKey1 = "Z";
+  let rightKey1 = "D";
+  let downKey1 = "S";
+  let leftKey1 = "Q";
+
+  //TODO : delete arrowRight.png
+
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML =  `
   <h1 class="m-5">Settings</h1>
@@ -17,7 +27,10 @@ function SettingsPage() {
       <div class="row">
         <div class="col-md-6 "> 
           <p>Player 1</p>
-          <span><img src="${arrowRight}" class="rounded inline" alt="Blue Snake" style="width:20% ;heigth:auto" >  : <input type="text" id="fname" name="fname"> </span>
+          <span><img src="${arrowUp}" class="rounded inline" alt="up key" style="width:10% ;heigth:auto" > : ${upKey1}</span>
+          <span><img src="${arrowRight}" class="rounded inline" alt="right key" style="width:10% ;heigth:auto" >  : ${rightKey1}</span>
+          <span><img src="${arrowDown}" class="rounded inline" alt="down key" style="width:10% ;heigth:auto" >  : ${downKey1}</span>
+          <span><img src="${arrowLeft}" class="rounded inline" alt="left key" style="width:10% ;heigth:auto" >  : ${leftKey1}</span>
           
         </div>
 
@@ -28,6 +41,8 @@ function SettingsPage() {
     </form>
   </div>
  `;
+
+ // TODO : Add an event listenner when we clic on an arrow
 
 
 
