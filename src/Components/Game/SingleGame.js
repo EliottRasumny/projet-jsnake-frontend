@@ -56,7 +56,7 @@ class SingleGame extends Phaser.Scene
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating the snakes
-    this.snake = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE_KEY);
+    this.snake = this.createSnake((6 * SQUARE_SIZE) , (11 * SQUARE_SIZE) , 'right', SNAKE_KEY);
     //Creating food
     this.apple = this.createFood();
     //Creating colliders
