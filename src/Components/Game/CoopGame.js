@@ -70,9 +70,9 @@ class CoopGame extends Phaser.Scene
     //Creating colliders
     //TODO: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
-    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
+    //this.physics.add.overlap(this.snake1, this.apple, this.eatFood(this.snake1), true, true);
     //this.physics.add.collider(this.snake2, this.apple);
-    //this.physics.add.collider(this.snake1, this.snake2);
+    this.physics.add.collider(this.snake1, this.snake2);
     //Creating colliders
     //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
@@ -108,6 +108,11 @@ class CoopGame extends Phaser.Scene
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
     if (this.keyFrameValue % (SQUARE_SIZE / 2) === 0) {
+      console.log(this.snake2.snake.x);
+      console.log(this.snake2.snake.y);
+      console.log(this.snake1.snake.x);
+      console.log(this.snake1.snake.y);
+      console.log("here");
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
