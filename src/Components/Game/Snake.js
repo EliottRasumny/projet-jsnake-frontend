@@ -51,13 +51,13 @@ export default class Snake
     }
     //Create head
     this.coordinates.push([X, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset).setName('head'));
+    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
     //Create body
     this.coordinates.push([X + orientation, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4).setName('body'));
+    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
     //Create tail
     this.coordinates.push([X + (orientation * 2), Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset).setName('tail'));
+    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
 
     //Set the correct Frame
     if (direction === 'right')
@@ -68,7 +68,6 @@ export default class Snake
       this.snake.getAt(2).setFrame(11);
     }
   }
-
 
   move(direction)
   {
