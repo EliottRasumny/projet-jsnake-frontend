@@ -70,7 +70,7 @@ class CoopGame extends Phaser.Scene
     //Creating colliders
     //TODO: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
-    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
+    this.physics.add.overlap(this.snake1, this.apple, this.eatFood(this.snake), true, true);
     //this.physics.add.collider(this.snake2, this.apple);
     //this.physics.add.collider(this.snake1, this.snake2);
     //Creating colliders

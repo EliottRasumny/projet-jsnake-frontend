@@ -148,22 +148,22 @@ export default class Snake
         {
           if (body.y > next.y)        //...from up
           {
-            body.setFrame(7);
+            body.setFrame(9);
           }
           else                        //...from down
           {
-            body.setFrame(6);
+            body.setFrame(8);
           }
         }
         else                          //going left
         {
           if (body.y > next.y)        //...from up
           {
-            body.setFrame(8);
+            body.setFrame(7);
           }
           else                        //...from down
           {
-            body.setFrame(9);
+            body.setFrame(6);
           }
         }
       }
