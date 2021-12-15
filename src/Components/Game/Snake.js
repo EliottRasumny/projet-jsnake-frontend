@@ -1,4 +1,4 @@
-import Phaser, { GameObjects } from 'phaser';
+import Phaser, { GameObjects, Geom } from 'phaser';
 //import scenes & events
 import eventsCenter from './EventCenter';
 
@@ -21,15 +21,15 @@ export default class Snake
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
     this.coordinates = [];
     //Create container and sprites of the snake
-    this.snake = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    this.body = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
     //ajoute a la DisplayList de la scene
-    this.snake.addToDisplayList();
+    this.body.addToDisplayList();
     this.create(X, Y, direction);
 	}
 
-  getSnake()
+  getBody()
   {
-    return this.snake;
+    return this.body;
   }
 
 
@@ -51,21 +51,21 @@ export default class Snake
     }
     //Create head
     this.coordinates.push([X, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
+    this.body.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
     //Create body
     this.coordinates.push([X + orientation, Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
+    this.body.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
     //Create tail
     this.coordinates.push([X + (orientation * 2), Y]);
-    this.snake.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
+    this.body.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
 
     //Set the correct Frame
     if (direction === 'right')
     {
-      this.snake.getAt(2).setFrame(10);
+      this.body.getAt(2).setFrame(10);
     } else {
-      this.snake.getAt(0).setFrame(2);
-      this.snake.getAt(2).setFrame(11);
+      this.body.getAt(0).setFrame(2);
+      this.body.getAt(2).setFrame(11);
     }
   }
 
@@ -77,9 +77,9 @@ export default class Snake
   }
   moveHead(direction)
   {
-    this.snake.moveTo(this.snake.getAt(this.snake.length - 1), 0);
-    let newhead = this.snake.getAt(0);
-    let oldHead = this.snake.getAt(1);
+    this.body.moveTo(this.body.getAt(this.body.length - 1), 0);
+    let newhead = this.body.getAt(0);
+    let oldHead = this.body.getAt(1);
     switch(direction)
     {
       case 'down':
@@ -106,64 +106,64 @@ export default class Snake
   }
   changeBody()
   {
-    for (let i = 1; i < this.snake.length - 1; i++)
+    for (let i = 1; i < this.body.length - 1; i++)
     {
-      let previous = this.snake.getAt(i - 1);
-      let body = this.snake.getAt(i);
-      let next = this.snake.getAt(i + 1);
-      //================================ IN LINE
-      if (next.y === previous.y)         //horizontal
+      let onwardBodyPart = this.body.getAt(i - 1);
+      let bodyPart = this.body.getAt(i);
+      let backwardBodyPart = this.body.getAt(i + 1);
+      //================================================== IN LINE
+      if (backwardBodyPart.y === onwardBodyPart.y)         //horizontal
       {
-        body.setFrame(4);
+        bodyPart.setFrame(4);
       }
-      else if (next.x === previous.x)    //vertical
+      else if (backwardBodyPart.x === onwardBodyPart.x)    //vertical
       {
-        body.setFrame(5);
+        bodyPart.setFrame(5);
       }
-      else//============================ ANGLE
+      else//============================================== ANGLE
       {
-        if (body.y > previous.y)//====== going up
+        if (bodyPart.y > onwardBodyPart.y)//============== going up
         {
-          if (body.x > next.x)           //...from right
+          if (bodyPart.x > backwardBodyPart.x)             //...from right
           {
-            body.setFrame(7);
+            bodyPart.setFrame(7);
           }
-          else                           //...from left
+          else                                             //...from left
           {
-            body.setFrame(9);
+            bodyPart.setFrame(9);
           }
         }
-        else if (body.y < previous.y)//= going down
+        else if (bodyPart.y < onwardBodyPart.y)//========= going down
         {
-          if (body.x > next.x)           //...from right
+          if (bodyPart.x > backwardBodyPart.x)             //...from right
           {
-            body.setFrame(6);
+            bodyPart.setFrame(6);
           }
-          else                           //...from left
+          else                                             //...from left
           {
-            body.setFrame(8);
+            bodyPart.setFrame(8);
           }
         }
-        else if (body.x < previous.x)//= going right
+        else if (bodyPart.x < onwardBodyPart.x)//========= going right
         {
-          if (body.y > next.y)           //...from up
+          if (bodyPart.y > backwardBodyPart.y)             //...from up
           {
-            body.setFrame(9);
+            bodyPart.setFrame(9);
           }
-          else                           //...from down
+          else                                             //...from down
           {
-            body.setFrame(8);
+            bodyPart.setFrame(8);
           }
         }
-        else//========================== going left
+        else//============================================ going left
         {
-          if (body.y > next.y)           //...from up
+          if (bodyPart.y > backwardBodyPart.y)             //...from up
           {
-            body.setFrame(7);
+            bodyPart.setFrame(7);
           }
-          else                           //...from down
+          else                                             //...from down
           {
-            body.setFrame(6);
+            bodyPart.setFrame(6);
           }
         }
       }
@@ -171,13 +171,13 @@ export default class Snake
   }
   changeTail()
   {
-    let lastBody = this.snake.getAt(this.snake.length - 2);
-    let tail = this.snake.getAt(this.snake.length - 1);
+    let lastBodyPart = this.body.getAt(this.body.length - 2);
+    let tail = this.body.getAt(this.body.length - 1);
     //Horizontal
-    if (tail.y === lastBody.y)
+    if (tail.y === lastBodyPart.y)
     {
       //Going right
-      if (tail.x < lastBody.x)
+      if (tail.x < lastBodyPart.x)
       {
         tail.setFrame(10);
       }
@@ -191,7 +191,7 @@ export default class Snake
     else
     {
       //Going up
-      if (tail.y > lastBody.y)
+      if (tail.y > lastBodyPart.y)
       {
         tail.setFrame(12);
       }
@@ -206,5 +206,11 @@ export default class Snake
   eatItself()
   {
      // TODO: launch event
+  }
+
+  growUp()
+  {
+    let previousTail = this.body.getAt(this.body.length);
+    this.body.add(new GameObjects.Sprite(this.scene, previousTail.x, previousTail.y, this.asset));
   }
 }
