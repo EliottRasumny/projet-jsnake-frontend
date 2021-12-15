@@ -17,13 +17,13 @@ class SingleGame extends Phaser.Scene
   constructor()
   {
     super('game-scene');
-    //Players
+    //Food
+    this.apple = undefined;
+    //Player
     this.snake = undefined;
     //directions
     this.direction = 'right';
     this.nextDirection = null;
-    //Food
-    this.apple = undefined;
     //Enable to render the snake properly
     this.keyFrameValue = 0;
     //Score of players
@@ -55,15 +55,13 @@ class SingleGame extends Phaser.Scene
   {
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
-    //Creating the snakes
-    this.snake = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE_KEY);
     //Creating food
     this.apple = this.createFood();
+    //Creating the snakes
+    this.snake = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE_KEY);
     //Creating colliders
-    //FIXME: see what to put in...
+    //TODO: see what to put in...
     //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), null, this);
-    //TODO: Eating food
-    //....
     //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player');
     //Enabling keyboard inputs
@@ -106,8 +104,6 @@ class SingleGame extends Phaser.Scene
         this.direction = this.nextDirection;
         this.nextDirection = null;
       }
-      //update the snake's body parts coordinates
-      this.snake.updateCoordinates(this.direction);
       //Moving the snake
       this.snake.move(this.direction);
     }
@@ -144,9 +140,7 @@ class SingleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    let newSnake = new Snake(this, asset, SQUARE_SIZE);
-    newSnake.createSnake(X, Y, direction);
-    return newSnake;
+    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
   };
 
 
@@ -164,7 +158,7 @@ class SingleGame extends Phaser.Scene
 
 
   //TODO:eating food
-  eatFood(player) {
+  eatFood() {
      //Deleting old apple
      this.apple.disableBody(true, true);
      this.score++;

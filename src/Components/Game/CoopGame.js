@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+import Phaser, {Geom} from 'phaser';
 //import scenes & events
 import eventsCenter from './EventCenter';
 //import classes
@@ -34,6 +34,8 @@ class CoopGame extends Phaser.Scene
     //Players controls
     this.controls1 = undefined;
     //TODO: controls2
+    //Velocity of the snakes
+    this.speed = 1;
     //State of the game
     this.gameOver = false;
   };
@@ -63,15 +65,17 @@ class CoopGame extends Phaser.Scene
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating the snakes
-    this.snake1 = this.createSnake((6 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'right', SNAKE1_KEY);
-    this.snake2 = this.createSnake((25 * SQUARE_SIZE) + (SQUARE_SIZE / 2), (11 * SQUARE_SIZE) + (SQUARE_SIZE / 2), 'left', SNAKE2_KEY);
+    this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
+    this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //Creating food
     this.apple = this.createFood();
     //Creating colliders
-    //FIXME: see what to put in...
-    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), null, this);
-    //TODO: Eating food
-    //....
+    //TODO: see what to put in...
+    //this.physics.add.collider(this.snake1._group, this.apple);
+    //this.physics.add.overlap(this.snake1, this.apple, this.eatFood(this.snake1), true, true);
+    //this.physics.add.collider(this.snake2, this.apple);
+    this.physics.add.collider(this.snake1, this.snake2);
+    //Creating colliders
     //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
@@ -86,6 +90,21 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
+    //Changing the speed depending on the score
+    if (this.score1 === 0 || this.score2 === 0)
+    {
+      //prevents 0 division
+    }
+    else if (this.score1 >= this.score2)
+    {
+      this.speed = Math.floor(this.score1 / 5);
+      console.log(Math.floor(this.score1 / 5));
+    }
+    else
+    {
+      this.speed = Math.floor(this.score2 / 5);
+    }
+    console.log(this.speed);
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
     {
@@ -105,7 +124,7 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / 4) === 0) {
+    if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
@@ -115,11 +134,15 @@ class CoopGame extends Phaser.Scene
         this.nextDirection1 = null;
       }
       //update the snake's body parts coordinates
-      this.snake1.updateCoordinates(this.direction1);
+      //this.snake1.updateCoordinates(this.direction1);
       //Moving the snake
       this.snake1.move(this.direction1);
     }
-
+    //Collision with an apple
+    if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+    {
+      this.eatFood(this.snake1);
+    }
     //Collision with itself -> end game
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
@@ -142,19 +165,18 @@ class CoopGame extends Phaser.Scene
     //TODO:
   };
 
+
   /**
    * Create and return a snake
    * @param {number} X coordinate of the position on the grid
    * @param {number} Y coordinate of the position on the grid
    * @param {string} direction it's orientation 
    * @param {sprite} asset sprite to use
-   * @returns snake object
+   * @returns Snake object
    */
   createSnake(X, Y, direction, asset)
   {
-    let newSnake = new Snake(this, asset, SQUARE_SIZE);
-    newSnake.createSnake(X, Y, direction);
-    return newSnake;
+    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
   };
 
 
@@ -165,24 +187,32 @@ class CoopGame extends Phaser.Scene
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     //Genereting apple
-    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY).setScale(0.5);
+    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
     newApple.enableBody = true;
     return newApple;
   };
 
 
-  //TODO:eating food
-  eatFood(player) {
-     //Deleting old apple
-     this.apple.disableBody(true, true);
-     //Updating score
-     if (player == this.snake1)
-       this.score1++;
-     else
-       this.score2++;
-     eventsCenter.emit('update-score', this.score1, this.score2);
-     //Creating new apple
-     this.apple = this.createFood();
+  eatFood(player)
+  {
+    //Deleting old apple
+    this.apple.disableBody(true, true);
+    //Updating score
+    if (player == this.snake1)
+    {
+      this.score1++;
+      //TODO:The snake grow up
+      //this.snake1.growUp();
+    }
+    else
+    {
+      this.score2++;
+      //TODO:The snake grow up
+      //this.snake2.growUp();
+    }
+    eventsCenter.emit('update-score', this.score1, this.score2);
+    //Creating new apple
+    this.apple = this.createFood();
    }
    
 }

@@ -1,35 +1,45 @@
-import Phaser, { GameObjects } from 'phaser';
+import Phaser, { GameObjects, Geom } from 'phaser';
 //import scenes & events
 import eventsCenter from './EventCenter';
 
 export default class Snake
 {
-	/**
-	 * @param {Phaser.Scene} scene: where it needs to be displayed
-	 * @param {Phaser.asset} asset: it's sprites
+  /**
+   * Create a snake
+   * @param {Phaser.Scene} scene 
+   * @param {Phaser.asset} asset 
+   * @param {number} squareSize 
+   * @param {number} X 
+   * @param {number} Y 
+   * @param {string} direction 
    */
-	constructor(scene, asset, squareSize)
+	constructor(scene, asset, squareSize, X, Y, direction)
 	{
 		this.scene = scene;
     this.asset = asset;
     this.SQUARE_SIZE = squareSize;
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
-    this.size = null;
     this.coordinates = [];
-    //Contains all the sprites of the snake
-    this.snake = [];
-    //Create collider between head and body parts
-    this._group = this.scene.physics.add.group();
-    
+    //Create container and sprites of the snake
+    this.body = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    //ajoute a la DisplayList de la scene
+    this.body.addToDisplayList();
+    this.create(X, Y, direction);
 	}
 
-	get group()
-	{
-		return this._group;
-	}
+  getBody()
+  {
+    return this.body;
+  }
 
 
-  createSnake(X, Y, direction)
+  /**
+   * Create coordinates and sprites of the snake
+   * @param {number} X 
+   * @param {number} Y 
+   * @param {number} direction 
+   */
+  create(X, Y, direction)
   {
     //Defining the starting orientation
     let orientation;
@@ -40,194 +50,155 @@ export default class Snake
       orientation = this.SQUARE_SIZE;
     }
     //Create head
-    this.coordinates[0] = [X, Y];
-    this.snake[0] = this.scene.physics.add.sprite(this.coordinates[0][0], this.coordinates[0][1], this.asset);
+    this.coordinates.push([X, Y]);
+    this.body.add(new GameObjects.Sprite(this.scene, X, Y, this.asset));
     //Create body
-    this.coordinates[1] = [X + orientation, Y];
-    this.snake[1] = this.scene.physics.add.sprite(this.coordinates[1][0], this.coordinates[1][1], this.asset).setFrame(4);
+    this.coordinates.push([X + orientation, Y]);
+    this.body.add(new GameObjects.Sprite(this.scene, X + orientation, Y, this.asset, 4));
     //Create tail
-    this.coordinates[2] = [X + (orientation * 2), Y];
-    this.snake[2] = this.scene.physics.add.sprite(this.coordinates[2][0], this.coordinates[2][1], this.asset);
-
-    this._group.addMultiple(this.snake);
+    this.coordinates.push([X + (orientation * 2), Y]);
+    this.body.add(new GameObjects.Sprite(this.scene, X + (orientation * 2), Y, this.asset));
 
     //Set the correct Frame
     if (direction === 'right')
     {
-      this.snake[2].setFrame(10);
+      this.body.getAt(2).setFrame(10);
     } else {
-      this.snake[0].setFrame(2);
-      this.snake[2].setFrame(11);
-    }
-    this.size = 3;
-  }
-
-
-  /**
-   * Update the coordinates of each snake's body part
-   * @param {string} direction: of the head
-   */
-  updateCoordinates(direction)
-  {
-    //Verify with the world border
-    if (this.coordinates[0][0] >= 1024 - (this.SQUARE_SIZE/2) || this.coordinates[0][1] >= 1024 - (this.SQUARE_SIZE/2) ||
-      this.coordinates[0][0] <= 0 + (this.SQUARE_SIZE/2) || this.coordinates[0][1] <= 0 + (this.SQUARE_SIZE/2)) return;
-    //Put the old tail as the new head
-    //The old head becomes the first body part
-    //The last body part becomes the new tail
-    this.coordinates.unshift(this.coordinates.pop());
-    switch(direction)
-    {
-      case 'down':
-        this.coordinates[0] = [this.coordinates[1][0], this.coordinates[1][1] + this.SQUARE_SIZE];
-        break;
-      case 'up':
-        this.coordinates[0] = [this.coordinates[1][0], this.coordinates[1][1] - this.SQUARE_SIZE];
-        break;
-      case 'left':
-        this.coordinates[0] = [this.coordinates[1][0] - this.SQUARE_SIZE, this.coordinates[1][1]];
-        break;
-      case 'right':
-        this.coordinates[0] = [this.coordinates[1][0] + this.SQUARE_SIZE, this.coordinates[1][1]];
-        break;
+      this.body.getAt(0).setFrame(2);
+      this.body.getAt(2).setFrame(11);
     }
   }
 
   move(direction)
   {
     this.moveHead(direction);
-    this.moveBody();
-    this.moveTail();
+    this.changeBody();
+    this.changeTail();
   }
   moveHead(direction)
   {
-    this.snake[0].setPosition(this.coordinates[0][0], this.coordinates[0][1]);
+    this.body.moveTo(this.body.getAt(this.body.length - 1), 0);
+    let newhead = this.body.getAt(0);
+    let oldHead = this.body.getAt(1);
     switch(direction)
     {
-      case 'right':
-        this.snake[0].setFrame(0);
-        break;
       case 'down':
-        this.snake[0].setFrame(1);
-        break;
-      case 'left':
-        this.snake[0].setFrame(2);
+        newhead.x = oldHead.x;
+        newhead.y = oldHead.y + this.SQUARE_SIZE;
+        newhead.setFrame(1);
         break;
       case 'up':
-        this.snake[0].setFrame(3);
+        newhead.x = oldHead.x;
+        newhead.y = oldHead.y - this.SQUARE_SIZE;
+        newhead.setFrame(3);
+        break;
+      case 'left':
+        newhead.x = oldHead.x - this.SQUARE_SIZE;
+        newhead.y = oldHead.y;
+        newhead.setFrame(2);
+        break;
+      case 'right':
+        newhead.x = oldHead.x + this.SQUARE_SIZE;
+        newhead.y = oldHead.y;
+        newhead.setFrame(0);
         break;
     }
   }
-  moveBody()
+  changeBody()
   {
-    for (let i = 1; i < this.size - 1; i++)
+    for (let i = 1; i < this.body.length - 1; i++)
     {
-      //Set position
-      this.snake[i].setPosition(this.coordinates[i][0], this.coordinates[i][1]);
-      //Defining direction
-      if (this.coordinates[i][1] === this.coordinates[i - 1][1])
+      let onwardBodyPart = this.body.getAt(i - 1);
+      let bodyPart = this.body.getAt(i);
+      let backwardBodyPart = this.body.getAt(i + 1);
+      //================================================== IN LINE
+      if (backwardBodyPart.y === onwardBodyPart.y)         //horizontal
       {
-        //If horizontal
-        if (this.coordinates[i][1] === this.coordinates[i + 1][1])
-        {
-          this.snake[i].setFrame(4);
-        }
-        //Comming from left
-        else if (this.coordinates[i][0] < this.coordinates[i - 1][0])
-        {
-          //And below
-          if (this.coordinates[i][1] < this.coordinates[i + 1][1])
-          {
-            this.snake[i].setFrame(8);
-          }
-          //And above
-          else
-          {
-            this.snake[i].setFrame(9);
-          }
-        }
-        //Comming from right
-        else
-        {
-          //And below
-          if (this.coordinates[i][1] < this.coordinates[i + 1][1])
-          {
-            this.snake[i].setFrame(6);
-          }
-          //And above
-          else
-          {
-            this.snake[i].setFrame(7);
-          }
-        }
+        bodyPart.setFrame(4);
       }
-      else
+      else if (backwardBodyPart.x === onwardBodyPart.x)    //vertical
       {
-        //If vertical
-        if (this.coordinates[i][0] === this.coordinates[i + 1][0])
+        bodyPart.setFrame(5);
+      }
+      else//============================================== ANGLE
+      {
+        if (bodyPart.y > onwardBodyPart.y)//============== going up
         {
-          this.snake[i].setFrame(5);
-        }
-        //Comming from below
-        else if (this.coordinates[i][1] > this.coordinates[i - 1][1])
-        {
-          //And right
-          if (this.coordinates[i][0] > this.coordinates[i + 1][0])
+          if (bodyPart.x > backwardBodyPart.x)             //...from right
           {
-            this.snake[i].setFrame(7);
+            bodyPart.setFrame(7);
           }
-          //And above
-          else
+          else                                             //...from left
           {
-            this.snake[i].setFrame(9);
+            bodyPart.setFrame(9);
           }
         }
-        //Comming from above
-        else
+        else if (bodyPart.y < onwardBodyPart.y)//========= going down
         {
-          //And right
-          if (this.coordinates[i][0] > this.coordinates[i + 1][0])
+          if (bodyPart.x > backwardBodyPart.x)             //...from right
           {
-            this.snake[i].setFrame(6);
+            bodyPart.setFrame(6);
           }
-          //And left
-          else
+          else                                             //...from left
           {
-            this.snake[i].setFrame(8);
+            bodyPart.setFrame(8);
+          }
+        }
+        else if (bodyPart.x < onwardBodyPart.x)//========= going right
+        {
+          if (bodyPart.y > backwardBodyPart.y)             //...from up
+          {
+            bodyPart.setFrame(9);
+          }
+          else                                             //...from down
+          {
+            bodyPart.setFrame(8);
+          }
+        }
+        else//============================================ going left
+        {
+          if (bodyPart.y > backwardBodyPart.y)             //...from up
+          {
+            bodyPart.setFrame(7);
+          }
+          else                                             //...from down
+          {
+            bodyPart.setFrame(6);
           }
         }
       }
     }
   }
-  moveTail()
+  changeTail()
   {
-    this.snake[this.size - 1].setPosition(this.coordinates[this.size - 1][0], this.coordinates[this.size - 1][1]);
+    let lastBodyPart = this.body.getAt(this.body.length - 2);
+    let tail = this.body.getAt(this.body.length - 1);
     //Horizontal
-    if (this.coordinates[this.size - 1][1] === this.coordinates[this.size - 2][1])
+    if (tail.y === lastBodyPart.y)
     {
       //Going right
-      if (this.coordinates[this.size - 1][0] < this.coordinates[this.size - 2][0])
+      if (tail.x < lastBodyPart.x)
       {
-        this.snake[this.size - 1].setFrame(10);
+        tail.setFrame(10);
       }
       //Going left
       else
       {
-        this.snake[this.size - 1].setFrame(11);
+        tail.setFrame(11);
       }
     }
     //Vertical
     else
     {
       //Going up
-      if (this.coordinates[this.size - 1][1] > this.coordinates[this.size - 2][1])
+      if (tail.y > lastBodyPart.y)
       {
-        this.snake[this.size - 1].setFrame(12);
+        tail.setFrame(12);
       }
       //Going down
       else
       {
-        this.snake[this.size - 1].setFrame(13);
+        tail.setFrame(13);
       }
     }
   }
@@ -235,5 +206,11 @@ export default class Snake
   eatItself()
   {
      // TODO: launch event
+  }
+
+  growUp()
+  {
+    let previousTail = this.body.getAt(this.body.length);
+    this.body.add(new GameObjects.Sprite(this.scene, previousTail.x, previousTail.y, this.asset));
   }
 }
