@@ -65,14 +65,14 @@ class CoopGame extends Phaser.Scene
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
+    //Creating food
+    this.apple = this.createFood();
     //Creating colliders
     //FIXME: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
     //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
     //this.physics.add.collider(this.snake2, this.apple);
     //this.physics.add.collider(this.snake1, this.snake2);
-    //Creating food
-    this.apple = this.createFood();
     //Creating colliders
     //FIXME: see what to put in...
     //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), null, this);
@@ -111,7 +111,7 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / 4) === 0) {
+    if (this.keyFrameValue % (SQUARE_SIZE / 2) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
@@ -123,7 +123,7 @@ class CoopGame extends Phaser.Scene
       //update the snake's body parts coordinates
       //this.snake1.updateCoordinates(this.direction1);
       //Moving the snake
-      //this.snake1.move(this.direction1);
+      this.snake1.move(this.direction1);
     }
 
     //Collision with itself -> end game
@@ -155,12 +155,11 @@ class CoopGame extends Phaser.Scene
    * @param {number} Y coordinate of the position on the grid
    * @param {string} direction it's orientation 
    * @param {sprite} asset sprite to use
-   * @returns snake object
+   * @returns Snake object
    */
   createSnake(X, Y, direction, asset)
   {
-    let newSnake = new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
-    return newSnake;
+    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
   };
 
 
