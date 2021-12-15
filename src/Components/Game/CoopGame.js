@@ -68,16 +68,12 @@ class CoopGame extends Phaser.Scene
     //Creating food
     this.apple = this.createFood();
     //Creating colliders
-    //FIXME: see what to put in...
+    //TODO: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
     //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake), true, true);
     //this.physics.add.collider(this.snake2, this.apple);
     //this.physics.add.collider(this.snake1, this.snake2);
     //Creating colliders
-    //FIXME: see what to put in...
-    //this.physics.add.overlap(this.snake1._group, this.apple, this.eatFood(this.snake1), null, this);
-    //TODO: Eating food
-    //....
     //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
