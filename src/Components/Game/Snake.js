@@ -111,59 +111,59 @@ export default class Snake
       let previous = this.snake.getAt(i - 1);
       let body = this.snake.getAt(i);
       let next = this.snake.getAt(i + 1);
-      //Defining direction
-      if (next.y === previous.y)      //horizontal
+      //================================ IN LINE
+      if (next.y === previous.y)         //horizontal
       {
         body.setFrame(4);
       }
-      else if (next.x === previous.x) //vertical
+      else if (next.x === previous.x)    //vertical
       {
         body.setFrame(5);
       }
-      else// angle
+      else//============================ ANGLE
       {
-        if (body.y > previous.y)      //going up
+        if (body.y > previous.y)//====== going up
         {
-          if (body.x > next.x)        //...from right
+          if (body.x > next.x)           //...from right
           {
             body.setFrame(7);
           }
-          else                        //...from left
+          else                           //...from left
           {
             body.setFrame(9);
           }
         }
-        else if (body.y < previous.y) //going down
+        else if (body.y < previous.y)//= going down
         {
-          if (body.x > next.x)        //...from right
+          if (body.x > next.x)           //...from right
           {
             body.setFrame(6);
           }
-          else                        //...from left
+          else                           //...from left
           {
             body.setFrame(8);
           }
         }
-        else if (body.x < previous.x) //going right
+        else if (body.x < previous.x)//= going right
         {
-          if (body.y > next.y)        //...from up
+          if (body.y > next.y)           //...from up
+          {
+            body.setFrame(9);
+          }
+          else                           //...from down
+          {
+            body.setFrame(8);
+          }
+        }
+        else//========================== going left
+        {
+          if (body.y > next.y)           //...from up
           {
             body.setFrame(7);
           }
-          else                        //...from down
+          else                           //...from down
           {
             body.setFrame(6);
-          }
-        }
-        else                          //going left
-        {
-          if (body.y > next.y)        //...from up
-          {
-            body.setFrame(8);
-          }
-          else                        //...from down
-          {
-            body.setFrame(9);
           }
         }
       }
@@ -171,34 +171,34 @@ export default class Snake
   }
   changeTail()
   {
-    let previous = this.snake.getAt(this.snake.length - 2);
-    let body = this.snake.getAt(this.snake.length - 1);
+    let lastBody = this.snake.getAt(this.snake.length - 2);
+    let tail = this.snake.getAt(this.snake.length - 1);
     //Horizontal
-    if (body.y === previous.y)
+    if (tail.y === lastBody.y)
     {
       //Going right
-      if (body.x < previous.x)
+      if (tail.x < lastBody.x)
       {
-        body.setFrame(10);
+        tail.setFrame(10);
       }
       //Going left
       else
       {
-        body.setFrame(11);
+        tail.setFrame(11);
       }
     }
     //Vertical
     else
     {
       //Going up
-      if (body.y > previous.y)
+      if (tail.y > lastBody.y)
       {
-        body.setFrame(12);
+        tail.setFrame(12);
       }
       //Going down
       else
       {
-        body.setFrame(13);
+        tail.setFrame(13);
       }
     }
   }
