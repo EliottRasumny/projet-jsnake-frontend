@@ -70,6 +70,7 @@ class CoopGame extends Phaser.Scene
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //Creating food
     this.apple = this.createFood();
+    this.apple.setScale(0.99,0.99);
     //Creating colliders
     //TODO: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
@@ -216,6 +217,7 @@ class CoopGame extends Phaser.Scene
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Creating new apple
     this.apple = this.createFood();
+    this.apple.setScale(0.99,0.99);
    }
    
 }
