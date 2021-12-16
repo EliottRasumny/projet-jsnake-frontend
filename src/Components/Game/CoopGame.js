@@ -99,11 +99,11 @@ class CoopGame extends Phaser.Scene
     }
     else if (this.score1 >= this.score2)
     {
-      this.speed = Math.floor(this.score1 / 4);
+      this.speed = Math.floor(this.score1);
     }
     else
     {
-      this.speed = Math.floor(this.score2 / 4);
+      this.speed = Math.floor(this.score2);
     }
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -143,10 +143,12 @@ class CoopGame extends Phaser.Scene
       }
     }
     //Collision with an apple
-    if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
-    {
-      this.eatFood(this.snake1);
-    }
+    this.physics.add.overlap(this.snake1, this.apple, this.eatFood(this.snake1));
+    //if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+    //{
+    //  this.eatFood(this.snake1);
+    //}
+
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
   };
