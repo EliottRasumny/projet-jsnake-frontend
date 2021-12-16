@@ -26,6 +26,7 @@ class CoopGame extends Phaser.Scene
     //TODO: direction2 & newDirection2
     //Food
     this.apple = undefined;
+    this.hasEaten = false;
     //Enable to render the snake properly
     this.keyFrameValue = 0;
     //Score of players
@@ -35,7 +36,7 @@ class CoopGame extends Phaser.Scene
     this.controls1 = undefined;
     //TODO: controls2
     //Velocity of the snakes
-    this.speed = 1;
+    this.speed = 4;
     //State of the game
     this.gameOver = false;
   };
@@ -97,11 +98,11 @@ class CoopGame extends Phaser.Scene
     }
     else if (this.score1 >= this.score2)
     {
-      this.speed = Math.floor(this.score1 / 5);
+      this.speed = Math.floor(this.score1 / 4);
     }
     else
     {
-      this.speed = Math.floor(this.score2 / 5);
+      this.speed = Math.floor(this.score2 / 4);
     }
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -131,17 +132,20 @@ class CoopGame extends Phaser.Scene
         this.direction1 = this.nextDirection1;
         this.nextDirection1 = null;
       }
-      //update the snake's body parts coordinates
-      //this.snake1.updateCoordinates(this.direction1);
       //Moving the snake
-      this.snake1.move(this.direction1);
+      if (!this.hasEaten)
+      {
+        this.snake1.move(this.direction1);
+      } else {
+        this.snake1.growUp(this.direction1);
+        this.hasEaten = false;
+      }
     }
     //Collision with an apple
     if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
     {
       this.eatFood(this.snake1);
     }
-    //Collision with itself -> end game
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
   };
@@ -199,6 +203,7 @@ class CoopGame extends Phaser.Scene
     if (player == this.snake1)
     {
       this.score1++;
+      this.hasEaten = true;
       //TODO:The snake grow up
       //this.snake1.growUp();
     }
