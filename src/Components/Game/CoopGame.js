@@ -90,7 +90,7 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //Changing the speed depending on the score
+    //TODO:Changing the speed depending on the score
     if (this.score1 === 0 || this.score2 === 0)
     {
       //prevents 0 division
@@ -98,13 +98,11 @@ class CoopGame extends Phaser.Scene
     else if (this.score1 >= this.score2)
     {
       this.speed = Math.floor(this.score1 / 5);
-      console.log(Math.floor(this.score1 / 5));
     }
     else
     {
       this.speed = Math.floor(this.score2 / 5);
     }
-    console.log(this.speed);
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
     {
