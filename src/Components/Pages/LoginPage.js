@@ -42,7 +42,6 @@ function LoginPage() {
     e.preventDefault();
     const username = document.getElementById("username");
     const password = document.getElementById("password");
-    console.log("In the form : ", username.value, password.value);
     try {
       const options = {
         method: "POST", 

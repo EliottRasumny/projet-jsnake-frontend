@@ -17,52 +17,50 @@ function SettingsPage() {
   let downKey1;
   let leftKey1;  
 
-  //TODO : delete arrowRight.png
+  let user = getSessionObject("user1");
 
+  
   const pageDiv = document.querySelector("#page");
   updatePage();
 
   function updatePage(){
     
-    //récupérer les touches du user authentifié 
-    //TODO find keys already saved 
-    let user = getSessionObject("user1");
-
     if(!user){
+      console.log("Not Connected !");
       upKey1 = "Z";
       rightKey1 = "D";
       downKey1 = "S";
       leftKey1 = "Q";  
     }else{
-      //console.log(user.valueOf("keyUp1"));
-      upKey1 = "Z";
-      rightKey1 = "D";
-      downKey1 = "S";
-      leftKey1 = "Q";  
+      console.log("In the session : ", user);
+      upKey1 = user.keyUp1;
+      rightKey1 = user.keyRight1;
+      downKey1 = user.keyDown1;
+      leftKey1 = user.keyLeft1;  
     }
-
-
 
 
     pageDiv.innerHTML =  `
     <h1 class="m-5">Settings</h1>
     <div class="wrapper">
-      <form>
-        <div class="row">
-          <div class="col-md-6 "> 
-            <p>Player 1</p>
-            <span id="up1"><img src="${arrowUp}" class="rounded inline" alt="up key" style="width:10% ;heigth:auto" > : ${upKey1}</span>
-            <span id="right1"><img src="${arrowRight}" class="rounded inline" alt="right key" style="width:10% ;heigth:auto" >  : ${rightKey1}</span>
-            <span id="down1"><img src="${arrowDown}" class="rounded inline" alt="down key" style="width:10% ;heigth:auto" >  : ${downKey1}</span>
-            <span id="left1"><img src="${arrowLeft}" class="rounded inline" alt="left key" style="width:10% ;heigth:auto" >  : ${leftKey1}</span>
-            
-          </div>
-  
-          <div class="col-md-6"> 
-            
-          </div>
+      <div class="row"> 
+        <div class="col-md-6"> 
+          <p>Player 1</p>
+          <span id="up1"><img src="${arrowUp}" class="rounded inline" alt="up key" style="width:10% ;heigth:auto" > : ${upKey1}</span></br>
+          <span id="left1"><img src="${arrowLeft}" class="rounded inline" alt="left key" style="width:10% ;heigth:auto" >  : ${leftKey1}</span>
+          <span id="down1"><img src="${arrowDown}" class="rounded inline" alt="down key" style="width:10% ;heigth:auto" >  : ${downKey1}</span>
+          <span id="right1"><img src="${arrowRight}" class="rounded inline" alt="right key" style="width:10% ;heigth:auto" >  : ${rightKey1}</span>            
         </div>
-      </form>
+
+        <div class="col-md-6"> 
+          <p>Player 2</p>
+          <span id="up1"><img src="${arrowUp}" class="rounded inline" alt="up key" style="width:10% ;heigth:auto" > : ${upKey1}</span>
+          <span id="right1"><img src="${arrowRight}" class="rounded inline" alt="right key" style="width:10% ;heigth:auto" >  : ${rightKey1}</span>            
+          <span id="down1"><img src="${arrowDown}" class="rounded inline" alt="down key" style="width:10% ;heigth:auto" >  : ${downKey1}</span>
+          <span id="left1"><img src="${arrowLeft}" class="rounded inline" alt="left key" style="width:10% ;heigth:auto" >  : ${leftKey1}</span>
+        </div>
+
+      </div>
     </div>
    `;  
     //TODO : add the settings for the other user and make it beautiful
@@ -97,26 +95,48 @@ function SettingsPage() {
 
   function listenKeyUp(){
     document.addEventListener("keydown", changeKeyUp);
-    console.log("YOOOOOO UP");
-    alert("Press the key");
+    console.log("UP");
+    upKey1 = "Press any key";
+    updatePage();
     //TODO : indiquer que le user doit enfoncer une touche
   }
-  function changeKeyUp(e){
+  async function changeKeyUp(e){
     console.log(e.code);
 
     //TODO mettre le nom et le code de la touche dans le backend et ou dans une variable session
-    //upKey1 = e.code;
+    try {
+      const options = {
+        method: "PUT", 
+        body: JSON.stringify({
+          keyUp1: e.code,
+        }), 
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await fetch(`/api/auths/user/`, options); // fetch return a promise => we wait for the response
+      if (!response.ok) {
+        throw new Error(
+          "fetch error : " + response.status + " : " + response.statusText
+        );
+      }
+    }catch (error) {
+      console.error("LoginPage::error: ", error);
+    }
+
+    user.keyUp1 = e.code;
     updatePage();
     document.removeEventListener('keydown', changeKeyUp);
   }
   function listenKeyRight(){
-    console.log("YOOOOOO Right");
+    console.log("Right");
   }
   function listenKeyDown(){
-    console.log("YOOOOOO Down");
+    console.log("Down");
   }
   function listenKeyLeft(){
-    console.log("YOOOOOO Left");
+    console.log("Left");
   }
 
 
