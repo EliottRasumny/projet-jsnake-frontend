@@ -157,8 +157,10 @@ class SingleGame extends Phaser.Scene
     //Random placement of the apple
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
-    //Set the positino of the apple
-    this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
+    //Genereting apple
+    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
+    newApple.enableBody = true;
+    return newApple;
   };
 
 
