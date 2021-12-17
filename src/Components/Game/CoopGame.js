@@ -38,18 +38,6 @@ class CoopGame extends Phaser.Scene
     this.speed = 4;
     //State of the game
     this.gameOver = false;
-    //Coordinates Snakes and border
-    this.coordinatesSnakeAndBorder = new Set();
-    for(let i = 0; i < 1024; i+=32){
-      this.coordinatesSnakeAndBorder.add([-32,i]);
-      this.coordinatesSnakeAndBorder.add([1024,i]);
-    }
-    console.log(this.coordinatesSnakeAndBorder);
-    let array = new Array(2)
-    array[0]=-32;
-    array[1]=64;
-    console.log(this.coordinatesSnakeAndBorder.has(array));
-    
   };
 
 
@@ -161,15 +149,14 @@ class CoopGame extends Phaser.Scene
 
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
-    this.coordinatesSnakeAndBorder.forEach(element => {
-      if(element[0] == this.snake1.getBody().getAt(0).x && element[1] == this.snake1.getBody().getAt(0).y)
-        console.log("here");
-    });
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 || this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+      console.log("outside box");
+    
     //collision with itself ->
     if(this.snake1.eatItself())
-      console.log("here");
+      console.log("eat himself");
     if(this.eatOtherSnake(this.snake1,this.snake2))
-      console.log("here");
+      console.log("eat other snake");
     
   };
 
