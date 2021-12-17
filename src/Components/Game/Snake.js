@@ -216,6 +216,8 @@ export default class Snake
     return false;
   }
 
+  
+
   growUp(direction)
   {
     let oldHead = this.body.getAt(0);
