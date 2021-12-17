@@ -31,7 +31,7 @@ class SingleGame extends Phaser.Scene
     //Players controls
     this.controls = undefined;
     //Velocity of the snakes
-    this.speed = 4;
+    this.speed = 2;
   };
 
 
@@ -74,18 +74,10 @@ class SingleGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //FIXME:Changing the speed depending on the score
-    if (this.score1 === 0 || this.score2 === 0)
+    //Changing the speed depending on the score
+    if (this.score > 20)
     {
-      //prevents 0 division
-    }
-    else if (this.score1 >= this.score2)
-    {
-      this.speed = Math.floor(this.score1);
-    }
-    else
-    {
-      this.speed = Math.floor(this.score2);
+      this.speed = Math.floor(this.score / 10);
     }
     //Registering new movement
     if (this.direction != 'down' && this.controls.up.isDown)
@@ -106,7 +98,7 @@ class SingleGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / 4) === 0) {
+    if (this.keyFrameValue % Math.floor(SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection != null)
