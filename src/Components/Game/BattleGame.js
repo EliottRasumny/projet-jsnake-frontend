@@ -37,6 +37,10 @@ class BattleGame extends Phaser.Scene
     this.controls2 = undefined;
     //Velocity of the snakes
     this.speed = 2;
+    //!this.upB = 'z';
+    //!this.downB = 's';
+    //!this.leftB = 'q';
+    //!this.rightB = 'd';
   };
 
 
@@ -73,7 +77,9 @@ class BattleGame extends Phaser.Scene
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
-    this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
+    this.controls2 = this.input.keyboard.addKeys(`q,z,s,d`);
+    //!this.controls2 = this.input.keyboard.addKeys(`${this.upB},${this.downB},${this.leftB},${this.rightB}`);
+    
   };
 
 
@@ -254,7 +260,7 @@ class BattleGame extends Phaser.Scene
       var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
       var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
-      var checkSnake = this.snake.getBody();
+      var checkSnake = this.snake1.getBody();
       for(let i = 0; i < checkSnake.length; i++)
       {
         if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)

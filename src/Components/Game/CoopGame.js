@@ -5,12 +5,13 @@ import eventsCenter from './EventCenter';
 import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/Grid32_1024x768.png'
-import appleAsset from '../../assets/RedApple.png';
+import appleAssetR from '../../assets/RedApple.png';
+import appleAssetB from '../../assets/BlueApple.png';
 import magentaSnakeAsset from '../../assets/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/OrangeSnake32.png'
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const GRID_KEY = 'grid', APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
 
 class CoopGame extends Phaser.Scene
 {
@@ -26,7 +27,8 @@ class CoopGame extends Phaser.Scene
     this.nextDirection1 = null;
     this.nextDirection2 = null;
     //Food
-    this.apple = undefined;
+    this.apple1 = undefined;
+    this.apple2 = undefined;
     //Enable to render the snake properly
     this.keyFrameValue = 0;
     //Score of players
@@ -45,7 +47,8 @@ class CoopGame extends Phaser.Scene
   preload()
   {
     this.load.image(GRID_KEY, gridAsset);
-    this.load.image(APPLE_KEY, appleAsset);
+    this.load.image(APPLE1_KEY, appleAssetB);
+    this.load.image(APPLE2_KEY, appleAssetR);
     this.load.spritesheet(SNAKE1_KEY,
       magentaSnakeAsset,
       {frameWidth: SQUARE_SIZE, frameHeight: SQUARE_SIZE});
@@ -63,8 +66,10 @@ class CoopGame extends Phaser.Scene
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating food
-    this.apple = this.createFood();
-    this.apple.setScale(0.99,0.99);
+    this.apple1 = this.createFood(APPLE1_KEY);
+    this.apple1.setScale(0.99,0.99);
+    this.apple2 = this.createFood(APPLE2_KEY);
+    this.apple2.setScale(0.99,0.99);
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
@@ -140,7 +145,7 @@ class CoopGame extends Phaser.Scene
         this.nextDirection2 = null;
       }
       //Collision with an apple : Snake1
-      if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+      if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple1.getBounds()))
       {
         this.eatFood(this.snake1);
       }
@@ -149,7 +154,7 @@ class CoopGame extends Phaser.Scene
         this.snake1.move(this.direction1);
       }
       //Collision with an apple : Snake2
-      if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+      if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple2.getBounds()))
       {
         this.eatFood(this.snake2);
       }
@@ -207,13 +212,13 @@ class CoopGame extends Phaser.Scene
    * Create an apple in random given coordinates
    * @returns A new apple
    */
-  createFood()
+  createFood(apple_key)
   {
     //Random placement of the apple
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     //Genereting apple
-    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
+    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), apple_key);
     newApple.enableBody = true;
     return newApple;
   };
@@ -247,7 +252,7 @@ class CoopGame extends Phaser.Scene
       var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
       var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
-      var checkSnake = this.snake.getBody();
+      var checkSnake = this.snake1.getBody();
       for(let i = 0; i < checkSnake.length; i++)
       {
         if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
@@ -269,7 +274,10 @@ class CoopGame extends Phaser.Scene
         }
       }
     } while (isOccupied)
-    this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
+    if(player == this.snake1)
+      this.apple1.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
+    else
+      this.apple2.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
 
 
