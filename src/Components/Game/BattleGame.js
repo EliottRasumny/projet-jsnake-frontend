@@ -22,7 +22,9 @@ class BattleGame extends Phaser.Scene
     this.snake2 = undefined;
     //directions
     this.direction1 = 'right';
+    this.direction2 = 'left';
     this.nextDirection1 = null;
+    this.nextDirection2 = null;
     //TODO: direction2 & newDirection2
     //Food
     this.apple = undefined;
@@ -33,6 +35,7 @@ class BattleGame extends Phaser.Scene
     this.score2 = 0;
     //Players controls
     this.controls1 = undefined;
+    this.controls2 = undefined;
     //TODO: controls2
     //Velocity of the snakes
     this.speed = 4;
@@ -82,6 +85,9 @@ class BattleGame extends Phaser.Scene
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
+    this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
+    console.log(this.controls1);
+    console.log(this.controls2);
   };
 
 
@@ -122,6 +128,25 @@ class BattleGame extends Phaser.Scene
     {
       this.nextDirection1 = 'left';
     }
+    
+
+
+    if (this.direction2 != 'down' && this.controls2.z.isDown)
+    {
+      this.nextDirection2 = 'up';
+    }
+    else if (this.direction2 != 'up' && this.controls2.s.isDown)
+    {
+      this.nextDirection2 = 'down';
+    }
+    else if (this.direction2 != 'left' && this.controls2.d.isDown)
+    {
+      this.nextDirection2 = 'right';
+    }
+    else if (this.direction2 != 'right' && this.controls2.q.isDown)
+    {
+      this.nextDirection2 = 'left';
+    }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
     if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
@@ -134,6 +159,12 @@ class BattleGame extends Phaser.Scene
         this.direction1 = this.nextDirection1;
         this.nextDirection1 = null;
       }
+      if (this.nextDirection2 != null)
+      {
+        //Update the direction of the snake
+        this.direction2 = this.nextDirection2;
+        this.nextDirection2 = null;
+      }
       //Collision with an apple
       if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
       {
@@ -144,19 +175,30 @@ class BattleGame extends Phaser.Scene
       {
         this.snake1.move(this.direction1);
       }
+
+      if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+      {
+        this.eatFood(this.snake2);
+      }
+      else
+      {
+        this.snake2.move(this.direction2);
+      }
+
     }
     //Collision with an apple
 
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
     if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 || this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
-      console.log("outside box");
-    
+      this.shutdown();
+      if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 || this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+      this.shutdown();
     //collision with itself ->
-    if(this.snake1.eatItself())
-      console.log("eat himself");
-    if(this.eatOtherSnake(this.snake1,this.snake2))
-      console.log("eat other snake");
+    if(this.snake1.eatItself() || this.snake2.eatItself())
+        this.shutdown();
+    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1))
+        this.shutdown();
     
   };
 
@@ -185,7 +227,7 @@ class BattleGame extends Phaser.Scene
    */
   shutdown()
   {
-    //TODO:
+    this.scene.start('GameOver');
   };
 
 
