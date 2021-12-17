@@ -36,7 +36,7 @@ class CoopGame extends Phaser.Scene
     //TODO: controls2
     //Velocity of the snakes
     this.speed = 2;
-  };
+  }; 
 
 
   /**
