@@ -200,8 +200,36 @@ class CoopGame extends Phaser.Scene
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    var isOccupied = false;
+    do
+    {
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var checkSnake = this.snake1.getBody();
+      //Check if the coordinate of the apple is in the body of snake1
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+      //Check if the coordinate of the apple is in the body of snake2
+      if (!isOccupied)
+      {
+        checkSnake = this.snake2.getBody();
+        for(let i = 0; i < checkSnake.length; i++)
+        {
+          if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+          {
+            isOccupied = true;
+            break;
+          }
+        }
+      }
+    } while (isOccupied)
+    //Give a new position for the apple
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
    
@@ -213,7 +241,7 @@ class CoopGame extends Phaser.Scene
 
     for(let i = 0; i < snake.body.length; i++)
     {
-      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
+      if(headX === snake.getBody().getAt(i).x && headY === snake.getBody().getAt(i).y)
         return true;
     }
     return false;
