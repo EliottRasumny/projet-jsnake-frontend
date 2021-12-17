@@ -42,6 +42,10 @@ const Navbar = () => {
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link  text-white" href="/settings">Settings</a>
+                </li>
             </ul>
             <div class="d-flex">
                 <a class="nav-link" href="/login1"><button class="btn btn-light ms-3">Login</button></a>
@@ -74,12 +78,14 @@ const Navbar = () => {
                   <li class="nav-item">
                       <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
                   </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/settings">Settings</a>
+                  </li>
               </ul>
               <div class="d-flex">
                   <a class="nav-link" href="/login2"><button class="btn btn-light ms-3">Login The Second Player</button></a>
                   <a class="nav-link" href="/logout"><button class="btn btn-light ms-3">Logout</button></a>
                   <a class="nav-link" href="/register"><button class="btn btn-light ms-3">Register</button></a>
-                  <a class="nav-link" href="/logout"><button class="btn btn-light ms-3">Logout</button></a>
               </div>
           </div>
       </div>
@@ -107,6 +113,9 @@ const Navbar = () => {
                   
                   <li class="nav-item">
                       <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link  text-white" href="/settings">Settings</a>
                   </li>
               </ul>
               <div class="d-flex">

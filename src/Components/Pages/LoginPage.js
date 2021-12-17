@@ -31,6 +31,11 @@ function LoginPage() {
     submit.type = "submit";
     submit.className = "btn";
     submit.id = "btn";
+
+  // create the notification
+  var notification = document.createElement("p");
+  pageDiv.appendChild(notification);
+
   form.addEventListener("submit", onSubmit);
   form.appendChild(username);
   form.appendChild(password);
@@ -57,21 +62,22 @@ function LoginPage() {
       const response = await fetch("/api/auths/login1", options); // fetch return a promise => we wait for the response
       
       if (!response.ok) {
-        throw new Error(
-          "fetch error : " + response.status + " : " + response.statusText
-        );
+        notification.className = "alert alert-danger";
+        notification.innerText = "Username or password incorrect"
       }
-      const user = await response.json(); // json() returns a promise => we wait for the data
-      console.log("user authenticated", user);
-      // save the user into the localStorage
-      setSessionObject("user1", user);
-
-      // Rerender the navbar for an authenticated user : temporary step prior to deal with token
-      Navbar({ isAuthenticated1: true });
-
-      // call the HomePage via the Router
-      Redirect("/");
-      
+      else{
+        const user = await response.json(); // json() returns a promise => we wait for the data
+        console.log("user authenticated", user);
+        // save the user into the localStorage
+        setSessionObject("user1", user);
+  
+        // Rerender the navbar for an authenticated user : temporary step prior to deal with token
+        Navbar({ isAuthenticated1: true });
+  
+        // call the HomePage via the Router
+        Redirect("/");  
+      }
+    
     } catch (error) {
       console.error("LoginPage::error: ", error);
     }
