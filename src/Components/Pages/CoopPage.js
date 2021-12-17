@@ -2,6 +2,7 @@ import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
 import UIScore from "../Game/UIScore";
+import GameOver from "../Game/GameOver";
 
 var game;
 
@@ -26,14 +27,6 @@ function CoopPage() {
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-  
-  /*
-  game.stage.add('Menu', Menu);     
-  // Adding the Game state.
-  game.state.add('Game', CoopGame);
-  game.state.start('Menu');
-  */
-
   // create a login form
   const submit = document.createElement("input");
   submit.value = "Go back to Two Player";

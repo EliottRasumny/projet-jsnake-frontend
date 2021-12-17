@@ -116,7 +116,6 @@ class CoopGame extends Phaser.Scene
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
     if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
-      //!!!!!!!!! a effacer console.log([this.snake1.getBody().getAt(0).x,this.snake1.getBody().getAt(0).y]);
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
       {
@@ -136,7 +135,6 @@ class CoopGame extends Phaser.Scene
       }
     }
     //collision with a wall
-    if (this.isGameOver) this.shutdown();
     if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
       this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
     {
@@ -145,19 +143,8 @@ class CoopGame extends Phaser.Scene
     //collision with itself
     if(this.snake1.eatItself()) this.shutdown();
     //collision with the other snake
-    if(this.eatOtherSnake(this.snake1,this.snake2)) this.shutdown();
+    if(this.isEatingOtherSnake(this.snake1,this.snake2)) this.shutdown();
   };
-
-  eatOtherSnake(snakeHead, snake){
-    let headX = snakeHead.getBody().getAt(0).x;
-    let headY = snakeHead.getBody().getAt(0).y;
-
-    for(let i = 0; i < snake.body.length; i++){
-      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
-        return true;
-    }
-    return false;
-  }
 
 
   /**
@@ -216,7 +203,20 @@ class CoopGame extends Phaser.Scene
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
-   }
+  }
    
+
+  isEatingOtherSnake(snakeHead, snake)
+  {
+    let headX = snakeHead.getBody().getAt(0).x;
+    let headY = snakeHead.getBody().getAt(0).y;
+
+    for(let i = 0; i < snake.body.length; i++)
+    {
+      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
+        return true;
+    }
+    return false;
+  }
 }
 export default CoopGame;
