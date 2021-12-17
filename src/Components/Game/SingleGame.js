@@ -6,7 +6,7 @@ import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/Grid32_1024x768.png'
 import appleAsset from '../../assets/RedApple.png';
-import magentaSnakeAsset from '../../assets/MagentaSnake32.png';
+import magentaSnakeAsset from '../../assets/RedSnake32.png';
 
 //Constants for DRY principle
 const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
@@ -30,8 +30,6 @@ class SingleGame extends Phaser.Scene
     this.score = 0;
     //Players controls
     this.controls = undefined;
-    //State of the game
-    this.gameOver = false;
   };
 
 
