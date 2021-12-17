@@ -157,10 +157,25 @@ class SingleGame extends Phaser.Scene
     //Random placement of the apple
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
-    //Genereting apple
-    var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY).setScale(0.5);
-    newApple.enableBody = true;
-    return newApple;
+    //Random placement of the apple
+    do
+    {
+      var isOccupied = false;
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var checkSnake = this.snake.getBody();
+      //Check if the coordinate of the apple is in the body of snake1
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+    } while (isOccupied)
+    //Give a new position for the apple
+    this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   };
 
 

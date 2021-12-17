@@ -200,9 +200,9 @@ class CoopGame extends Phaser.Scene
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Random placement of the apple
-    var isOccupied = false;
     do
     {
+      var isOccupied = false;
       var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
       var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
       var checkSnake = this.snake1.getBody();
