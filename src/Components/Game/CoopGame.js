@@ -35,8 +35,8 @@ class CoopGame extends Phaser.Scene
     this.controls1 = undefined;
     //TODO: controls2
     //Velocity of the snakes
-    this.speed = 4;
-  };
+    this.speed = 2;
+  }; 
 
 
   /**
@@ -82,18 +82,18 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //FIXME:Changing the speed depending on the score
+    //Changing the speed depending on the score
     if (this.score1 === 0 || this.score2 === 0)
     {
       //prevents 0 division
     }
-    else if (this.score1 >= this.score2)
+    else if (this.score1 >= this.score2 && this.score1 > 20)
     {
-      this.speed = Math.floor(this.score1);
+      this.speed = Math.floor(this.score1 / 10);
     }
-    else
+    else if (this.score2 > 20)
     {
-      this.speed = Math.floor(this.score2);
+      this.speed = Math.floor(this.score2 / 10);
     }
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -114,9 +114,8 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
+    if (this.keyFrameValue % Math.floor(SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
-      //!!!!!!!!! a effacer console.log([this.snake1.getBody().getAt(0).x,this.snake1.getBody().getAt(0).y]);
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
       {
@@ -136,7 +135,6 @@ class CoopGame extends Phaser.Scene
       }
     }
     //collision with a wall
-    if (this.isGameOver) this.shutdown();
     if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
       this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
     {
@@ -145,19 +143,8 @@ class CoopGame extends Phaser.Scene
     //collision with itself
     if(this.snake1.eatItself()) this.shutdown();
     //collision with the other snake
-    if(this.eatOtherSnake(this.snake1,this.snake2)) this.shutdown();
+    if(this.isEatingOtherSnake(this.snake1,this.snake2)) this.shutdown();
   };
-
-  eatOtherSnake(snakeHead, snake){
-    let headX = snakeHead.getBody().getAt(0).x;
-    let headY = snakeHead.getBody().getAt(0).y;
-
-    for(let i = 0; i < snake.body.length; i++){
-      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
-        return true;
-    }
-    return false;
-  }
 
 
   /**
@@ -213,10 +200,51 @@ class CoopGame extends Phaser.Scene
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    var isOccupied = false;
+    do
+    {
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var checkSnake = this.snake1.getBody();
+      //Check if the coordinate of the apple is in the body of snake1
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+      //Check if the coordinate of the apple is in the body of snake2
+      if (!isOccupied)
+      {
+        checkSnake = this.snake2.getBody();
+        for(let i = 0; i < checkSnake.length; i++)
+        {
+          if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+          {
+            isOccupied = true;
+            break;
+          }
+        }
+      }
+    } while (isOccupied)
+    //Give a new position for the apple
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
-   }
+  }
    
+
+  isEatingOtherSnake(snakeHead, snake)
+  {
+    let headX = snakeHead.getBody().getAt(0).x;
+    let headY = snakeHead.getBody().getAt(0).y;
+
+    for(let i = 0; i < snake.body.length; i++)
+    {
+      if(headX === snake.getBody().getAt(i).x && headY === snake.getBody().getAt(i).y)
+        return true;
+    }
+    return false;
+  }
 }
 export default CoopGame;
