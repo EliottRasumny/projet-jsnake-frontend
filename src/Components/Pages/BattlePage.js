@@ -1,38 +1,39 @@
-import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 import Phaser from "phaser";
-import GameScene from "../Game/GameScene";
+import BattleGame from '../Game/BattleGame';
+import UIScore from "../Game/UIScore";
 
 var game;
 
-/**
- * Render the BattlePage :
- * Just an example to demonstrate how to use the router to "redirect" to a new page
- */
+
 function BattlePage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div id="gameDiv" class="d-flex justify-content-center my-3"></div>`;
+  pageDiv.innerHTML = `<div id="battleGame" class="container justify-content-center my-3"></div>`;
 
-  let config = {
+  const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
+    backgroundColor: '#BDEB5E',
     physics: {
-      default: "arcade",
-      arcade: {
-        gravity: { y: 300 },
-        debug: false,
-      },
+      default: 'arcade',
+      arcade: {y: 0}
     },
-    scene: [GameScene],
-    //  parent DOM element into which the canvas created by the renderer will be injected.
-    parent: "gameDiv",
+    parent: "battleGame",
+    scene: [BattleGame, UIScore]
   };
+
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-
+  
+  /*
+  game.stage.add('Menu', Menu);     
+  // Adding the Game state.
+  game.state.add('Game', BattleGame);
+  game.state.start('Menu');
+  */
 
   // create a login form
   const submit = document.createElement("input");
