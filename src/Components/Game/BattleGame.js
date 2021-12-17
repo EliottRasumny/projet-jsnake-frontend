@@ -37,6 +37,10 @@ class BattleGame extends Phaser.Scene
     this.controls2 = undefined;
     //Velocity of the snakes
     this.speed = 2;
+    this.upB = z;
+    this.downB = s;
+    this.leftB = q;
+    this.rightB = d
   };
 
 
@@ -73,7 +77,7 @@ class BattleGame extends Phaser.Scene
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
-    this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
+    this.controls2 = this.input.keyboard.addKeys(`${this.upB},${this.downB},${this.leftB},${this.rightB}`);
   };
 
 
@@ -115,19 +119,19 @@ class BattleGame extends Phaser.Scene
       this.nextDirection1 = 'left';
     }
     //Registering new movement : Snake2
-    if (this.direction2 != 'down' && this.controls2.z.isDown)
+    if (this.direction2 != 'down' && this.controls2.this.downB.isDown)
     {
       this.nextDirection2 = 'up';
     }
-    else if (this.direction2 != 'up' && this.controls2.s.isDown)
+    else if (this.direction2 != 'up' && this.controls2.this.upB.isDown)
     {
       this.nextDirection2 = 'down';
     }
-    else if (this.direction2 != 'left' && this.controls2.d.isDown)
+    else if (this.direction2 != 'left' && this.controls2.this.rightB.isDown)
     {
       this.nextDirection2 = 'right';
     }
-    else if (this.direction2 != 'right' && this.controls2.q.isDown)
+    else if (this.direction2 != 'right' && this.controls2.this.leftB.isDown)
     {
       this.nextDirection2 = 'left';
     }
