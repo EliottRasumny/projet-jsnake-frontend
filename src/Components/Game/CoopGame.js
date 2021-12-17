@@ -38,6 +38,18 @@ class CoopGame extends Phaser.Scene
     this.speed = 4;
     //State of the game
     this.gameOver = false;
+    //Coordinates Snakes and border
+    this.coordinatesSnakeAndBorder = new Set();
+    for(let i = 0; i < 1024; i+=32){
+      this.coordinatesSnakeAndBorder.add([-32,i]);
+      this.coordinatesSnakeAndBorder.add([1024,i]);
+    }
+    console.log(this.coordinatesSnakeAndBorder);
+    let array = new Array(2)
+    array[0]=-32;
+    array[1]=64;
+    console.log(this.coordinatesSnakeAndBorder.has(array));
+    
   };
 
 
@@ -74,7 +86,7 @@ class CoopGame extends Phaser.Scene
     //Creating colliders
     //TODO: see what to put in...
     //this.physics.add.collider(this.snake1._group, this.apple);
-    //this.physics.add.overlap(this.snake1, this.apple, this.eatFood(this.snake1), true, true);
+    //this.physics.add.overlap(this.snake1.getBody().getAt(0), this.apple, this.eatFood(this.snake1), true, true);
     //this.physics.add.collider(this.snake2, this.apple);
     //this.physics.add.collider(this.snake1, this.snake2);
     //Creating colliders
@@ -126,6 +138,7 @@ class CoopGame extends Phaser.Scene
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
     if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
+      //!!!!!!!!! a effacer console.log([this.snake1.getBody().getAt(0).x,this.snake1.getBody().getAt(0).y]);
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
       {
@@ -134,11 +147,9 @@ class CoopGame extends Phaser.Scene
         this.nextDirection1 = null;
       }
       //Collision with an apple
-
       if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
       {
         this.eatFood(this.snake1);
-        this.snake1.growUp(this.direction1);
       }
       //Moving the snake
       else
@@ -150,7 +161,28 @@ class CoopGame extends Phaser.Scene
 
     //collision with a wall -> end game
     if (this.isGameOver) this.shutdown();
+    this.coordinatesSnakeAndBorder.forEach(element => {
+      if(element[0] == this.snake1.getBody().getAt(0).x && element[1] == this.snake1.getBody().getAt(0).y)
+        console.log("here");
+    });
+    //collision with itself ->
+    if(this.snake1.eatItself())
+      console.log("here");
+    if(this.eatOtherSnake(this.snake1,this.snake2))
+      console.log("here");
+    
   };
+
+  eatOtherSnake(snakeHead, snake){
+    let headX = snakeHead.getBody().getAt(0).x;
+    let headY = snakeHead.getBody().getAt(0).y;
+
+    for(let i = 0; i < snake.body.length; i++){
+      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
+        return true;
+    }
+    return false;
+  }
 
 
   /**
@@ -203,14 +235,14 @@ class CoopGame extends Phaser.Scene
     if (player == this.snake1)
     {
       this.score1++;
-      //TODO:The snake grow up
-      //this.snake1.growUp();
+      //The snake grow up
+      player.growUp(this.direction1);
     }
     else
     {
       this.score2++;
-      //TODO:The snake grow up
-      //this.snake2.growUp();
+      //The snake grow up
+      player.growUp(this.direction2);
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Random placement of the apple

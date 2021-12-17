@@ -205,7 +205,15 @@ export default class Snake
 
   eatItself()
   {
-     // TODO: launch event
+    // TODO: launch event
+    let headX = this.body.getAt(0).x;
+    let headY = this.body.getAt(0).y;
+
+    for(let i = 4; i < this.body.length; i++){
+      if(headX == this.body.getAt(i).x && headY == this.body.getAt(i).y)
+        return true;
+    }
+    return false;
   }
 
   growUp(direction)
