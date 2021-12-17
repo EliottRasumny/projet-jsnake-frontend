@@ -22,7 +22,9 @@ class CoopGame extends Phaser.Scene
     this.snake2 = undefined;
     //directions
     this.direction1 = 'right';
+    this.direction2 = 'left';
     this.nextDirection1 = null;
+    this.nextDirection2 = null;
     //TODO: direction2 & newDirection2
     //Food
     this.apple = undefined;
@@ -33,10 +35,13 @@ class CoopGame extends Phaser.Scene
     this.score2 = 0;
     //Players controls
     this.controls1 = undefined;
+    this.controls2 = undefined;
     //TODO: controls2
     //Velocity of the snakes
-    this.speed = 2;
-  }; 
+    this.speed = 4;
+    //State of the game
+    this.gameOver = false;
+  };
 
 
   /**
@@ -68,10 +73,21 @@ class CoopGame extends Phaser.Scene
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
+    
+    //Creating colliders
+    //TODO: see what to put in...
+    //this.physics.add.collider(this.snake1._group, this.apple);
+    //this.physics.add.overlap(this.snake1.getBody().getAt(0), this.apple, this.eatFood(this.snake1), true, true);
+    //this.physics.add.collider(this.snake2, this.apple);
+    //this.physics.add.collider(this.snake1, this.snake2);
+    //Creating colliders
     //UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
+    this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
+    console.log(this.controls1);
+    console.log(this.controls2);
   };
 
 
@@ -82,18 +98,18 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //Changing the speed depending on the score
+    //TODO:Changing the speed depending on the score
     if (this.score1 === 0 || this.score2 === 0)
     {
       //prevents 0 division
     }
-    else if (this.score1 >= this.score2 && this.score1 > 20)
+    else if (this.score1 >= this.score2)
     {
-      this.speed = Math.floor(this.score1 / 10);
+      this.speed = Math.floor(this.score1);
     }
-    else if (this.score2 > 20)
+    else
     {
-      this.speed = Math.floor(this.score2 / 10);
+      this.speed = Math.floor(this.score2);
     }
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -112,16 +128,42 @@ class CoopGame extends Phaser.Scene
     {
       this.nextDirection1 = 'left';
     }
+    
+
+
+    if (this.direction2 != 'down' && this.controls2.z.isDown)
+    {
+      this.nextDirection2 = 'up';
+    }
+    else if (this.direction2 != 'up' && this.controls2.s.isDown)
+    {
+      this.nextDirection2 = 'down';
+    }
+    else if (this.direction2 != 'left' && this.controls2.d.isDown)
+    {
+      this.nextDirection2 = 'right';
+    }
+    else if (this.direction2 != 'right' && this.controls2.q.isDown)
+    {
+      this.nextDirection2 = 'left';
+    }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % Math.floor(SQUARE_SIZE / this.speed) === 0) {
+    if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
+      //!!!!!!!!! a effacer console.log([this.snake1.getBody().getAt(0).x,this.snake1.getBody().getAt(0).y]);
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
       {
         //Update the direction of the snake
         this.direction1 = this.nextDirection1;
         this.nextDirection1 = null;
+      }
+      if (this.nextDirection2 != null)
+      {
+        //Update the direction of the snake
+        this.direction2 = this.nextDirection2;
+        this.nextDirection2 = null;
       }
       //Collision with an apple
       if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
@@ -133,17 +175,50 @@ class CoopGame extends Phaser.Scene
       {
         this.snake1.move(this.direction1);
       }
+
+      if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple.getBounds()))
+      {
+        this.eatFood(this.snake2);
+      }
+      else
+      {
+        this.snake2.move(this.direction2);
+      }
+
     }
-    //collision with a wall
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
-    {
+    //Collision with an apple
+
+    //collision with a wall -> end game
+    if (this.isGameOver) this.shutdown();
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 || this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
       this.shutdown();
+      if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 || this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+      this.shutdown();
+    //collision with itself ->
+    if(this.snake1.eatItself() || this.snake2.eatItself())
+        this.shutdown();
+    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1))
+        this.shutdown();
+    
+  };
+
+  eatOtherSnake(snakeHead, snake){
+    let headX = snakeHead.getBody().getAt(0).x;
+    let headY = snakeHead.getBody().getAt(0).y;
+
+    for(let i = 0; i < snake.body.length; i++){
+      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
+        return true;
     }
-    //collision with itself
-    if(this.snake1.eatItself()) this.shutdown();
-    //collision with the other snake
-    if(this.isEatingOtherSnake(this.snake1,this.snake2)) this.shutdown();
+    return false;
+  }
+
+
+  /**
+   * Postrendering the scene
+   */
+  render()
+  {
   };
 
 
@@ -200,51 +275,10 @@ class CoopGame extends Phaser.Scene
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
     //Random placement of the apple
-    do
-    {
-      var isOccupied = false;
-      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
-      var checkSnake = this.snake1.getBody();
-      //Check if the coordinate of the apple is in the body of snake1
-      for(let i = 0; i < checkSnake.length; i++)
-      {
-        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
-        {
-          isOccupied = true;
-          break;
-        }
-      }
-      //Check if the coordinate of the apple is in the body of snake2
-      if (!isOccupied)
-      {
-        checkSnake = this.snake2.getBody();
-        for(let i = 0; i < checkSnake.length; i++)
-        {
-          if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
-          {
-            isOccupied = true;
-            break;
-          }
-        }
-      }
-    } while (isOccupied)
-    //Give a new position for the apple
+    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
-  }
+   }
    
-
-  isEatingOtherSnake(snakeHead, snake)
-  {
-    let headX = snakeHead.getBody().getAt(0).x;
-    let headY = snakeHead.getBody().getAt(0).y;
-
-    for(let i = 0; i < snake.body.length; i++)
-    {
-      if(headX === snake.getBody().getAt(i).x && headY === snake.getBody().getAt(i).y)
-        return true;
-    }
-    return false;
-  }
 }
 export default CoopGame;

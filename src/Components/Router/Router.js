@@ -28,7 +28,7 @@ const routes = {
   "/battle": BattlePage,
   "/scoreboardCoop": ScoreboardCoopPage,
   "/scoreboard": ScoreboardPage,
-  "/login": LoginPage,
+  "/login1": LoginPage,
   "/login2": LoginPage2,
   "/register": RegisterPage,
   "/logout": Lougout,
