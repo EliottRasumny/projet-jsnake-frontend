@@ -98,7 +98,6 @@ function SettingsPage() {
     console.log("UP");
     upKey1 = "Press any key";
     updatePage();
-    //TODO : indiquer que le user doit enfoncer une touche
   }
   async function changeKeyUp(e){
     console.log(e.code);
@@ -115,7 +114,7 @@ function SettingsPage() {
         },
       };
 
-      const response = await fetch(`/api/auths/user/`, options); // fetch return a promise => we wait for the response
+      const response = await fetch(`/api/auths/user/${user.id}`, options); // fetch return a promise => we wait for the response
       if (!response.ok) {
         throw new Error(
           "fetch error : " + response.status + " : " + response.statusText
