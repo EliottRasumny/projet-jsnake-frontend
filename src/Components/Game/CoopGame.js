@@ -184,17 +184,6 @@ class CoopGame extends Phaser.Scene
     
   };
 
-  eatOtherSnake(snakeHead, snake){
-    let headX = snakeHead.getBody().getAt(0).x;
-    let headY = snakeHead.getBody().getAt(0).y;
-
-    for(let i = 0; i < snake.body.length; i++){
-      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y)
-        return true;
-    }
-    return false;
-  };
-
 
   /**
    * Shutting down the scene
@@ -219,7 +208,10 @@ class CoopGame extends Phaser.Scene
   };
 
 
-  //Creating food for snakes
+  /**
+   * Create an apple in random given coordinates
+   * @returns A new apple
+   */
   createFood()
   {
     //Random placement of the apple
@@ -232,6 +224,11 @@ class CoopGame extends Phaser.Scene
   };
 
 
+  /**
+   * Update score of the snake which has eaten the apple and replacing this last one.
+   * Grew the body of the eating' snake up.
+   * @param {Snake} player : the snake eating the apple
+   */
   eatFood(player)
   {
     //Updating score
@@ -278,7 +275,24 @@ class CoopGame extends Phaser.Scene
       }
     } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
-   }
-   
+  }
+
+
+  /**
+   * Check if the moving snake collide with the body of the other snake
+   * @param {Snake} snakeHead : head of the moving' snake
+   * @param {Snake} snake : body of the other snake
+   * @returns true if collision, false otherwise
+   */
+  eatOtherSnake(snakeHead, snake)
+  {
+    let headX = snakeHead.getBody().getAt(0).x;
+    let headY = snakeHead.getBody().getAt(0).y;
+    for(let i = 0; i < snake.body.length; i++)
+    {
+      if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y) return true;
+    }
+    return false;
+  }
 }
 export default CoopGame;

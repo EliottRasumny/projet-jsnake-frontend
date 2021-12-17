@@ -210,7 +210,10 @@ class BattleGame extends Phaser.Scene
   };
 
 
-  //Creating food for snakes
+  /**
+   * Create an apple in random given coordinates
+   * @returns A new apple
+   */
   createFood()
   {
     //Random placement of the apple
