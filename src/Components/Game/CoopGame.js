@@ -248,9 +248,35 @@ class CoopGame extends Phaser.Scene
       player.growUp(this.direction2);
     }
     eventsCenter.emit('update-score', this.score);
-    //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    do
+    {
+      var isOccupied = false;
+      //Random placement of the apple
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      //Check if the RANDOM coordinates are in the snake or not
+      var checkSnake = this.snake.getBody();
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+      if (!isOccupied)
+      {
+        checkSnake = this.snake2.getBody();
+        for(let i = 0; i < checkSnake.length; i++)
+        {
+          if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+          {
+            isOccupied = true;
+            break;
+          }
+        }
+      }
+    } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
    }
    

@@ -223,6 +223,11 @@ class BattleGame extends Phaser.Scene
   };
 
 
+  /**
+   * Update score of the snake which has eaten the apple and replacing this last one.
+   * Grew the body of the eating' snake up.
+   * @param {Snake} player : the snake eating the apple
+   */
   eatFood(player)
   {
     //Updating score
@@ -239,13 +244,45 @@ class BattleGame extends Phaser.Scene
       player.growUp(this.direction2);
     }
     eventsCenter.emit('update-score', this.score1, this.score2);
-    //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    do
+    {
+      var isOccupied = false;
+      //Random placement of the apple
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      //Check if the RANDOM coordinates are in the snake or not
+      var checkSnake = this.snake.getBody();
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+      if (!isOccupied)
+      {
+        checkSnake = this.snake2.getBody();
+        for(let i = 0; i < checkSnake.length; i++)
+        {
+          if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+          {
+            isOccupied = true;
+            break;
+          }
+        }
+      }
+    } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
    
 
+  /**
+   * Check if the moving snake collide with the body of the other snake
+   * @param {Snake} snakeHead : head of the moving' snake
+   * @param {Snake} snake : body of the other snake
+   * @returns true if collision, false otherwise
+   */
   eatOtherSnake(snakeHead, snake)
   {
     let headX = snakeHead.getBody().getAt(0).x;
