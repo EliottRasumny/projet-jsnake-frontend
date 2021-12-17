@@ -5,7 +5,7 @@ import eventsCenter from './EventCenter';
 import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/Grid32_1024x768.png'
-import appleAsset from '../../assets/RedApple.png';
+import appleAsset from '../../assets/GoldenApple.png';
 import magentaSnakeAsset from '../../assets/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/OrangeSnake32.png'
 
