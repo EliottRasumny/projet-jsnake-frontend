@@ -244,7 +244,7 @@ class CoopGame extends Phaser.Scene
       //The snake grow up
       player.growUp(this.direction2);
     }
-    eventsCenter.emit('update-score', this.score);
+    eventsCenter.emit('update-scoreSingle', this.score);
     do
     {
       var isOccupied = false;
