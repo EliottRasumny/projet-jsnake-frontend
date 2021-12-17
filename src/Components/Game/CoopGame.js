@@ -25,7 +25,6 @@ class CoopGame extends Phaser.Scene
     this.direction2 = 'left';
     this.nextDirection1 = null;
     this.nextDirection2 = null;
-    //TODO: direction2 & newDirection2
     //Food
     this.apple = undefined;
     //Enable to render the snake properly
@@ -35,11 +34,8 @@ class CoopGame extends Phaser.Scene
     //Players controls
     this.controls1 = undefined;
     this.controls2 = undefined;
-    //TODO: controls2
     //Velocity of the snakes
-    this.speed = 4;
-    //State of the game
-    this.gameOver = false;
+    this.speed = 2;
   };
 
 
@@ -72,13 +68,11 @@ class CoopGame extends Phaser.Scene
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
-    //UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
     this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
-    console.log(this.controls1);
-    console.log(this.controls2);
+    //UIScene for scores
+    this.scene.run('ui-score', 10, 10, 'Player1');
   };
 
 
@@ -94,7 +88,7 @@ class CoopGame extends Phaser.Scene
     {
       this.speed = Math.floor(this.score / 10);
     }
-    //Registering new movement
+    //Registering new movement : Snake1
     if (this.direction1 != 'down' && this.controls1.up.isDown)
     {
       this.nextDirection1 = 'up';
@@ -111,9 +105,7 @@ class CoopGame extends Phaser.Scene
     {
       this.nextDirection1 = 'left';
     }
-    
-
-
+    //Registering new movement : Snake2
     if (this.direction2 != 'down' && this.controls2.z.isDown)
     {
       this.nextDirection2 = 'up';
@@ -137,50 +129,53 @@ class CoopGame extends Phaser.Scene
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
       {
-        //Update the direction of the snake
+        //Update the direction of the snake : Snake1
         this.direction1 = this.nextDirection1;
         this.nextDirection1 = null;
       }
       if (this.nextDirection2 != null)
       {
-        //Update the direction of the snake
+        //Update the direction of the snake : Snake2
         this.direction2 = this.nextDirection2;
         this.nextDirection2 = null;
       }
-      //Collision with an apple
+      //Collision with an apple : Snake1
       if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple.getBounds()))
       {
         this.eatFood(this.snake1);
       }
-      //Moving the snake
-      else
+      else //Moving the snake
       {
         this.snake1.move(this.direction1);
       }
-
+      //Collision with an apple : Snake2
       if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple.getBounds()))
       {
         this.eatFood(this.snake2);
       }
-      else
+      else //Moving the snake
       {
         this.snake2.move(this.direction2);
       }
 
     }
-    //Collision with an apple
-
-    //collision with a wall -> end game
+    //Collision with a wall : Snake1
     if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 || this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
+      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+    {
       this.shutdown();
-      if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 || this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+    }
+    //Collision with a wall : Snake2
+    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 ||
+      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+    {
       this.shutdown();
-    //collision with itself ->
-    if(this.snake1.eatItself() || this.snake2.eatItself())
-        this.shutdown();
-    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1))
-        this.shutdown();
+    }
+    //Collision with themselfs
+    if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+    //Collision with each other
+    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
     
   };
 
