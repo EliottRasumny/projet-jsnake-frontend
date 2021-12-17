@@ -61,7 +61,13 @@ function RegisterPage() {
         },
       };
 
-      const response = await fetch("/api/auths/register", options); // fetch return a promise => we wait for the response
+      let user1 = getSessionObject("user1");
+      var response = null;
+      if(!user1){
+        response = await fetch("/api/auths/register1", options); // fetch return a promise => we wait for the response
+      } else {
+        response = await fetch("/api/auths/register2", options); // fetch return a promise => we wait for the response
+      }
 
       if (!response.ok) {
         notification.className = "alert alert-danger";
@@ -72,7 +78,6 @@ function RegisterPage() {
       
       // save the user into the localStorage
       // AND rerender the navbar for an authenticated user : temporary step prior to deal with token
-      let user1 = getSessionObject("user1");
       if(!user1){
         setSessionObject("user1", user);
         Navbar({ isAuthenticated1: true });

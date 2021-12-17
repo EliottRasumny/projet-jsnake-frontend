@@ -2,6 +2,7 @@ import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import PlayGame from "../Game/SingleGame";
 import UIScore from "../Game/UIScore";
+import GameOver from "../Game/GameOver";
 
 var game;
 
@@ -25,16 +26,7 @@ function PlayPage() {
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
-  //FIXME: bugs while collisions = true
   game = new Phaser.Game(config);
-  
-  /*
-  game.stage.add('Menu', Menu);     
-  // Adding the Game state.
-  game.state.add('Game', CoopGame);
-  game.state.start('Menu');
-  */
-
   // create a login form
   const submit = document.createElement("input");
   submit.value = "Go back to Single player";
