@@ -157,24 +157,7 @@ class SingleGame extends Phaser.Scene
     //Random placement of the apple
     var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
     var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
-    //Random placement of the apple
-    do
-    {
-      var isOccupied = false;
-      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
-      var checkSnake = this.snake.getBody();
-      //Check if the coordinate of the apple is in the body of snake1
-      for(let i = 0; i < checkSnake.length; i++)
-      {
-        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
-        {
-          isOccupied = true;
-          break;
-        }
-      }
-    } while (isOccupied)
-    //Give a new position for the apple
+    //Set the positino of the apple
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   };
 
@@ -186,9 +169,23 @@ class SingleGame extends Phaser.Scene
     //The snake grow up
     this.snake.growUp(this.direction);
     eventsCenter.emit('update-score', this.score1);
-    //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    do
+    {
+      var isOccupied = false;
+      //Random placement of the apple
+      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      //Check if the RANDOM coordinates are in the snake or not
+      var checkSnake = this.snake.getBody();
+      for(let i = 0; i < checkSnake.length; i++)
+      {
+        if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
+        {
+          isOccupied = true;
+          break;
+        }
+      }
+    } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
    
