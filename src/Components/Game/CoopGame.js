@@ -247,7 +247,7 @@ class CoopGame extends Phaser.Scene
       var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
       var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
-      var checkSnake = this.snake.getBody();
+      var checkSnake = this.snake1.getBody();
       for(let i = 0; i < checkSnake.length; i++)
       {
         if(randomX === checkSnake.getAt(i).x && randomY === checkSnake.getAt(i).y)
