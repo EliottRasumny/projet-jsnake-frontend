@@ -35,7 +35,7 @@ class CoopGame extends Phaser.Scene
     this.controls1 = undefined;
     //TODO: controls2
     //Velocity of the snakes
-    this.speed = 4;
+    this.speed = 2;
   };
 
 
@@ -82,18 +82,18 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //FIXME:Changing the speed depending on the score
+    //Changing the speed depending on the score
     if (this.score1 === 0 || this.score2 === 0)
     {
       //prevents 0 division
     }
-    else if (this.score1 >= this.score2)
+    else if (this.score1 >= this.score2 && this.score1 > 20)
     {
-      this.speed = Math.floor(this.score1);
+      this.speed = Math.floor(this.score1 / 10);
     }
-    else
+    else if (this.score2 > 20)
     {
-      this.speed = Math.floor(this.score2);
+      this.speed = Math.floor(this.score2 / 10);
     }
     //Registering new movement
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -114,7 +114,7 @@ class CoopGame extends Phaser.Scene
     }
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
+    if (this.keyFrameValue % Math.floor(SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)
