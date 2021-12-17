@@ -36,8 +36,6 @@ class CoopGame extends Phaser.Scene
     //TODO: controls2
     //Velocity of the snakes
     this.speed = 4;
-    //State of the game
-    this.gameOver = false;
   };
 
 
@@ -70,14 +68,6 @@ class CoopGame extends Phaser.Scene
     //Creating the snakes
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
-    
-    //Creating colliders
-    //TODO: see what to put in...
-    //this.physics.add.collider(this.snake1._group, this.apple);
-    //this.physics.add.overlap(this.snake1.getBody().getAt(0), this.apple, this.eatFood(this.snake1), true, true);
-    //this.physics.add.collider(this.snake2, this.apple);
-    //this.physics.add.collider(this.snake1, this.snake2);
-    //Creating colliders
     //UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player1');
     //Enabling keyboard inputs
@@ -92,7 +82,7 @@ class CoopGame extends Phaser.Scene
   {
     //Update the key frame value
     this.keyFrameValue++;
-    //TODO:Changing the speed depending on the score
+    //FIXME:Changing the speed depending on the score
     if (this.score1 === 0 || this.score2 === 0)
     {
       //prevents 0 division
@@ -145,19 +135,17 @@ class CoopGame extends Phaser.Scene
         this.snake1.move(this.direction1);
       }
     }
-    //Collision with an apple
-
-    //collision with a wall -> end game
+    //collision with a wall
     if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 || this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
-      console.log("outside box");
-    
-    //collision with itself ->
-    if(this.snake1.eatItself())
-      console.log("eat himself");
-    if(this.eatOtherSnake(this.snake1,this.snake2))
-      console.log("eat other snake");
-    
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
+      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+    {
+      this.shutdown();
+    }
+    //collision with itself
+    if(this.snake1.eatItself()) this.shutdown();
+    //collision with the other snake
+    if(this.eatOtherSnake(this.snake1,this.snake2)) this.shutdown();
   };
 
   eatOtherSnake(snakeHead, snake){
@@ -173,19 +161,11 @@ class CoopGame extends Phaser.Scene
 
 
   /**
-   * Postrendering the scene
-   */
-  render()
-  {
-  };
-
-
-  /**
    * Shutting down the scene
    */
   shutdown()
   {
-    //TODO:
+    this.scene.start('GameOver');
   };
 
 
