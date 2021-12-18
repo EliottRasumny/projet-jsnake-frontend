@@ -64,7 +64,7 @@ class SingleGame extends Phaser.Scene
     //Creating the snakes
     this.snake = this.createSnake((5 * SQUARE_SIZE), (7 * SQUARE_SIZE), 'right', SNAKE_KEY);
     //FIXME:UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player');
+    this.scene.run('ui-score', 'Player');
     //Enabling keyboard inputs
     this.controls = this.input.keyboard.createCursorKeys();
   };

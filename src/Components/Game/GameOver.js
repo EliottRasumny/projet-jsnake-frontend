@@ -32,7 +32,7 @@ export default class GameOver extends Phaser.Scene
     button.setInteractive();
     button.on('pointerover', () => { button.setFontSize(30);});
     button.on('pointerout', () => { button.setFontSize(25); });
-    button.on('pointerdown', () => { this.scene.start('game-start'); });
+    button.on('pointerdown', () => { this.scene.start('game-scene'); });
   }
 
 
