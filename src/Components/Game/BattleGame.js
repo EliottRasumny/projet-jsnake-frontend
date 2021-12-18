@@ -84,7 +84,6 @@ class BattleGame extends Phaser.Scene
     this.controls1 = this.input.keyboard.createCursorKeys();
     this.controls2 = this.input.keyboard.addKeys(`q,z,s,d`);
     //!this.controls2 = this.input.keyboard.addKeys(`${this.upB},${this.downB},${this.leftB},${this.rightB}`);
-    
   };
 
 
