@@ -31,7 +31,7 @@ class SingleGame extends Phaser.Scene
     //Players controls
     this.controls = undefined;
     //Velocity of the snakes
-    this.speed = 2;
+    this.speed = 3;
   };
 
 
