@@ -24,7 +24,6 @@ export default class UIScore extends Phaser.Scene
 		// clean up when Scene is shutdown
 		this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
 			eventsCenter.off('update-score', this.updateScore, this);
-			eventsCenter.off('game-over', this.gameOverDisplay, this);
 		});
 	}
 

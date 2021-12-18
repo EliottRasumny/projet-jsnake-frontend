@@ -208,7 +208,7 @@ class CoopGame extends Phaser.Scene
   {
     this.callBackend(this.score);
     //Create event to display the final score
-    eventsCenter.emit('game-over');
+    eventsCenter.emit('game-over-score');
     //Closing gamescene and open GameOver scene
     this.scene.start('game-over');
   };

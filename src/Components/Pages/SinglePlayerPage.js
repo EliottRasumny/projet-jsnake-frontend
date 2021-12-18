@@ -14,6 +14,7 @@ function SinglePage() {
     TODO:
     <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
   </div>
+  <h1 class="m-5">Single Player</h1>
   <div id="playGame" class="container justify-content-center mt-5 my-3"></div>`;
 
   const config = {

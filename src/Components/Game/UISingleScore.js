@@ -19,11 +19,10 @@ export default class UISingleScore extends Phaser.Scene
 		}).setOrigin(0.5);
 		//Listen to an event
 		eventsCenter.on('update-score-single', this.updateScore, this);
-		eventsCenter.on('game-over', this.gameOverDisplay, this);
+		eventsCenter.on('game-over-score', this.gameOverDisplay, this);
 		// clean up when Scene is shutdown
 		this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
 			eventsCenter.off('update-score-single', this.updateScore, this);
-			eventsCenter.off('game-over', this.gameOverDisplay, this);
 		});
 	}
 
