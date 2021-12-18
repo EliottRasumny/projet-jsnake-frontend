@@ -36,7 +36,7 @@ class BattleGame extends Phaser.Scene
     this.controls1 = undefined;
     this.controls2 = undefined;
     //Velocity of the snakes
-    this.speed = 2;
+    this.speed = 3;
   };
 
 
@@ -85,17 +85,13 @@ class BattleGame extends Phaser.Scene
     //Update the key frame value
     this.keyFrameValue++;
     //Changing the speed depending on the score
-    if (this.score1 === 0 || this.score2 === 0)
+    if (this.score1 >= this.score2 && this.score1 > 15)
     {
-      //prevents 0 division
+      this.speed = Math.floor(this.score1 / 5);
     }
-    else if (this.score1 >= this.score2 && this.score1 > 20)
+    else if (this.score2 > 15)
     {
-      this.speed = Math.floor(this.score1 / 10);
-    }
-    else if (this.score2 > 20)
-    {
-      this.speed = Math.floor(this.score2 / 10);
+      this.speed = Math.floor(this.score2 / 5);
     }
     //Registering new movement : Snake1
     if (this.direction1 != 'down' && this.controls1.up.isDown)
@@ -282,7 +278,7 @@ class BattleGame extends Phaser.Scene
 
   /**
    * Check if the moving snake collide with the body of the other snake
-   * @param {Snake} snakeHead : head of the moving' snake
+   * @param {Snake} snakeHead : head of the moving snake
    * @param {Snake} snake : body of the other snake
    * @returns true if collision, false otherwise
    */

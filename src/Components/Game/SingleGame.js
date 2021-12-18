@@ -75,9 +75,9 @@ class SingleGame extends Phaser.Scene
     //Update the key frame value
     this.keyFrameValue++;
     //Changing the speed depending on the score
-    if (this.score > 20)
+    if (this.score > 15)
     {
-      this.speed = Math.floor(this.score / 10);
+      this.speed = Math.floor(this.score / 5);
     }
     //Registering new movement
     if (this.direction != 'down' && this.controls.up.isDown)
