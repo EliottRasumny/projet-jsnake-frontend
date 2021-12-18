@@ -170,7 +170,6 @@ class CoopGame extends Phaser.Scene
 
     }
     //Collision with a wall : Snake1
-    if (this.isGameOver) this.shutdown();
     if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
       this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
     {

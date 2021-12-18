@@ -4,7 +4,6 @@ import PlayGame from "../Game/SingleGame";
 import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/UIGameOver";
 import Start from "../Game/UIStart";
-import BattleGame from "../Game/BattleGame";
 
 var game;
 
@@ -27,23 +26,48 @@ function PlayPage() {
 
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
-  if (BattleGame.game) BattleGame.game.destroy(true, false);
   if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
-  // create a login form
-  const submit = document.createElement("input");
-  submit.value = "Go back to Single player";
-  // Example on how to use Bootstrap to style a Button
-  submit.className = "btn btn-secondary mt-3";
-  // Example on how to add an event handler : when the button is clicked, redirect
-  // to the HomePage
-  submit.addEventListener("click", () => {
-    if (game)
-    {
-      game.destroy(true, false);
-    }
-    Redirect("/single");
+  //Buttons ======================================================
+  //Go Home
+  const submitHome = document.createElement("input");
+  submitHome.value = "< GO HOME";
+  submitHome.id = "button";
+  submitHome.className = "btn btn-secondary m-3";
+  submitHome.addEventListener("click", () => {
+    if (game) game.destroy(true, false);
+    Redirect("/");
   });
-  pageDiv.appendChild(submit);
+  pageDiv.appendChild(submitHome);
+  //Go to scoreboard
+  const submitScore = document.createElement("input");
+  submitScore.value = "< SCOREBOARD >";
+  submitScore.id = "button";
+  submitScore.className = "btn btn-secondary m-3";
+  submitScore.addEventListener("click", () => {
+    if (game) game.destroy(true, false);
+    Redirect("/scoreboardSingle");
+  });
+  pageDiv.appendChild(submitScore);
+  //Go to settings
+  const submitSettings = document.createElement("input");
+  submitSettings.value = "< SETTINGS >";
+  submitSettings.id = "button";
+  submitSettings.className = "btn btn-secondary m-3";
+  submitSettings.addEventListener("click", () => {
+    if (game) game.destroy(true, false);
+    Redirect("/settings");
+  });
+  pageDiv.appendChild(submitSettings);
+  //Go to two players
+  const submitTwo = document.createElement("input");
+  submitTwo.value = "TWO PLAYERS >";
+  submitTwo.id = "button";
+  submitTwo.className = "btn btn-secondary m-3";
+  submitTwo.addEventListener("click", () => {
+    if (game) game.destroy(true, false);
+    Redirect("/twoPlayer");
+  });
+  pageDiv.appendChild(submitTwo);
 }
 export default PlayPage;

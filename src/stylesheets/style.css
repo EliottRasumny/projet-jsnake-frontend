@@ -14,6 +14,14 @@ body {
     color: white;
 }
 
+#button{
+    background-color: #a3d977;
+    
+}
+#button:hover{
+    background-color: #e3caac;
+}
+
 #btnToSingle{
     background-color: #a3d977;
     
