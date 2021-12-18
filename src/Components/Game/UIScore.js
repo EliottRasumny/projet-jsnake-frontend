@@ -7,6 +7,7 @@ export default class UIScore extends Phaser.Scene
 	constructor()
 	{
 		super('ui-score');
+		this.label = null;
 	}
 
 	create()

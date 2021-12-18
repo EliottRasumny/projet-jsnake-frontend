@@ -6,6 +6,7 @@ export default class UISingleScore extends Phaser.Scene
 	constructor()
 	{
 		super('ui-single-score');
+		this.label = null;
 	}
 
 	create()
