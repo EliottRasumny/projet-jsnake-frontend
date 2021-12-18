@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import PlayGame from "../Game/SingleGame";
 import UIScoreSingleScore from "../Game/UIScoreSingleScore";
 import GameOver from "../Game/GameOver";
+import Start from "../Game/Start";
 
 var game;
 
@@ -12,15 +13,15 @@ function PlayPage() {
 
   const config = {
     type: Phaser.AUTO,
-    width: 1024,
-    height: 768,
+    width: 544,
+    height: 480,
     backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
       arcade: {y: 0}
     },
     parent: "playGame",
-    scene: [PlayGame, UIScoreSingleScore]
+    scene: [Start, PlayGame, UIScoreSingleScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)

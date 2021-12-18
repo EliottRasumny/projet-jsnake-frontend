@@ -4,9 +4,9 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
-import gridAsset from '../../assets/Grid32_1024x768.png'
-import appleAsset from '../../assets/RedApple.png';
-import magentaSnakeAsset from '../../assets/RedSnake32.png';
+import gridAsset from '../../assets/img/Grid32_1024x768.png'
+import appleAsset from '../../assets/img/RedApple.png';
+import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
 
 //Constants for DRY principle
 const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
@@ -22,7 +22,7 @@ class SingleGame extends Phaser.Scene
     //Player
     this.snake = undefined;
     //directions
-    this.direction = 'right';
+    this.direction = null;
     this.nextDirection = null;
     //Enable to render the snake properly
     this.keyFrameValue = 0;
@@ -53,13 +53,16 @@ class SingleGame extends Phaser.Scene
    */
   create()
   {
+    //Reset direction if game restart
+    this.direction = 'right';
+    this.nextDirection = null;
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating food
     this.apple = this.createFood();
     this.apple.setScale(0.99,0.99);
     //Creating the snakes
-    this.snake = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE_KEY);
+    this.snake = this.createSnake((5 * SQUARE_SIZE), (7 * SQUARE_SIZE), 'right', SNAKE_KEY);
     //FIXME:UIScene for scores
     this.scene.run('ui-score', 10, 10, 'Player');
     //Enabling keyboard inputs
@@ -119,8 +122,8 @@ class SingleGame extends Phaser.Scene
       }
     }
     //collision with a wall
-    if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 1024 ||
-      this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 768)
+    if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
+      this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
     {
       this.shutdown();
     }
@@ -134,7 +137,8 @@ class SingleGame extends Phaser.Scene
    */
   shutdown()
   {
-    this.scene.start('GameOver');
+    this.scene.stop('ui-score');
+    this.scene.start('game-over'); //Stop current scene and start the new one
   };
 
   /**
@@ -155,8 +159,8 @@ class SingleGame extends Phaser.Scene
   createFood()
   {
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    var randomX = Math.floor(Math.random() * 17) * SQUARE_SIZE;
+    var randomY = Math.floor(Math.random() * 15) * SQUARE_SIZE;
     //Genereting apple
     var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
     newApple.enableBody = true;
@@ -175,8 +179,8 @@ class SingleGame extends Phaser.Scene
     {
       var isOccupied = false;
       //Random placement of the apple
-      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var randomX = Math.floor(Math.random() * 17) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 15) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
       var checkSnake = this.snake.getBody();
       for(let i = 0; i < checkSnake.length; i++)
