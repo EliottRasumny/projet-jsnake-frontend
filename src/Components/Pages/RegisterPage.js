@@ -48,7 +48,6 @@ function RegisterPage() {
     e.preventDefault();
     const username = document.getElementById("username");
     const password = document.getElementById("password");
-    console.log("credentials", username.value, password.value);
     try {
       const options = {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -75,7 +74,6 @@ function RegisterPage() {
       }
       else{
         const user = await response.json(); // json() returns a promise => we wait for the data
-        console.log("user authenticated", user);
         
         // save the user into the localStorage
         // AND rerender the navbar for an authenticated user : temporary step prior to deal with token

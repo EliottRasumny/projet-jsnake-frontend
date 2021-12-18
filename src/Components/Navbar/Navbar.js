@@ -90,6 +90,9 @@ const Navbar = () => {
                 <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
                 <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
               </div>
+              <div class="d-flex">
+                <span class="ms-3">${user1.username1}</span>
+              </div>
           </div>
       </div>
   </nav>
@@ -140,6 +143,10 @@ const Navbar = () => {
             </ul>
             <div class="d-flex">
                 <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
+            </div>
+            <div class="d-flex">
+              <span class="ms-3">${user1.username1}</span>
+              <span class="ms-3">${user2.username1}</span>
             </div>
           </div>
       </div>
