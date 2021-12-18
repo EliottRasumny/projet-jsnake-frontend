@@ -1,6 +1,4 @@
 import Phaser from 'phaser';
-//import scenes & events
-import eventsCenter from './EventCenter';
 
 export default class GameOver extends Phaser.Scene
 {
@@ -35,6 +33,7 @@ export default class GameOver extends Phaser.Scene
     button.on('pointerout', () => { button.setFontSize(32); });
     button.on('pointerdown', () => {
       this.scene.stop('ui-score');
+      this.scene.stop('ui-single-score');
       this.scene.start('game-scene');
     });
   }

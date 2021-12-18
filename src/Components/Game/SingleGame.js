@@ -136,70 +136,7 @@ class SingleGame extends Phaser.Scene
    */
   shutdown()
   {
-    let user = getSessionObject("user1");
-    if(!user){
-
-    }
-    else{
-      console.log(user);
-
-      if (this.score > user.bestScoreSingle){
-        changeScore(this.score);
-      }
-  
-  
-    }
-    
-    async function changeScore(score){
-      console.log("score : ", score);  
-      
-      //update the user bestscore
-      try {
-        const options = {
-          method: "PUT", 
-          body: JSON.stringify({
-            bestScoreSingle: score,
-          }), 
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await fetch(`/api/auths/user/${user.id}`, options); // fetch return a promise => we wait for the response
-        if (!response.ok) {
-          throw new Error(
-            "fetch error : " + response.status + " : " + response.statusText
-          );
-        }
-      }catch (error) {
-        console.error("error: ", error);
-      }
-      user.bestScoreSingle = score;
-      console.log("user after update : ", user);
-      //update the bestscoreSingle
-      try {
-        const options = {
-          method: "POST", 
-          body: JSON.stringify({
-            score: score,
-            username: user.username1,
-          }), 
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await fetch(`/api/single/bestscoressingle/`, options); // fetch return a promise => we wait for the response
-        if (!response.ok) {
-          throw new Error(
-            "fetch error : " + response.status + " : " + response.statusText
-          );
-        }
-      }catch (error) {
-        console.error("LoginPage::error: ", error);
-      }
-
-    }
+    callBackend(this.score);
     //Create event to display the final score
     eventsCenter.emit('game-over');
     //Closing gamescene and open GameOver scene
@@ -258,6 +195,65 @@ class SingleGame extends Phaser.Scene
       }
     } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
+  }
+
+
+  callBackend(score)
+  {
+    let user = getSessionObject("user1");
+    if(!user)
+    {}
+    else{
+      if (score > user.bestScoreSingle){
+        changeScore(score);
+      }
+    }
+    
+    async function changeScore(score){
+      //update the user bestscore
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreSingle: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(`/api/auths/user/${user.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user.bestScoreSingle = score;
+      console.log("user after update : ", user);
+      //update the bestscoreSingle
+      try {
+        const options = {
+          method: "POST", 
+          body: JSON.stringify({
+            score: score,
+            username: user.username1,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(`/api/single/bestscoressingle/`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("LoginPage::error: ", error);
+      }
+    }
   }
 }
 export default SingleGame;

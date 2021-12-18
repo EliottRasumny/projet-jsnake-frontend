@@ -13,8 +13,10 @@ export default class UIScore extends Phaser.Scene
 	{
 		//Creating score's text to display
 		this.label = this.add.text(this.scale.width * 0.5, 16, `Player 1: 0 \nPlayer 2: 0`, {
-			fontSize: 16
-		});
+			fontSize: 16,
+			color: '#665847',
+			fontStyle: 'bold'
+		}).setOrigin(0.5);
 		//Listen to an event
 		eventsCenter.on('update-score', this.updateScore, this);
 		eventsCenter.on('game-over', this.gameOverDisplay, this);

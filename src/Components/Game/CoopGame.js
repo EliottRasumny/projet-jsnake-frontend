@@ -151,19 +151,31 @@ class CoopGame extends Phaser.Scene
         this.direction2 = this.nextDirection2;
         this.nextDirection2 = null;
       }
-      //Collision with an apple : Snake1
+      //UPDATE SNAKE1
+      //Collision with an apple1 : Snake1
       if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple1.getBounds()))
       {
-        this.eatFood(this.snake1);
+        this.eatFood(this.snake1, this.apple1);
+      }
+      //Collision with an apple2 : Snake1
+      else if (Geom.Intersects.RectangleToRectangle(this.snake1.getBody().getAt(0).getBounds(), this.apple2.getBounds()))
+      {
+        this.eatFood(this.snake1, this.apple2);
       }
       else //Moving the snake
       {
         this.snake1.move(this.direction1);
       }
-      //Collision with an apple : Snake2
+      //UPDATE SNAKE2
+      //Collision with an apple1 : Snake2
+      if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple1.getBounds()))
+      {
+        this.eatFood(this.snake2, this.apple1);
+      }
+      //Collision with an apple2 : Snake2
       if (Geom.Intersects.RectangleToRectangle(this.snake2.getBody().getAt(0).getBounds(), this.apple2.getBounds()))
       {
-        this.eatFood(this.snake2);
+        this.eatFood(this.snake2, this.apple2);
       }
       else //Moving the snake
       {
@@ -194,111 +206,7 @@ class CoopGame extends Phaser.Scene
    */
   shutdown()
   {
-    let user1 = getSessionObject("user1");
-    let user2 = getSessionObject("user2");
-
-    if(!user1 || !user2){
-
-    }
-    else{
-      console.log("User 1 : ", user1);
-      console.log("User 2 : ", user2);
-
-      if (this.score > user1.bestScoreCoop){
-        changePlayer1ScoreCoop(this.score);
-      }
-      if (this.score > user2.bestScoreCoop){
-        changePlayer2ScoreCoop(this.score);
-      }
-
-
-      if (this.score > user1.bestScoreCoop || this.score > user2.bestScoreCoop){
-        changeBestScoresCoop(this.score);
-      }
-  
-  
-    }
-    
-    async function changePlayer1ScoreCoop(score){
-      console.log("score : ", score);  
-      try {
-        const options = {
-          method: "PUT", 
-          body: JSON.stringify({
-            bestScoreCoop: score,
-          }), 
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await fetch(`/api/auths/user/${user1.id}`, options); // fetch return a promise => we wait for the response
-        if (!response.ok) {
-          throw new Error(
-            "fetch error : " + response.status + " : " + response.statusText
-          );
-        }
-      }catch (error) {
-        console.error("error: ", error);
-      }
-      user1.bestScoreCoop = score;
-      console.log("user after update : ", user1);
-    }
-
-    async function changePlayer2ScoreCoop(score){
-      console.log("score : ", score);  
-      try {
-        const options = {
-          method: "PUT", 
-          body: JSON.stringify({
-            bestScoreCoop: score,
-          }), 
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await fetch(`/api/auths/user/${user2.id}`, options); // fetch return a promise => we wait for the response
-        if (!response.ok) {
-          throw new Error(
-            "fetch error : " + response.status + " : " + response.statusText
-          );
-        }
-      }catch (error) {
-        console.error("error: ", error);
-      }
-      user2.bestScoreCoop = score;
-      console.log("user after update : ", user2);
-    }
-
-
-
-    async function changeBestScoresCoop(score){
-      console.log("score : ", score);  
-      try {
-        const options = {
-          method: "POST", 
-          body: JSON.stringify({
-            score: score,
-            username1: user1.username1,
-            username2: user2.username1,
-          }), 
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-  
-        const response = await fetch(`/api/coop/bestscorescoop/`, options); // fetch return a promise => we wait for the response
-        if (!response.ok) {
-          throw new Error(
-            "fetch error : " + response.status + " : " + response.statusText
-          );
-        }
-      }catch (error) {
-        console.error("error: ", error);
-      }
-
-    }
+    callBackend(this.score);
     //Create event to display the final score
     eventsCenter.emit('game-over');
     //Closing gamescene and open GameOver scene
@@ -340,11 +248,12 @@ class CoopGame extends Phaser.Scene
    * Update score of the snake which has eaten the apple and replacing this last one.
    * Grew the body of the eating' snake up.
    * @param {Snake} player : the snake eating the apple
+   * @param {Phaser.Types.Physics.Arcade.ImageWithDynamicBody} apple : which is eaten
    */
-  eatFood(player)
+  eatFood(player, apple)
   {
     //Updating score
-    if (player == this.snake1)
+    if (player === this.snake1)
     {
       //The snake grow up
       player.growUp(this.direction1);
@@ -354,7 +263,29 @@ class CoopGame extends Phaser.Scene
       //The snake grow up
       player.growUp(this.direction2);
     }
-    this.score++;
+    //Changing score depending on the eater and the food
+    if (player === this.snake1)
+    {
+      if (apple === this.apple1)
+      {
+        this.score++;
+      }
+      else
+      {
+        if (this.score < 0) this.score--;
+      }
+    }
+    else
+    {
+      if (apple === this.apple2)
+      {
+        this.score++;
+      }
+      else
+      {
+        if (this.score < 0) this.score--;
+      }
+    }
     eventsCenter.emit('update-score-single', this.score);
     do
     {
@@ -385,10 +316,7 @@ class CoopGame extends Phaser.Scene
         }
       }
     } while (isOccupied)
-    if(player == this.snake1)
-      this.apple1.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
-    else
-      this.apple2.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
+    apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
 
 
@@ -407,6 +335,106 @@ class CoopGame extends Phaser.Scene
       if(headX == snake.getBody().getAt(i).x && headY == snake.getBody().getAt(i).y) return true;
     }
     return false;
+  }
+
+
+
+  callBackend(score)
+  {
+    let user1 = getSessionObject("user1");
+    let user2 = getSessionObject("user2");
+
+    if(!user1 || !user2)
+    {}
+    else{
+      if (this.score > user1.bestScoreCoop){
+        changePlayer1ScoreCoop(score);
+      }
+      if (this.score > user2.bestScoreCoop){
+        changePlayer2ScoreCoop(score);
+      }
+      if (this.score > user1.bestScoreCoop || score > user2.bestScoreCoop){
+        changeBestScoresCoop(score);
+      }
+    }
+    
+
+    async function changePlayer1ScoreCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreCoop: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(`/api/auths/user/${user1.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user1.bestScoreCoop = score;
+      console.log("user after update : ", user1);
+    }
+
+
+    async function changePlayer2ScoreCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreCoop: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(`/api/auths/user/${user2.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user2.bestScoreCoop = score;
+      console.log("user after update : ", user2);
+    }
+
+
+    async function changeBestScoresCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "POST", 
+          body: JSON.stringify({
+            score: score,
+            username1: user1.username1,
+            username2: user2.username1,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(`/api/coop/bestscorescoop/`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+    }
   }
 }
 export default CoopGame;
