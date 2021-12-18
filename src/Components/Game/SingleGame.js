@@ -4,17 +4,10 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
-<<<<<<< HEAD
-import gridAsset from '../../assets/Grid32_1024x768.png'
-import appleAsset from '../../assets/RedApple.png';
-import magentaSnakeAsset from '../../assets/RedSnake32.png';
-import { getSessionObject } from "../../utils/session";
-
-=======
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
->>>>>>> c89f6256e20446374de9119122c63dfc5cfbf3e5
+import { getSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
 const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
