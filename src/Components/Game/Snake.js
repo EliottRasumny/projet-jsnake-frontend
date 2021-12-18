@@ -1,6 +1,7 @@
 import Phaser, { GameObjects, Geom } from 'phaser';
 //import scenes & events
 import eventsCenter from './EventCenter';
+import { SQUARE_SIZE } from '../../constant';
 
 export default class Snake
 {
@@ -8,20 +9,18 @@ export default class Snake
    * Create a snake
    * @param {Phaser.Scene} scene 
    * @param {Phaser.asset} asset 
-   * @param {number} squareSize 
    * @param {number} X 
    * @param {number} Y 
    * @param {string} direction 
    */
-	constructor(scene, asset, squareSize, X, Y, direction)
+	constructor(scene, asset, X, Y, direction)
 	{
 		this.scene = scene;
     this.asset = asset;
-    this.SQUARE_SIZE = squareSize;
     //Save coordinates of the snake body like [[head][body part]...[body part][tail]]
     this.coordinates = [];
     //Create container and sprites of the snake
-    this.body = new GameObjects.Container(this.scene, this.SQUARE_SIZE / 2, this.SQUARE_SIZE / 2);
+    this.body = new GameObjects.Container(this.scene, SQUARE_SIZE / 2, SQUARE_SIZE / 2);
     //ajoute a la DisplayList de la scene
     this.body.addToDisplayList();
     this.create(X, Y, direction);
@@ -45,9 +44,9 @@ export default class Snake
     let orientation;
     if (direction === 'right')
     {
-      orientation = -this.SQUARE_SIZE;
+      orientation = -SQUARE_SIZE;
     } else {
-      orientation = this.SQUARE_SIZE;
+      orientation = SQUARE_SIZE;
     }
     //Create head
     this.coordinates.push([X, Y]);
@@ -87,21 +86,21 @@ export default class Snake
     {
       case 'down':
         newhead.x = oldHead.x;
-        newhead.y = oldHead.y + this.SQUARE_SIZE;
+        newhead.y = oldHead.y + SQUARE_SIZE;
         newhead.setFrame(1);
         break;
       case 'up':
         newhead.x = oldHead.x;
-        newhead.y = oldHead.y - this.SQUARE_SIZE;
+        newhead.y = oldHead.y - SQUARE_SIZE;
         newhead.setFrame(3);
         break;
       case 'left':
-        newhead.x = oldHead.x - this.SQUARE_SIZE;
+        newhead.x = oldHead.x - SQUARE_SIZE;
         newhead.y = oldHead.y;
         newhead.setFrame(2);
         break;
       case 'right':
-        newhead.x = oldHead.x + this.SQUARE_SIZE;
+        newhead.x = oldHead.x + SQUARE_SIZE;
         newhead.y = oldHead.y;
         newhead.setFrame(0);
         break;
@@ -205,7 +204,6 @@ export default class Snake
 
   eatItself()
   {
-    // TODO: launch event
     let headX = this.body.getAt(0).x;
     let headY = this.body.getAt(0).y;
 
@@ -226,19 +224,19 @@ export default class Snake
     switch(direction)
     {
       case 'down':
-        this.body.getAt(0).y = oldHead.y + this.SQUARE_SIZE;
+        this.body.getAt(0).y = oldHead.y + SQUARE_SIZE;
         this.body.getAt(0).setFrame(1);
         break;
       case 'up':
-        newHead.y = oldHead.y - this.SQUARE_SIZE;
+        newHead.y = oldHead.y - SQUARE_SIZE;
         newHead.setFrame(3);
         break;
       case 'left':
-        newHead.x = oldHead.x - this.SQUARE_SIZE;
+        newHead.x = oldHead.x - SQUARE_SIZE;
         newHead.setFrame(2);
         break;
       case 'right':
-        newHead.x = oldHead.x + this.SQUARE_SIZE;
+        newHead.x = oldHead.x + SQUARE_SIZE;
         newHead.setFrame(0);
         break;
     }

@@ -8,9 +8,10 @@ import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
 import { getSessionObject } from "../../utils/session";
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
+const APPLE_KEY = 'apple', SNAKE_KEY = 'snake';
 
 
 class SingleGame extends Phaser.Scene
@@ -216,7 +217,7 @@ class SingleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 

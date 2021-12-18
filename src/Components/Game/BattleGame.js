@@ -7,10 +7,11 @@ import Snake from './Snake';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
-import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
+import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png';
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
 
 class BattleGame extends Phaser.Scene
 {
@@ -212,7 +213,7 @@ class BattleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 

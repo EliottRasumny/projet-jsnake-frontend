@@ -9,10 +9,11 @@ import appleAssetR from '../../assets/img/RedApple.png';
 import appleAssetB from '../../assets/img/BlueApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 import { getSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
 
 class CoopGame extends Phaser.Scene
 {
@@ -316,7 +317,7 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 
