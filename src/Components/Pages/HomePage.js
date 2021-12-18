@@ -21,6 +21,7 @@ const HomePage = () => {
         <button id="btnToDual" type="button" class="btn p-3 m-5 text-center active">Two Players</button>
       </div>
     </div>
+    <button id="btnToScoreBoard" type="button" class="btn btn-secondary p-3 m-5 text-center active">GLOBAL SCOREBOARD</button>
   </div>
   `;
   let submitSingle = document.querySelector("#btnToSingle");
@@ -31,6 +32,7 @@ const HomePage = () => {
   submitDual.addEventListener("click", () => {
     Redirect("/twoPlayer");
   });
-
+  let submitScoreBoard = document.querySelector("#btnToScoreBoard");
+  submitScoreBoard.addEventListener("click", () => {Redirect("/scoreboard");});
 };
 export default HomePage;

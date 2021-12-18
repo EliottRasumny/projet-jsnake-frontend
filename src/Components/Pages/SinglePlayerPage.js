@@ -9,7 +9,12 @@ var game;
 
 function SinglePage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div id="playGame" class="container justify-content-center my-3"></div>`;
+  pageDiv.innerHTML = `
+  <div id="navbar" class="mb-5">
+    TODO:
+    <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
+  </div>
+  <div id="playGame" class="container justify-content-center mt-5 my-3"></div>`;
 
   const config = {
     type: Phaser.AUTO,
@@ -29,7 +34,13 @@ function SinglePage() {
   if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
   //Buttons ======================================================
-  //Go Home
+  //TODO: EXEMPLE Go Home
+  var submitHome = document.querySelector("#singleToHome");
+  submitHome.addEventListener("click", () => {
+    Redirect("/");
+  });
+  //TODO: a supprimer ce qui suit et faire comme dans 'EXEMPLE'
+  /*
   const submitHome = document.createElement("input");
   submitHome.value = "< GO HOME";
   submitHome.id = "button";
@@ -39,6 +50,7 @@ function SinglePage() {
     Redirect("/");
   });
   pageDiv.appendChild(submitHome);
+  */
   //Go to scoreboard
   const submitScore = document.createElement("input");
   submitScore.value = "< SCOREBOARD >";

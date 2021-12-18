@@ -35,9 +35,6 @@ const Navbar = () => {
                     <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
                 </li>
                 <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
-                </li>
-                <li class="nav-item">
                     <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
                 </li>
                 <li class="nav-item">
@@ -77,9 +74,6 @@ const Navbar = () => {
               <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
                     <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
                 </li>
                 <li class="nav-item">
                     <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
@@ -135,9 +129,6 @@ const Navbar = () => {
                     <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
                 </li>
                 <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
-                </li>
-                <li class="nav-item">
                     <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
                 </li>
                 <li class="nav-item">
@@ -175,10 +166,6 @@ const Navbar = () => {
   let submitHome2 = document.querySelector("#btnToHome2");
   submitHome2.addEventListener("click", () => {
     Redirect("/");
-  });
-  let submitSingle = document.querySelector("#btnToSingleP");
-  submitSingle.addEventListener("click", () => {
-    Redirect("/singlePlayer");
   });
   let submitTwoPlayer = document.querySelector("#btnToTwoPlayer");
   submitTwoPlayer.addEventListener("click", () => {
