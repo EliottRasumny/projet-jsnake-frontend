@@ -4,6 +4,7 @@ import PlayGame from "../Game/SingleGame";
 import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/UIGameOver";
 import Start from "../Game/UIStart";
+import BattleGame from "../Game/BattleGame";
 
 var game;
 
@@ -26,7 +27,8 @@ function PlayPage() {
 
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
-  if (game) game.destroy(true);
+  if (BattleGame.game) BattleGame.game.destroy(true, false);
+  if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
   // create a login form
   const submit = document.createElement("input");
@@ -36,9 +38,12 @@ function PlayPage() {
   // Example on how to add an event handler : when the button is clicked, redirect
   // to the HomePage
   submit.addEventListener("click", () => {
+    if (game)
+    {
+      game.destroy(true, false);
+    }
     Redirect("/single");
   });
   pageDiv.appendChild(submit);
 }
-
 export default PlayPage;

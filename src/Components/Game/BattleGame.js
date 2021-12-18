@@ -76,8 +76,8 @@ class BattleGame extends Phaser.Scene
     this.apple = this.createFood();
     this.apple.setScale(0.99,0.99);
     //Creating the snakes
-    this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
-    this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
+    this.snake1 = this.createSnake((5 * SQUARE_SIZE), (8 * SQUARE_SIZE), 'right', SNAKE1_KEY);
+    this.snake2 = this.createSnake((17 * SQUARE_SIZE), (8 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //UIScene for scores
     this.scene.run('ui-score');
     //Enabling keyboard inputs
@@ -175,14 +175,14 @@ class BattleGame extends Phaser.Scene
     }
     //collision with a wall : Snake1
     if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
+      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
     {
       this.shutdown();
     }
     //collision with a wall : Snake2
-    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 ||
-      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
     {
       this.shutdown();
     }
@@ -224,8 +224,8 @@ class BattleGame extends Phaser.Scene
   createFood()
   {
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    var randomX = Math.floor(Math.random() * 23) * SQUARE_SIZE;
+    var randomY = Math.floor(Math.random() * 17) * SQUARE_SIZE;
     //Genereting apple
     var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
     newApple.enableBody = true;
@@ -258,8 +258,8 @@ class BattleGame extends Phaser.Scene
     {
       var isOccupied = false;
       //Random placement of the apple
-      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var randomX = Math.floor(Math.random() * 23) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 17) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
       var checkSnake = this.snake1.getBody();
       for(let i = 0; i < checkSnake.length; i++)
