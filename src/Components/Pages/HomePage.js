@@ -38,4 +38,3 @@ const HomePage = () => {
 
 
 export default HomePage;
-//        <a id="btnToSingle" class="btn p-3 m-5 text-center" href="/single">Single Player</a>
