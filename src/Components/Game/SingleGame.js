@@ -118,15 +118,15 @@ class SingleGame extends Phaser.Scene
       {
         this.snake.move(this.direction);
       }
+      //collision with a wall
+      if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
+        this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
+      {
+        this.shutdown();
+      }
+      //collision with itself
+      if(this.snake.eatItself()) this.shutdown();
     }
-    //collision with a wall
-    if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
-      this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
-    {
-      this.shutdown();
-    }
-    //collision with itself
-    if(this.snake.eatItself()) this.shutdown();
   };
 
 
@@ -150,7 +150,6 @@ class SingleGame extends Phaser.Scene
     }
     
     async function changeScore(score){
-      score = score;
       console.log("score : ", score);  
       
       //update the user bestscore
@@ -172,7 +171,7 @@ class SingleGame extends Phaser.Scene
           );
         }
       }catch (error) {
-        console.error("LoginPage::error: ", error);
+        console.error("error: ", error);
       }
       user.bestScoreSingle = score;
       console.log("user after update : ", user);

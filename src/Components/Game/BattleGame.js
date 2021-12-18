@@ -172,24 +172,24 @@ class BattleGame extends Phaser.Scene
       {
         this.snake2.move(this.direction2);
       }
+      //collision with a wall : Snake1
+      if (this.isGameOver) this.shutdown();
+      if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
+        this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //collision with a wall : Snake2
+      if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+        this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //collision with themselfs
+      if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      //collision with each other
+      if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
     }
-    //collision with a wall : Snake1
-    if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //collision with a wall : Snake2
-    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
-      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //collision with themselfs
-    if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
-    //collision with each other
-    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
   };
 
 
