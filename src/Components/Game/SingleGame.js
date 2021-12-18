@@ -202,7 +202,6 @@ class SingleGame extends Phaser.Scene
 
     }
 
-
     this.scene.stop('ui-score');
     this.scene.start('game-over'); //Stop current scene and start the new one
   };
