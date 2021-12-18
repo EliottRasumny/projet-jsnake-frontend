@@ -15,17 +15,27 @@ const HomePage = () => {
     <div class="row">
       <div class="col-md-6 "> 
         <img src="${oneSnake}" class="rounded" alt="Blue Snake" style="width:100% ;heigth:auto" >
-        <a id="btnToSingle" class="btn p-3 m-5 text-center" href="/single">Single Player</a>
+        <button id="btnToSingle" type="button" class="btn p-3 m-5 text-center active">Single Player</button>
       </div>
 
       <div class="col-md-6"> 
         <img src="${twoSnakes}" class="rounded" alt="Two Snakes" style="width:100% ;heigth:auto"> 
-        <a id="btnToDual" class="btn p-3 m-5 text-center" href="/twoPlayer">Two Players</a>
+        <button id="btnToDual" type="button" class="btn p-3 m-5 text-center active">Two Players</button>
       </div>
     </div>
   </div>
- `;
+  `;
+  let submitSingle = document.querySelector("#btnToSingle");
+  submitSingle.addEventListener("click", () => {
+    Redirect("/single");
+  });
+  let submitDual = document.querySelector("#btnToDual");
+  submitDual.addEventListener("click", () => {
+    Redirect("/twoPlayer");
+  });
+
 };
 
 
 export default HomePage;
+//        <a id="btnToSingle" class="btn p-3 m-5 text-center" href="/single">Single Player</a>

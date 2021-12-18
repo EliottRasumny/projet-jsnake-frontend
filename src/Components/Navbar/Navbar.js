@@ -4,6 +4,8 @@
 // we change the name of the imported Bootstrap's 'Navbar' component
 import { Navbar as BootstrapNavbar} from "bootstrap";
 import { getSessionObject } from "../../utils/session"; // destructuring assignment ("{}": see MDN for more info ; )
+import { Redirect } from "../Router/Router";
+
 
 
 /**
@@ -23,109 +25,172 @@ const Navbar = () => {
     navbar = `
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container ">
-        <a class="navbar-brand text-white" href="/">JSnake</a>
+        <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link active  text-white" href="/">Home</a>
+                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  text-white" href="/single">Single Player</a>
+                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
+                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
                 </li>
-                
                 <li class="nav-item">
-                    <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
+                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
                 </li>
             </ul>
             <div class="d-flex">
-                <a class="nav-link" href="/login1"><button class="btn btn-light ms-3">Login</button></a>
-                <a class="nav-link" href="/register"><button class="btn btn-light ms-3">Register</button></a>
+                <button id="btnToLogin1" type="button" class="btn btn-light ms-3 active">Login</button>
+                <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
             </div>
         </div>
     </div>
-</nav>
+  </nav>
   `;  
+  navbarWrapper.innerHTML = navbar;
+
+  let submitLogin1 = document.querySelector("#btnToLogin1");
+  submitLogin1.addEventListener("click", () => {
+    Redirect("/login1");
+  });
+  let submitRegister = document.querySelector("#btnToRegister");
+  submitRegister.addEventListener("click", () => {
+    Redirect("/register");
+  });
+
+
+
   } else if (!user2) {
     navbar = `
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container ">
-          <a class="navbar-brand text-white" href="/">JSnake</a>
+          <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
               <ul class="navbar-nav mx-auto">
-                  <li class="nav-item">
-                      <a class="nav-link active  text-white" href="/">Home</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/single">Single Player</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
-                  </li>
-                  
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/settings">Settings</a>
-                  </li>
+                <li class="nav-item">
+                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToSetting" type="button" class="btn btn-link nav-link active text-white">Settings</button>
+                </li>
               </ul>
               <div class="d-flex">
-                  <a class="nav-link" href="/login2"><button class="btn btn-light ms-3">Login The Second Player</button></a>
-                  <a class="nav-link" href="/logout"><button class="btn btn-light ms-3">Logout</button></a>
-                  <a class="nav-link" href="/register"><button class="btn btn-light ms-3">Register</button></a>
+                <button id="btnToLogin2" type="button" class="btn btn-light ms-3 active">Login Second Player</button>
+                <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
+                <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
               </div>
           </div>
       </div>
   </nav>
     `;  
+    navbarWrapper.innerHTML = navbar;
+
+    let submitLogin2 = document.querySelector("#btnToLogin2");
+    submitLogin2.addEventListener("click", () => {
+      Redirect("/login2");
+    });
+    let submitLogout = document.querySelector("#btnToLogout");
+    submitLogout.addEventListener("click", () => {
+      Redirect("/logout");
+    });
+    let submitSettings = document.querySelector("#btnToSetting");
+    submitSettings.addEventListener("click", () => {
+      Redirect("/settings");
+    });
+    let submitRegister = document.querySelector("#btnToRegister");
+    submitRegister.addEventListener("click", () => {
+        Redirect("/register");
+    });
+
+  
+
   } else {
     navbar = `
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container ">
-          <a class="navbar-brand text-white" href="/">JSnake</a>
+          <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-              <ul class="navbar-nav mx-auto">
-                  <li class="nav-item">
-                      <a class="nav-link active  text-white" href="/">Home</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/single">Single Player</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/twoPlayer">Two Player</a>
-                  </li>
-                  
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link  text-white" href="/settings">Settings</a>
-                  </li>
-              </ul>
-              <div class="d-flex">
-                  <a class="nav-link" href="/logout"><button class="btn btn-light ms-3">Logout</button></a>
-              </div>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
+                </li>
+                <li class="nav-item">
+                    <button id="btnToSetting" type="button" class="btn btn-link nav-link active text-white">Settings</button>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
+            </div>
           </div>
       </div>
   </nav>
     `;  
+    navbarWrapper.innerHTML = navbar;
+
+    let submitLogout = document.querySelector("#btnToLogout");
+    submitLogout.addEventListener("click", () => {
+      Redirect("/logout");
+    });
+    let submitSettings = document.querySelector("#btnToSetting");
+    submitSettings.addEventListener("click", () => {
+      Redirect("/settings");
+    });
+
   }
-
-
   
-  navbarWrapper.innerHTML = navbar;
+
+  let submitHome = document.querySelector("#btnToHome");
+  submitHome.addEventListener("click", () => {
+    Redirect("/");
+  });
+  let submitHome2 = document.querySelector("#btnToHome2");
+  submitHome2.addEventListener("click", () => {
+    Redirect("/");
+  });
+  let submitSingle = document.querySelector("#btnToSingleP");
+  submitSingle.addEventListener("click", () => {
+    Redirect("/single");
+  });
+  let submitTwoPlayer = document.querySelector("#btnToTwoPlayer");
+  submitTwoPlayer.addEventListener("click", () => {
+    Redirect("/twoPlayer");
+  });
+  let submitScoreboard = document.querySelector("#btnToScoreboards");
+  submitScoreboard.addEventListener("click", () => {
+    Redirect("/scoreboard");
+  });
+
+
+
 };
 
 export default Navbar;
