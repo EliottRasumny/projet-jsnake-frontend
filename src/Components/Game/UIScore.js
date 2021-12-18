@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+//import scenes & events
 import eventsCenter from './EventCenter';
 
 let X, Y, score, player;

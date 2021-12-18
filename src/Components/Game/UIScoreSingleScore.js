@@ -5,21 +5,21 @@ let X, Y, score, player;
 
 export default class UIScoreSingleScore extends Phaser.Scene
 {
-	constructor(X, Y, player)
+	constructor(player)
 	{
 		super('ui-score');
 		this.score = 0;
 		this.player = player;
-		this.X = X;
-		this.Y = Y;
 	}
 
 	create()
 	{
 		//Creating score's text to display
-		this.label = this.add.text(X, Y, `Score : 0`, {
-			fontSize: 16
-		});
+		this.label = this.add.text(this.scale.width * 0.5, 16, `Score : 0`, {
+			fontSize: 16,
+			color: '#665847',
+			fontStyle: 'bold'
+		}).setOrigin(0.5);
 		//Listen to an event
 		eventsCenter.on('update-scoreSingle', this.updateScore, this);
 
@@ -31,6 +31,6 @@ export default class UIScoreSingleScore extends Phaser.Scene
 
 	updateScore(score)
 	{
-		this.label.text = `Score ${score}`;		
+		this.label.text = `Score : ${score}`;		
 	}
 }
