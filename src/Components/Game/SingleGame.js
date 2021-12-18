@@ -6,11 +6,12 @@ import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
-import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
+import magentaSnakeAsset from '../../assets/img/GreenSnake32.png';
 import { getSessionObject } from "../../utils/session";
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
+const APPLE_KEY = 'apple', SNAKE_KEY = 'snake';
 
 
 class SingleGame extends Phaser.Scene
@@ -118,15 +119,15 @@ class SingleGame extends Phaser.Scene
       {
         this.snake.move(this.direction);
       }
+      //collision with a wall
+      if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
+        this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
+      {
+        this.shutdown();
+      }
+      //collision with itself
+      if(this.snake.eatItself()) this.shutdown();
     }
-    //collision with a wall
-    if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
-      this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
-    {
-      this.shutdown();
-    }
-    //collision with itself
-    if(this.snake.eatItself()) this.shutdown();
   };
 
 
@@ -150,7 +151,6 @@ class SingleGame extends Phaser.Scene
     }
     
     async function changeScore(score){
-      score = score;
       console.log("score : ", score);  
       
       //update the user bestscore
@@ -172,7 +172,7 @@ class SingleGame extends Phaser.Scene
           );
         }
       }catch (error) {
-        console.error("LoginPage::error: ", error);
+        console.error("error: ", error);
       }
       user.bestScoreSingle = score;
       console.log("user after update : ", user);
@@ -183,7 +183,7 @@ class SingleGame extends Phaser.Scene
           method: "POST", 
           body: JSON.stringify({
             score: score,
-            id: user.id,
+            username: user.username1,
           }), 
           headers: {
             "Content-Type": "application/json",
@@ -216,7 +216,7 @@ class SingleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 

@@ -1,8 +1,7 @@
 import HomePage from "../Pages/HomePage";
-import SinglePlayer from "../Pages/SinglePlayer";
 import TwoPlayer from "../Pages/TwoPlayerPage";
 import GamePage from "../Pages/GamePage";
-import PlayPage from "../Pages/PlayPage.js";
+import SinglePlayer from "../Pages/SinglePlayerPage.js";
 import ScoreboardSinglePage from "../Pages/ScoreboardSinglePage";
 import SettingsPage from "../Pages/SettingsPage.js";
 import CoopPage from "../Pages/CoopPage";
@@ -19,9 +18,8 @@ import Lougout from "../Logout/Logout";
 const routes = {
   "/": HomePage,
   "/game": GamePage,
-  "/single": SinglePlayer,
-  "/twoPlayer": TwoPlayer,
-  "/play": PlayPage,
+  "/singlePlayer": SinglePlayer,
+  "/twoPlayers": TwoPlayer,
   "/scoreboardSingle": ScoreboardSinglePage,
   "/settings": SettingsPage,
   "/coop": CoopPage,

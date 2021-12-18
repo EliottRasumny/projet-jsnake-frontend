@@ -1,4 +1,3 @@
-
 import oneSnake from "../../img/oneSnake.png";
 import twoSnakes from "../../img/twoSnakes.png";
 import { Redirect } from "../Router/Router";
@@ -6,7 +5,6 @@ import { Redirect } from "../Router/Router";
 /**
  * Render the HomePage
  */
-
 const HomePage = () => {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
@@ -23,18 +21,18 @@ const HomePage = () => {
         <button id="btnToDual" type="button" class="btn p-3 m-5 text-center active">Two Players</button>
       </div>
     </div>
+    <button id="btnToScoreBoard" type="button" class="btn btn-secondary p-3 m-5 text-center active">GLOBAL SCOREBOARD</button>
   </div>
   `;
   let submitSingle = document.querySelector("#btnToSingle");
   submitSingle.addEventListener("click", () => {
-    Redirect("/single");
+    Redirect("/singlePlayer");
   });
   let submitDual = document.querySelector("#btnToDual");
   submitDual.addEventListener("click", () => {
-    Redirect("/twoPlayer");
+    Redirect("/twoPlayers");
   });
-
+  let submitScoreBoard = document.querySelector("#btnToScoreBoard");
+  submitScoreBoard.addEventListener("click", () => {Redirect("/scoreboard");});
 };
-
-
 export default HomePage;

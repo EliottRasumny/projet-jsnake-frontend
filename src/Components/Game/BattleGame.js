@@ -6,11 +6,12 @@ import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
-import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
-import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
+import magentaSnakeAsset from '../../assets/img/BlueSnake32.png';
+import orangeSnakeAsset from '../../assets/img/RedSnake32.png';
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
 
 class BattleGame extends Phaser.Scene
 {
@@ -172,24 +173,23 @@ class BattleGame extends Phaser.Scene
       {
         this.snake2.move(this.direction2);
       }
+      //collision with a wall : Snake1
+      if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
+        this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //collision with a wall : Snake2
+      else if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+        this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //collision with themselfs
+      else if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      //collision with each other
+      else if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
     }
-    //collision with a wall : Snake1
-    if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //collision with a wall : Snake2
-    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
-      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //collision with themselfs
-    if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
-    //collision with each other
-    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
   };
 
 
@@ -213,7 +213,7 @@ class BattleGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 

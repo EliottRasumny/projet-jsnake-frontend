@@ -30,20 +30,6 @@ const Navbar = () => {
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
-                </li>
-            </ul>
             <div class="d-flex">
                 <button id="btnToLogin1" type="button" class="btn btn-light ms-3 active">Login</button>
                 <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
@@ -74,27 +60,13 @@ const Navbar = () => {
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-              <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSetting" type="button" class="btn btn-link nav-link active text-white">Settings</button>
-                </li>
-              </ul>
               <div class="d-flex">
                 <button id="btnToLogin2" type="button" class="btn btn-light ms-3 active">Login Second Player</button>
                 <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
                 <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
+              </div>
+              <div class="d-flex">
+                <span class="ms-3">${user1.username1}</span>
               </div>
           </div>
       </div>
@@ -130,29 +102,16 @@ const Navbar = () => {
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <button id="btnToHome" type="button" class="btn btn-link nav-link active text-white">Home</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSingleP" type="button" class="btn btn-link nav-link active text-white">Single Player</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToTwoPlayer" type="button" class="btn btn-link nav-link active text-white">Two Players</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToScoreboards" type="button" class="btn btn-link nav-link active text-white">Scoreboard</button>
-                </li>
-                <li class="nav-item">
-                    <button id="btnToSetting" type="button" class="btn btn-link nav-link active text-white">Settings</button>
-                </li>
-            </ul>
             <div class="d-flex">
                 <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
             </div>
+            <div class="d-flex">
+              <span class="ms-3">${user1.username1}</span>
+              <span class="ms-3">${user2.username1}</span>
+            </div>
           </div>
       </div>
-  </nav>
+    </nav>
     `;  
     navbarWrapper.innerHTML = navbar;
 
@@ -164,33 +123,6 @@ const Navbar = () => {
     submitSettings.addEventListener("click", () => {
       Redirect("/settings");
     });
-
-  }
-  
-
-  let submitHome = document.querySelector("#btnToHome");
-  submitHome.addEventListener("click", () => {
-    Redirect("/");
-  });
-  let submitHome2 = document.querySelector("#btnToHome2");
-  submitHome2.addEventListener("click", () => {
-    Redirect("/");
-  });
-  let submitSingle = document.querySelector("#btnToSingleP");
-  submitSingle.addEventListener("click", () => {
-    Redirect("/single");
-  });
-  let submitTwoPlayer = document.querySelector("#btnToTwoPlayer");
-  submitTwoPlayer.addEventListener("click", () => {
-    Redirect("/twoPlayer");
-  });
-  let submitScoreboard = document.querySelector("#btnToScoreboards");
-  submitScoreboard.addEventListener("click", () => {
-    Redirect("/scoreboard");
-  });
-
-
-
+  } 
 };
-
 export default Navbar;

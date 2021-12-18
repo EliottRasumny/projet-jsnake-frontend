@@ -5,13 +5,15 @@ import eventsCenter from './EventCenter';
 import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
-import appleAssetR from '../../assets/img/RedApple.png';
-import appleAssetB from '../../assets/img/BlueApple.png';
+import appleAssetR from '../../assets/img/OrangeApple.png';
+import appleAssetB from '../../assets/img/MagentaApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
+import { SQUARE_SIZE, GRID_KEY } from '../../constant';
+import { getSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
-const GRID_KEY = 'grid', APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2', SQUARE_SIZE = 32;
+const APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
 
 class CoopGame extends Phaser.Scene
 {
@@ -167,26 +169,23 @@ class CoopGame extends Phaser.Scene
       {
         this.snake2.move(this.direction2);
       }
-
+      //Collision with a wall : Snake1
+      if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
+        this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //Collision with a wall : Snake2
+      else if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+        this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
+      {
+        this.shutdown();
+      }
+      //Collision with themselfs
+      else if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      //Collision with each other
+      else if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
     }
-    //Collision with a wall : Snake1
-    if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //Collision with a wall : Snake2
-    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
-      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
-    {
-      this.shutdown();
-    }
-    //Collision with themselfs
-    if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
-    //Collision with each other
-    if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
-    
   };
 
 
@@ -195,6 +194,114 @@ class CoopGame extends Phaser.Scene
    */
   shutdown()
   {
+    let user1 = getSessionObject("user1");
+    let user2 = getSessionObject("user2");
+
+    if(!user1 || !user2){
+
+    }
+    else{
+      console.log("User 1 : ", user1);
+      console.log("User 2 : ", user2);
+
+      if (this.score > user1.bestScoreCoop){
+        changePlayer1ScoreCoop(this.score);
+      }
+      if (this.score > user2.bestScoreCoop){
+        changePlayer2ScoreCoop(this.score);
+      }
+
+
+      if (this.score > user1.bestScoreCoop || this.score > user2.bestScoreCoop){
+        changeBestScoresCoop(this.score);
+      }
+  
+  
+    }
+    
+    async function changePlayer1ScoreCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreCoop: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/auths/user/${user1.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user1.bestScoreCoop = score;
+      console.log("user after update : ", user1);
+    }
+
+    async function changePlayer2ScoreCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreCoop: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/auths/user/${user2.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user2.bestScoreCoop = score;
+      console.log("user after update : ", user2);
+    }
+
+
+
+    async function changeBestScoresCoop(score){
+      console.log("score : ", score);  
+      try {
+        const options = {
+          method: "POST", 
+          body: JSON.stringify({
+            score: score,
+            username1: user1.username1,
+            username2: user2.username1,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/coop/bestscorescoop/`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+
+    }
+
+
+
     this.scene.stop('ui-score')
     this.scene.start('game-over');
   };
@@ -210,7 +317,7 @@ class CoopGame extends Phaser.Scene
    */
   createSnake(X, Y, direction, asset)
   {
-    return new Snake(this, asset, SQUARE_SIZE, X, Y, direction);
+    return new Snake(this, asset, X, Y, direction);
   };
 
 

@@ -5,6 +5,10 @@ body {
     background-color: #e3caac;
 }
 
+#navbar {
+    background-color: #e3caac;
+}
+
 #text-green{
     color: #a3d977;
 }
@@ -12,6 +16,14 @@ body {
 #btn{
     background-color: #a3d977;
     color: white;
+}
+
+#button{
+    background-color: #a3d977;
+    
+}
+#button:hover{
+    background-color: #e3caac;
 }
 
 #btnToSingle{
