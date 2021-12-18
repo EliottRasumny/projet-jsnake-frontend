@@ -36,15 +36,11 @@ class BattleGame extends Phaser.Scene
     this.controls1 = undefined;
     this.controls2 = undefined;
     //Velocity of the snakes
-<<<<<<< HEAD
     this.speed = 3;
-=======
-    this.speed = 2;
     //!this.upB = 'z';
     //!this.downB = 's';
     //!this.leftB = 'q';
     //!this.rightB = 'd';
->>>>>>> 81262c564cdcbd1a6d926796848b68e4e645fa03
   };
 
 
