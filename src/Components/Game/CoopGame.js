@@ -131,9 +131,10 @@ class CoopGame extends Phaser.Scene
     {
       this.nextDirection2 = 'left';
     }
+
     //Check if the snake reach a new square. If yes, allows it to change direction
     //If a new direction has been chosen from the keyboard, make it the direction of the snake now.
-    if (this.keyFrameValue % (SQUARE_SIZE / this.speed) === 0) {
+    if (this.keyFrameValue % Math.floor(SQUARE_SIZE / this.speed) === 0) {
       //Reset the keyFrameValue
       this.keyFrameValue = 0;
       if (this.nextDirection1 != null)

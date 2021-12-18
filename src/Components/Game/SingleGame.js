@@ -64,7 +64,6 @@ class SingleGame extends Phaser.Scene
     //UIScene for scores
     this.scene.run('ui-score', 'Player');
     //Enabling keyboard inputs
-    this.controls = this.input.keyboard.createCursorKeys();
   };
 
 
