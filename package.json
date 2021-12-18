@@ -4,7 +4,7 @@
   "description": "myJScourse's modern frontend boilerplate to build a phaser game",
   "scripts": {
     "dev": "webpack --mode development --config webpack.config.base.js",
-    "build":  "webpack --mode production --config webpack.config.prod.js",
+    "build": "webpack --mode production --config webpack.config.prod.js",
     "start": "webpack serve --mode development --config webpack.config.base.js"
   },
   "author": "e-baron",

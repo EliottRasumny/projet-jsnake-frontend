@@ -170,7 +170,7 @@ class SingleGame extends Phaser.Scene
     this.score++;
     //The snake grow up
     this.snake.growUp(this.direction);
-    eventsCenter.emit('update-score', this.score1);
+    eventsCenter.emit('update-scoreSingle', this.score);
     do
     {
       var isOccupied = false;

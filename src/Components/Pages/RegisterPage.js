@@ -73,21 +73,23 @@ function RegisterPage() {
         notification.className = "alert alert-danger";
         notification.innerText = "This pseudo already exist, please choose another one."
       }
-      const user = await response.json(); // json() returns a promise => we wait for the data
-      console.log("user authenticated", user);
-      
-      // save the user into the localStorage
-      // AND rerender the navbar for an authenticated user : temporary step prior to deal with token
-      if(!user1){
-        setSessionObject("user1", user);
-        Navbar({ isAuthenticated1: true });
-      } else {
-        setSessionObject("user2", user);
-        Navbar({ isAuthenticated2: true });
+      else{
+        const user = await response.json(); // json() returns a promise => we wait for the data
+        console.log("user authenticated", user);
+        
+        // save the user into the localStorage
+        // AND rerender the navbar for an authenticated user : temporary step prior to deal with token
+        if(!user1){
+          setSessionObject("user1", user);
+          Navbar({ isAuthenticated1: true });
+        } else {
+          setSessionObject("user2", user);
+          Navbar({ isAuthenticated2: true });
+        }
+  
+        // call the HomePage via the Router
+        Redirect("/");  
       }
-
-      // call the HomePage via the Router
-      Redirect("/");
     } catch (error) {
       console.error("RegisterPage::error: ", error);
     }
