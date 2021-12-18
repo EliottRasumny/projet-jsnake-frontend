@@ -6,7 +6,7 @@ import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
-import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
+import magentaSnakeAsset from '../../assets/img/GreenSnake32.png';
 import { getSessionObject } from "../../utils/session";
 import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 

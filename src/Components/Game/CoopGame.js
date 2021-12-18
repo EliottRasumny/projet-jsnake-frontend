@@ -5,8 +5,8 @@ import eventsCenter from './EventCenter';
 import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
-import appleAssetR from '../../assets/img/RedApple.png';
-import appleAssetB from '../../assets/img/BlueApple.png';
+import appleAssetR from '../../assets/img/OrangeApple.png';
+import appleAssetB from '../../assets/img/MagentaApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
 import { SQUARE_SIZE, GRID_KEY } from '../../constant';

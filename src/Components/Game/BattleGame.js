@@ -6,8 +6,8 @@ import Snake from './Snake';
 //import assets
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
-import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
-import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png';
+import magentaSnakeAsset from '../../assets/img/BlueSnake32.png';
+import orangeSnakeAsset from '../../assets/img/RedSnake32.png';
 import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
