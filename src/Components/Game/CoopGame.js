@@ -240,7 +240,7 @@ class CoopGame extends Phaser.Scene
       }catch (error) {
         console.error("error: ", error);
       }
-      userr.bestScoreCoop = score;
+      user1.bestScoreCoop = score;
       console.log("user after update : ", user1);
     }
 
@@ -266,7 +266,7 @@ class CoopGame extends Phaser.Scene
       }catch (error) {
         console.error("error: ", error);
       }
-      userr.bestScoreCoop = score;
+      user2.bestScoreCoop = score;
       console.log("user after update : ", user2);
     }
 
