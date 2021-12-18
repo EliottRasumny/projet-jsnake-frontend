@@ -75,6 +75,7 @@ function SettingsPage() {
         </div>
 
       </div>
+      <button id="goBack" onclick="history.back()" type="button" class="btn btn-secondary text-center active mt-5">GO BACK</button>
     </div>
    `;  
 
@@ -95,21 +96,6 @@ function SettingsPage() {
     right2Button.addEventListener("click", listenKeyRight2)
     down2Button.addEventListener("click", listenKeyDown2)
     left2Button.addEventListener("click", listenKeyLeft2)
-
-
-
-    // create a login form
-    const submit = document.createElement("input");
-    submit.value = "Go back to HomePage";
-    // Example on how to use Bootstrap to style a Button
-    submit.className = "btn btn-secondary mt-3";
-    // Example on how to add an event handler : when the button is clicked, redirect
-    // to the HomePage
-    submit.addEventListener("click", () => {
-      Redirect("/");
-    });
-    pageDiv.appendChild(submit);
-
   }
 
 

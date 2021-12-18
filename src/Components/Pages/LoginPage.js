@@ -1,4 +1,3 @@
-import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 import Navbar from "../Navbar/Navbar";
 import { setSessionObject } from "../../utils/session";

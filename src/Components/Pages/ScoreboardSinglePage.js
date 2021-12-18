@@ -1,4 +1,3 @@
-import HomePage from "./HomePage";
 import { Redirect } from "../Router/Router";
 import { getSessionObject } from "../../utils/session";
 
@@ -17,13 +16,13 @@ function ScoreboardSinglePage() {
   UserScore();
   // create a login form
   const submit = document.createElement("input");
-  submit.value = "Go back to HomePage";
+  submit.value = "GO BACK";
   // Example on how to use Bootstrap to style a Button
   submit.className = "btn btn-secondary mt-3";
   // Example on how to add an event handler : when the button is clicked, redirect
   // to the HomePage
   submit.addEventListener("click", () => {
-   Redirect("/");
+   Redirect("/singlePlayer");
   });
   pageDiv.appendChild(submit);
 }

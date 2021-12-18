@@ -136,7 +136,7 @@ class SingleGame extends Phaser.Scene
    */
   shutdown()
   {
-    callBackend(this.score);
+    this.callBackend(this.score);
     //Create event to display the final score
     eventsCenter.emit('game-over');
     //Closing gamescene and open GameOver scene
