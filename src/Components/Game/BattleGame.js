@@ -17,26 +17,19 @@ class BattleGame extends Phaser.Scene
   constructor()
   {
     super('game-scene');
-    //Players
     this.snake1 = undefined;
     this.snake2 = undefined;
-    //directions
-    this.direction1 = 'right';
-    this.direction2 = 'left';
+    this.direction1 = null;
+    this.direction2 = null;
     this.nextDirection1 = null;
     this.nextDirection2 = null;
-    //Food
     this.apple = undefined;
-    //Enable the snake to render properly
-    this.keyFrameValue = 0;
-    //Score of players
-    this.score1 = 0;
-    this.score2 = 0;
-    //Players controls
+    this.keyFrameValue = null;
+    this.score1 = null;
+    this.score2 = null;
     this.controls1 = undefined;
     this.controls2 = undefined;
-    //Velocity of the snakes
-    this.speed = 3;
+    this.speed = null;
     //!this.upB = 'z';
     //!this.downB = 's';
     //!this.leftB = 'q';
@@ -65,21 +58,32 @@ class BattleGame extends Phaser.Scene
    */
   create()
   {
+    //directions
+    this.direction1 = 'right';
+    this.direction2 = 'left';
+    this.nextDirection1 = null;
+    this.nextDirection2 = null;
+    //Enable the snake to render properly
+    this.keyFrameValue = 0;
+    //Score of players
+    this.score1 = 0;
+    this.score2 = 0;
+    //Velocity of the snakes
+    this.speed = 3;
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating food
     this.apple = this.createFood();
     this.apple.setScale(0.99,0.99);
     //Creating the snakes
-    this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
-    this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
+    this.snake1 = this.createSnake((5 * SQUARE_SIZE), (8 * SQUARE_SIZE), 'right', SNAKE1_KEY);
+    this.snake2 = this.createSnake((17 * SQUARE_SIZE), (8 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player1');
+    this.scene.run('ui-score');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
     this.controls2 = this.input.keyboard.addKeys(`q,z,s,d`);
     //!this.controls2 = this.input.keyboard.addKeys(`${this.upB},${this.downB},${this.leftB},${this.rightB}`);
-    
   };
 
 
@@ -171,14 +175,14 @@ class BattleGame extends Phaser.Scene
     }
     //collision with a wall : Snake1
     if (this.isGameOver) this.shutdown();
-    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 1024 ||
-      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 768)
+    if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
+      this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
     {
       this.shutdown();
     }
     //collision with a wall : Snake2
-    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 1024 ||
-      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 768)
+    if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+      this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
     {
       this.shutdown();
     }
@@ -194,7 +198,8 @@ class BattleGame extends Phaser.Scene
    */
   shutdown()
   {
-    this.scene.start('GameOver');
+    this.scene.stop('ui-score');
+    this.scene.start('game-over');
   };
 
 
@@ -219,8 +224,8 @@ class BattleGame extends Phaser.Scene
   createFood()
   {
     //Random placement of the apple
-    var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-    var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+    var randomX = Math.floor(Math.random() * 23) * SQUARE_SIZE;
+    var randomY = Math.floor(Math.random() * 17) * SQUARE_SIZE;
     //Genereting apple
     var newApple = this.physics.add.image(randomX + (SQUARE_SIZE / 2), randomY + (SQUARE_SIZE / 2), APPLE_KEY);
     newApple.enableBody = true;
@@ -253,8 +258,8 @@ class BattleGame extends Phaser.Scene
     {
       var isOccupied = false;
       //Random placement of the apple
-      var randomX = Math.floor(Math.random() * 32) * SQUARE_SIZE;
-      var randomY = Math.floor(Math.random() * 24) * SQUARE_SIZE;
+      var randomX = Math.floor(Math.random() * 23) * SQUARE_SIZE;
+      var randomY = Math.floor(Math.random() * 17) * SQUARE_SIZE;
       //Check if the RANDOM coordinates are in the snake or not
       var checkSnake = this.snake1.getBody();
       for(let i = 0; i < checkSnake.length; i++)

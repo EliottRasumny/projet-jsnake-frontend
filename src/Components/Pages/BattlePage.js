@@ -2,9 +2,10 @@ import { Redirect } from "../Router/Router";
 import Phaser from "phaser";
 import BattleGame from '../Game/BattleGame';
 import UIScore from "../Game/UIScore";
+import UIStart from "../Game/UIStart";
+import GameOver from "../Game/UIGameOver";
 
 var game;
-
 
 function BattlePage() {
   const pageDiv = document.querySelector("#page");
@@ -12,29 +13,21 @@ function BattlePage() {
 
   const config = {
     type: Phaser.AUTO,
-    width: 1024,
-    height: 768,
+    width: 736,
+    height: 544,
     backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
       arcade: {y: 0}
     },
     parent: "battleGame",
-    scene: [BattleGame, UIScore]
+    scene: [UIStart, BattleGame, UIScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-  
-  /*
-  game.stage.add('Menu', Menu);     
-  // Adding the Game state.
-  game.state.add('Game', BattleGame);
-  game.state.start('Menu');
-  */
-
   // create a login form
   const submit = document.createElement("input");
   submit.value = "Go back to Two Player";
@@ -47,5 +40,4 @@ function BattlePage() {
   });
   pageDiv.appendChild(submit);
 }
-
 export default BattlePage;

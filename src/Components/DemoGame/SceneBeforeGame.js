@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import eventsCenter from './EventCenter';
+import eventsCenter from '../Game/EventCenter';
 
 
 class SceneBeforeGame extends Phaser.Scene

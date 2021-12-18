@@ -1,15 +1,12 @@
 import Phaser from 'phaser';
 import eventsCenter from './EventCenter';
 
-let X, Y, score, player;
-
-export default class UIScoreSingleScore extends Phaser.Scene
+export default class UISingleScore extends Phaser.Scene
 {
-	constructor(player)
+	constructor()
 	{
 		super('ui-score');
 		this.score = 0;
-		this.player = player;
 	}
 
 	create()

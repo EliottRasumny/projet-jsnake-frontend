@@ -1,8 +1,9 @@
 import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
-import UIScoreSingleScore from "../Game/UIScoreSingleScore";
-import GameOver from "../Game/GameOver";
+import UISingleScore from "../Game/UISingleScore";
+import GameOver from "../Game/UIGameOver";
+import Start from "../Game/UIStart";
 
 var game;
 
@@ -12,15 +13,15 @@ function CoopPage() {
 
   const config = {
     type: Phaser.AUTO,
-    width: 1024,
-    height: 768,
+    width: 736,
+    height: 544,
     backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
       arcade: {y: 0}
     },
     parent: "coopGame",
-    scene: [CoopGame, UIScoreSingleScore]
+    scene: [Start, CoopGame, UISingleScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)

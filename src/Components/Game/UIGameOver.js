@@ -16,7 +16,7 @@ export default class GameOver extends Phaser.Scene
     this.add.text(centerX, centerY - 100, 'GAME OVER',
       {
         //fontFamily: 'showcard-gothic',
-        fontSize: '48px',
+        fontSize: '52px',
         color: '#665847',
         fontStyle: 'bold'
       }
@@ -24,14 +24,14 @@ export default class GameOver extends Phaser.Scene
     const button = this.add.text(centerX, centerY + 100, 'Restart',
       {
         //fontFamily: 'showcard-gothic',
-        fontSize: 25,
+        fontSize: '32px',
         color: '#665847',
         fontStyle: 'bold'
       }
     ).setOrigin(0.5);
     button.setInteractive();
-    button.on('pointerover', () => { button.setFontSize(30);});
-    button.on('pointerout', () => { button.setFontSize(25); });
+    button.on('pointerover', () => { button.setFontSize(48);});
+    button.on('pointerout', () => { button.setFontSize(32); });
     button.on('pointerdown', () => { this.scene.start('game-scene'); });
   }
 
