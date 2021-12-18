@@ -7,6 +7,7 @@ import Snake from './Snake';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/RedSnake32.png';
+import { getSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
 const GRID_KEY = 'grid', APPLE_KEY = 'apple', SNAKE_KEY = 'snake', SQUARE_SIZE = 32;
@@ -134,6 +135,10 @@ class SingleGame extends Phaser.Scene
    */
   shutdown()
   {
+    let user = getSessionObject("user1");
+
+    console.log(user);
+
     this.scene.stop('ui-score');
     this.scene.start('game-over'); //Stop current scene and start the new one
   };
