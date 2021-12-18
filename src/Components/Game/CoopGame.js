@@ -83,7 +83,7 @@ class CoopGame extends Phaser.Scene
     this.controls1 = this.input.keyboard.createCursorKeys();
     this.controls2 = this.input.keyboard.addKeys("q,z,s,d");
     //UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player1');
+    this.scene.run('ui-single-score');
   };
 
 
@@ -299,10 +299,9 @@ class CoopGame extends Phaser.Scene
       }
 
     }
-
-
-
-    this.scene.stop('ui-score')
+    //Create event to display the final score
+    eventsCenter.emit('game-over');
+    //Closing gamescene and open GameOver scene
     this.scene.start('game-over');
   };
 
@@ -347,17 +346,16 @@ class CoopGame extends Phaser.Scene
     //Updating score
     if (player == this.snake1)
     {
-      this.score++;
       //The snake grow up
       player.growUp(this.direction1);
     }
     else
     {
-      this.score++;
       //The snake grow up
       player.growUp(this.direction2);
     }
-    eventsCenter.emit('update-scoreSingle', this.score);
+    this.score++;
+    eventsCenter.emit('update-score-single', this.score);
     do
     {
       var isOccupied = false;

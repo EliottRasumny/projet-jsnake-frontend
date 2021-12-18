@@ -5,8 +5,7 @@ export default class UISingleScore extends Phaser.Scene
 {
 	constructor()
 	{
-		super('ui-score');
-		this.score = 0;
+		super('ui-single-score');
 	}
 
 	create()
@@ -18,7 +17,7 @@ export default class UISingleScore extends Phaser.Scene
 			fontStyle: 'bold'
 		}).setOrigin(0.5);
 		//Listen to an event
-		eventsCenter.on('update-scoreSingle', this.updateScore, this);
+		eventsCenter.on('update-score-single', this.updateScore, this);
 		eventsCenter.on('game-over', this.gameOverDisplay, this);
 		// clean up when Scene is shutdown
 		this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {

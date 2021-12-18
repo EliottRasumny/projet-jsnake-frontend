@@ -198,7 +198,6 @@ class BattleGame extends Phaser.Scene
    */
   shutdown()
   {
-    this.scene.stop('ui-score');
     this.scene.start('game-over');
   };
 

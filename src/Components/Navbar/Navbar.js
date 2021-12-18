@@ -25,7 +25,6 @@ const Navbar = () => {
     navbar = `
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container ">
-        <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,7 +54,6 @@ const Navbar = () => {
     navbar = `
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container ">
-          <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -82,10 +80,6 @@ const Navbar = () => {
     submitLogout.addEventListener("click", () => {
       Redirect("/logout");
     });
-    let submitSettings = document.querySelector("#btnToSetting");
-    submitSettings.addEventListener("click", () => {
-      Redirect("/settings");
-    });
     let submitRegister = document.querySelector("#btnToRegister");
     submitRegister.addEventListener("click", () => {
         Redirect("/register");
@@ -97,7 +91,6 @@ const Navbar = () => {
     navbar = `
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container ">
-          <button id="btnToHome2" type="button" class="btn btn-link navbar-brand active text-white">JSnake</button>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -118,10 +111,6 @@ const Navbar = () => {
     let submitLogout = document.querySelector("#btnToLogout");
     submitLogout.addEventListener("click", () => {
       Redirect("/logout");
-    });
-    let submitSettings = document.querySelector("#btnToSetting");
-    submitSettings.addEventListener("click", () => {
-      Redirect("/settings");
     });
   } 
 };

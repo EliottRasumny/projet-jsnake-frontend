@@ -63,7 +63,7 @@ class SingleGame extends Phaser.Scene
     //Creating the snakes
     this.snake = this.createSnake((5 * SQUARE_SIZE), (7 * SQUARE_SIZE), 'right', SNAKE_KEY);
     //UIScene for scores
-    this.scene.run('ui-score', 'Player');
+    this.scene.run('ui-single-score');
     //Enabling keyboard inputs
     this.controls = this.input.keyboard.createCursorKeys();
   };
@@ -239,7 +239,7 @@ class SingleGame extends Phaser.Scene
     this.score++;
     //The snake grow up
     this.snake.growUp(this.direction);
-    eventsCenter.emit('update-scoreSingle', this.score);
+    eventsCenter.emit('update-score-single', this.score);
     do
     {
       var isOccupied = false;
@@ -259,6 +259,5 @@ class SingleGame extends Phaser.Scene
     } while (isOccupied)
     this.apple.setPosition(randomX + (SQUARE_SIZE / 2),randomY + (SQUARE_SIZE / 2));
   }
-   
 }
 export default SingleGame;
