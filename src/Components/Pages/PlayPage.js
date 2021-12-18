@@ -1,7 +1,7 @@
 import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import PlayGame from "../Game/SingleGame";
-import UIScoreSingleScore from "../Game/UIScoreSingleScore";
+import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/GameOver";
 import Start from "../Game/Start";
 
@@ -21,7 +21,7 @@ function PlayPage() {
       arcade: {y: 0}
     },
     parent: "playGame",
-    scene: [Start, PlayGame, UIScoreSingleScore, GameOver]
+    scene: [Start, PlayGame, UISingleScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)

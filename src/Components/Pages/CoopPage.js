@@ -1,8 +1,9 @@
 import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
-import UIScoreSingleScore from "../Game/UIScoreSingleScore";
+import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/GameOver";
+import Start from "../Game/Start";
 
 var game;
 
@@ -20,7 +21,7 @@ function CoopPage() {
       arcade: {y: 0}
     },
     parent: "coopGame",
-    scene: [CoopGame, UIScoreSingleScore]
+    scene: [Start, CoopGame, UISingleScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)

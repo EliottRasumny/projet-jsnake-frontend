@@ -18,26 +18,19 @@ class CoopGame extends Phaser.Scene
   constructor()
   {
     super('game-scene');
-    //Players
     this.snake1 = undefined;
     this.snake2 = undefined;
-    //directions
-    this.direction1 = 'right';
-    this.direction2 = 'left';
+    this.direction1 = null;
+    this.direction2 = null;
     this.nextDirection1 = null;
     this.nextDirection2 = null;
-    //Food
     this.apple1 = undefined;
     this.apple2 = undefined;
-    //Enable to render the snake properly
-    this.keyFrameValue = 0;
-    //Score of players
-    this.score = 0;
-    //Players controls
+    this.keyFrameValue = null;
+    this.score = null;
     this.controls1 = undefined;
     this.controls2 = undefined;
-    //Velocity of the snakes
-    this.speed = 2;
+    this.speed = null;
   };
 
 
@@ -63,6 +56,17 @@ class CoopGame extends Phaser.Scene
    */
   create()
   {
+    //Enable to render the snake properly
+    this.keyFrameValue = 0;
+    //directions
+    this.direction1 = 'right';
+    this.direction2 = 'left';
+    this.nextDirection1 = null;
+    this.nextDirection2 = null;
+    //Score of players
+    this.score = 0;
+    //Velocity of the snakes
+    this.speed = 3;
     //Creating the grid
     this.add.image(SQUARE_SIZE * 16, SQUARE_SIZE * 12, GRID_KEY);
     //Creating food
@@ -190,7 +194,8 @@ class CoopGame extends Phaser.Scene
    */
   shutdown()
   {
-    this.scene.start('GameOver');
+    this.scene.stop('ui-score')
+    this.scene.start('game-over');
   };
 
 
