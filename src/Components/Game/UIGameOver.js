@@ -21,6 +21,7 @@ export default class GameOver extends Phaser.Scene
         fontStyle: 'bold'
       }
     ).setOrigin(0.5);
+    //Button to restart the game
     const button = this.add.text(centerX, centerY + 100, 'Restart',
       {
         //fontFamily: 'showcard-gothic',
@@ -32,7 +33,10 @@ export default class GameOver extends Phaser.Scene
     button.setInteractive();
     button.on('pointerover', () => { button.setFontSize(48);});
     button.on('pointerout', () => { button.setFontSize(32); });
-    button.on('pointerdown', () => { this.scene.start('game-scene'); });
+    button.on('pointerdown', () => {
+      this.scene.stop('ui-score');
+      this.scene.start('game-scene');
+    });
   }
 
 

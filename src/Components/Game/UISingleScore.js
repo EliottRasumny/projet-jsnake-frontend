@@ -19,7 +19,7 @@ export default class UISingleScore extends Phaser.Scene
 		}).setOrigin(0.5);
 		//Listen to an event
 		eventsCenter.on('update-scoreSingle', this.updateScore, this);
-
+		eventsCenter.on('game-over', this.gameOverDisplay, this);
 		// clean up when Scene is shutdown
 		this.events.on(Phaser.Scenes.Events.SHUTDOWN, () => {
 			eventsCenter.off('update-scoreSingle', this.updateScore, this)
@@ -29,5 +29,11 @@ export default class UISingleScore extends Phaser.Scene
 	updateScore(score)
 	{
 		this.label.text = `Score : ${score}`;		
+	}
+
+	gameOverDisplay()
+	{
+		this.label.setY(this.scale.height * 0.5);
+		this.label.setFontSize(32);
 	}
 }
