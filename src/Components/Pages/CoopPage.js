@@ -13,8 +13,8 @@ function CoopPage() {
 
   const config = {
     type: Phaser.AUTO,
-    width: 1024,
-    height: 768,
+    width: 736,
+    height: 544,
     backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
