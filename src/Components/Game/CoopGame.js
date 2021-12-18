@@ -169,22 +169,21 @@ class CoopGame extends Phaser.Scene
         this.snake2.move(this.direction2);
       }
       //Collision with a wall : Snake1
-      if (this.isGameOver) this.shutdown();
       if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
         this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
       {
         this.shutdown();
       }
       //Collision with a wall : Snake2
-      if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+      else if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
         this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
       {
         this.shutdown();
       }
       //Collision with themselfs
-      if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      else if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
       //Collision with each other
-      if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
+      else if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
     }
   };
 
