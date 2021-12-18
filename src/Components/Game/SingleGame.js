@@ -118,15 +118,15 @@ class SingleGame extends Phaser.Scene
       {
         this.snake.move(this.direction);
       }
+      //collision with a wall
+      if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
+        this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
+      {
+        this.shutdown();
+      }
+      //collision with itself
+      if(this.snake.eatItself()) this.shutdown();
     }
-    //collision with a wall
-    if(this.snake.getBody().getAt(0).x <= -32 || this.snake.getBody().getAt(0).x >= 544 ||
-      this.snake.getBody().getAt(0).y <= -32 || this.snake.getBody().getAt(0).y >= 480)
-    {
-      this.shutdown();
-    }
-    //collision with itself
-    if(this.snake.eatItself()) this.shutdown();
   };
 
 
@@ -136,8 +136,71 @@ class SingleGame extends Phaser.Scene
   shutdown()
   {
     let user = getSessionObject("user1");
+    if(!user){
 
-    console.log(user);
+    }
+    else{
+      console.log(user);
+
+      if (this.score > user.bestScoreSingle){
+        changeScore(this.score);
+      }
+  
+  
+    }
+    
+    async function changeScore(score){
+      console.log("score : ", score);  
+      
+      //update the user bestscore
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreSingle: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/auths/user/${user.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("error: ", error);
+      }
+      user.bestScoreSingle = score;
+      console.log("user after update : ", user);
+
+      //update the bestscoreSingle
+      try {
+        const options = {
+          method: "POST", 
+          body: JSON.stringify({
+            score: score,
+            username: user.username1,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/single/bestscoressingle/`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("LoginPage::error: ", error);
+      }
+
+    }
+
 
     this.scene.stop('ui-score');
     this.scene.start('game-over'); //Stop current scene and start the new one
