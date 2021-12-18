@@ -42,10 +42,6 @@ const Navbar = () => {
                 <li class="nav-item">
                     <a class="nav-link  text-white" href="/scoreboard">Scoreboard</a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link  text-white" href="/settings">Settings</a>
-                </li>
             </ul>
             <div class="d-flex">
                 <a class="nav-link" href="/login1"><button class="btn btn-light ms-3">Login</button></a>
