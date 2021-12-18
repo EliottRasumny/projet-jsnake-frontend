@@ -7,15 +7,14 @@ import GameOver from "../Game/UIGameOver";
 
 var game;
 
-
 function BattlePage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `<div id="battleGame" class="container justify-content-center my-3"></div>`;
 
   const config = {
     type: Phaser.AUTO,
-    width: 1024,
-    height: 768,
+    width: 736,
+    height: 544,
     backgroundColor: '#BDEB5E',
     physics: {
       default: 'arcade',
@@ -29,14 +28,6 @@ function BattlePage() {
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-  
-  /*
-  game.stage.add('Menu', Menu);     
-  // Adding the Game state.
-  game.state.add('Game', BattleGame);
-  game.state.start('Menu');
-  */
-
   // create a login form
   const submit = document.createElement("input");
   submit.value = "Go back to Two Player";
@@ -49,5 +40,4 @@ function BattlePage() {
   });
   pageDiv.appendChild(submit);
 }
-
 export default BattlePage;
