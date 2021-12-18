@@ -17,21 +17,14 @@ class SingleGame extends Phaser.Scene
   constructor()
   {
     super('game-scene');
-    //Food
     this.apple = undefined;
-    //Player
     this.snake = undefined;
-    //directions
     this.direction = null;
     this.nextDirection = null;
-    //Enable to render the snake properly
     this.keyFrameValue = 0;
-    //Score of players
-    this.score = 0;
-    //Players controls
+    this.score = null;
     this.controls = undefined;
-    //Velocity of the snakes
-    this.speed = 3;
+    this.speed = null;
   };
 
 
@@ -53,7 +46,11 @@ class SingleGame extends Phaser.Scene
    */
   create()
   {
-    //Reset direction if game restart
+    //Score player' score
+    this.score = 0;
+    //Velocity of the snakes
+    this.speed = 3;
+    //Set direction
     this.direction = 'right';
     this.nextDirection = null;
     //Creating the grid
@@ -63,7 +60,7 @@ class SingleGame extends Phaser.Scene
     this.apple.setScale(0.99,0.99);
     //Creating the snakes
     this.snake = this.createSnake((5 * SQUARE_SIZE), (7 * SQUARE_SIZE), 'right', SNAKE_KEY);
-    //FIXME:UIScene for scores
+    //UIScene for scores
     this.scene.run('ui-score', 'Player');
     //Enabling keyboard inputs
     this.controls = this.input.keyboard.createCursorKeys();

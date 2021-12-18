@@ -31,6 +31,6 @@ export default class UIScoreSingleScore extends Phaser.Scene
 
 	updateScore(score)
 	{
-		this.label.text = `Score ${score}`;		
+		this.label.text = `Score : ${score}`;		
 	}
 }
