@@ -23,7 +23,6 @@ function BattlePage() {
     parent: "battleGame",
     scene: [UIStart, BattleGame, UIScore, GameOver]
   };
-
   // there could be issues when a game was quit (events no longer working)
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);

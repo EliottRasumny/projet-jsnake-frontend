@@ -185,7 +185,7 @@ const Navbar = () => {
   });
   let submitSingle = document.querySelector("#btnToSingleP");
   submitSingle.addEventListener("click", () => {
-    Redirect("/single");
+    Redirect("/singlePlayer");
   });
   let submitTwoPlayer = document.querySelector("#btnToTwoPlayer");
   submitTwoPlayer.addEventListener("click", () => {

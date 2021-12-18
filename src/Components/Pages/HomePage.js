@@ -1,4 +1,3 @@
-
 import oneSnake from "../../img/oneSnake.png";
 import twoSnakes from "../../img/twoSnakes.png";
 import { Redirect } from "../Router/Router";
@@ -6,7 +5,6 @@ import { Redirect } from "../Router/Router";
 /**
  * Render the HomePage
  */
-
 const HomePage = () => {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
@@ -27,7 +25,7 @@ const HomePage = () => {
   `;
   let submitSingle = document.querySelector("#btnToSingle");
   submitSingle.addEventListener("click", () => {
-    Redirect("/single");
+    Redirect("/singlePlayer");
   });
   let submitDual = document.querySelector("#btnToDual");
   submitDual.addEventListener("click", () => {
@@ -35,6 +33,4 @@ const HomePage = () => {
   });
 
 };
-
-
 export default HomePage;
