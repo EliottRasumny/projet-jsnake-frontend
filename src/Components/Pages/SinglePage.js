@@ -1,13 +1,13 @@
 import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
-import PlayGame from "../Game/SingleGame";
+import SingleGame from "../Game/SingleGame";
 import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/UIGameOver";
 import Start from "../Game/UIStart";
 
 var game;
 
-function PlayPage() {
+function SinglePage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `<div id="playGame" class="container justify-content-center my-3"></div>`;
 
@@ -21,7 +21,7 @@ function PlayPage() {
       arcade: {y: 0}
     },
     parent: "playGame",
-    scene: [Start, PlayGame, UISingleScore, GameOver]
+    scene: [Start, SingleGame, UISingleScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)
@@ -70,4 +70,4 @@ function PlayPage() {
   });
   pageDiv.appendChild(submitTwo);
 }
-export default PlayPage;
+export default SinglePage;
