@@ -4,7 +4,6 @@ import PlayGame from "../Game/SingleGame";
 import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/UIGameOver";
 import Start from "../Game/UIStart";
-import BattleGame, {game} from "../Game/BattleGame";
 
 var game;
 
@@ -46,5 +45,4 @@ function PlayPage() {
   });
   pageDiv.appendChild(submit);
 }
-
 export default PlayPage;
