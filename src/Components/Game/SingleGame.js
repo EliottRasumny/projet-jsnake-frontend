@@ -183,7 +183,7 @@ class SingleGame extends Phaser.Scene
           method: "POST", 
           body: JSON.stringify({
             score: score,
-            id: user.id,
+            username: user.username1,
           }), 
           headers: {
             "Content-Type": "application/json",
