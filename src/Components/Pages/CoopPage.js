@@ -28,17 +28,52 @@ function CoopPage() {
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-  // create a login form
-  const submit = document.createElement("input");
-  submit.value = "Go back to Two Player";
-  // Example on how to use Bootstrap to style a Button
-  submit.className = "btn btn-secondary mt-3";
-  // Example on how to add an event handler : when the button is clicked, redirect
-  // to the HomePage
-  submit.addEventListener("click", () => {
-    Redirect("/twoPlayer");
+  //button==================================================
+  //Go back to 2 players
+  const submitGoBack = document.createElement("input");
+  submitGoBack.value = "< GO BACK";
+  submitGoBack.className = "btn btn-secondary m-3";
+  submitGoBack.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/twoPlayers");
   });
-  pageDiv.appendChild(submit);
+  pageDiv.appendChild(submitGoBack);
+  //To Home
+  const submitHome = document.createElement("input");
+  submitHome.value = "< GO HOME >";
+  submitHome.className = "btn btn-secondary m-3";
+  submitHome.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/");
+  });
+  pageDiv.appendChild(submitHome);
+  //To settings
+  const submitSettings = document.createElement("input");
+  submitSettings.value = "< SETTINGS >";
+  submitSettings.className = "btn btn-secondary m-3";
+  submitSettings.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/settings");
+  });
+  pageDiv.appendChild(submitSettings);
+  //To Scoreboard
+  const submitScoreBoard = document.createElement("input");
+  submitScoreBoard.value = "< SCOREBOARD >";
+  submitScoreBoard.className = "btn btn-secondary m-3";
+  submitScoreBoard.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/scoreboardCoop");
+  });
+  pageDiv.appendChild(submitScoreBoard);
+  //To Single Player
+  const submitSingle = document.createElement("input");
+  submitSingle.value = "TO SINGLE PLAYER >";
+  submitSingle.className = "btn btn-secondary m-3";
+  submitSingle.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/singlePlayer");
+  });
+  pageDiv.appendChild(submitSingle);
 }
 
 export default CoopPage;

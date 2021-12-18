@@ -37,6 +37,7 @@ function SinglePage() {
   //TODO: EXEMPLE Go Home
   var submitHome = document.querySelector("#singleToHome");
   submitHome.addEventListener("click", () => {
+    if (game) game.destroy(true);
     Redirect("/");
   });
   //TODO: a supprimer ce qui suit et faire comme dans 'EXEMPLE'
@@ -78,7 +79,7 @@ function SinglePage() {
   submitTwo.className = "btn btn-secondary m-3";
   submitTwo.addEventListener("click", () => {
     if (game) game.destroy(true, false);
-    Redirect("/twoPlayer");
+    Redirect("/twoPlayers");
   });
   pageDiv.appendChild(submitTwo);
 }

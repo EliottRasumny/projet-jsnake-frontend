@@ -19,7 +19,7 @@ const routes = {
   "/": HomePage,
   "/game": GamePage,
   "/singlePlayer": SinglePlayer,
-  "/twoPlayer": TwoPlayer,
+  "/twoPlayers": TwoPlayer,
   "/scoreboardSingle": ScoreboardSinglePage,
   "/settings": SettingsPage,
   "/coop": CoopPage,

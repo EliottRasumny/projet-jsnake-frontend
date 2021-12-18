@@ -30,7 +30,7 @@ const HomePage = () => {
   });
   let submitDual = document.querySelector("#btnToDual");
   submitDual.addEventListener("click", () => {
-    Redirect("/twoPlayer");
+    Redirect("/twoPlayers");
   });
   let submitScoreBoard = document.querySelector("#btnToScoreBoard");
   submitScoreBoard.addEventListener("click", () => {Redirect("/scoreboard");});
