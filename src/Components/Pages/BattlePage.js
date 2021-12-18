@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import BattleGame from '../Game/BattleGame';
 import UIScore from "../Game/UIScore";
 import UIStart from "../Game/UIStart";
+import GameOver from "../Game/UIGameOver";
 
 var game;
 

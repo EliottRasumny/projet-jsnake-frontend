@@ -2,7 +2,7 @@ import { Redirect } from "../Router/Router";
 import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
 import UISingleScore from "../Game/UISingleScore";
-import GameOver from "../Game/GameOver";
+import GameOver from "../Game/UIGameOver";
 import Start from "../Game/UIStart";
 
 var game;
