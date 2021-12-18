@@ -2,6 +2,7 @@ import { Redirect } from "../Router/Router";
 import Phaser from "phaser";
 import BattleGame from '../Game/BattleGame';
 import UIScore from "../Game/UIScore";
+import UIStart from "../Game/UIStart";
 
 var game;
 
@@ -20,7 +21,7 @@ function BattlePage() {
       arcade: {y: 0}
     },
     parent: "battleGame",
-    scene: [BattleGame, UIScore]
+    scene: [UIStart, BattleGame, UIScore, GameOver]
   };
 
   // there could be issues when a game was quit (events no longer working)

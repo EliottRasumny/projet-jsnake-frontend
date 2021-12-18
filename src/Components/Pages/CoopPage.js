@@ -3,7 +3,7 @@ import Phaser from 'phaser';
 import CoopGame from '../Game/CoopGame';
 import UISingleScore from "../Game/UISingleScore";
 import GameOver from "../Game/GameOver";
-import Start from "../Game/Start";
+import Start from "../Game/UIStart";
 
 var game;
 

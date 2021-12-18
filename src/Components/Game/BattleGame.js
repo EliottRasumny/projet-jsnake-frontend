@@ -74,7 +74,7 @@ class BattleGame extends Phaser.Scene
     this.snake1 = this.createSnake((6 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'right', SNAKE1_KEY);
     this.snake2 = this.createSnake((25 * SQUARE_SIZE), (11 * SQUARE_SIZE), 'left', SNAKE2_KEY);
     //UIScene for scores
-    this.scene.run('ui-score', 10, 10, 'Player1');
+    this.scene.run('ui-score');
     //Enabling keyboard inputs
     this.controls1 = this.input.keyboard.createCursorKeys();
     this.controls2 = this.input.keyboard.addKeys(`q,z,s,d`);
@@ -194,7 +194,8 @@ class BattleGame extends Phaser.Scene
    */
   shutdown()
   {
-    this.scene.start('GameOver');
+    this.scene.stop('ui-score');
+    this.scene.start('game-over');
   };
 
 
