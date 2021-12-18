@@ -136,8 +136,72 @@ class SingleGame extends Phaser.Scene
   shutdown()
   {
     let user = getSessionObject("user1");
+    if(!user){
 
-    console.log(user);
+    }
+    else{
+      console.log(user);
+
+      if (this.score > user.bestScoreSingle){
+        changeScore(this.score);
+      }
+  
+  
+    }
+    
+    async function changeScore(score){
+      score = score;
+      console.log("score : ", score);  
+      
+      //update the user bestscore
+      try {
+        const options = {
+          method: "PUT", 
+          body: JSON.stringify({
+            bestScoreSingle: score,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/auths/user/${user.id}`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("LoginPage::error: ", error);
+      }
+      user.bestScoreSingle = score;
+      console.log("user after update : ", user);
+
+      //update the bestscoreSingle
+      try {
+        const options = {
+          method: "POST", 
+          body: JSON.stringify({
+            score: score,
+            id: user.id,
+          }), 
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+  
+        const response = await fetch(`/api/single/bestscoressingle/`, options); // fetch return a promise => we wait for the response
+        if (!response.ok) {
+          throw new Error(
+            "fetch error : " + response.status + " : " + response.statusText
+          );
+        }
+      }catch (error) {
+        console.error("LoginPage::error: ", error);
+      }
+
+    }
+
 
     this.scene.stop('ui-score');
     this.scene.start('game-over'); //Stop current scene and start the new one
