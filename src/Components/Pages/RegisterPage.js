@@ -46,17 +46,6 @@ function RegisterPage() {
   form.addEventListener("submit", onSubmit);
   pageDiv.appendChild(form);
 
-
-  //Go back
-  const submitGoBack = document.createElement("input");
-  submitGoBack.value = "GO BACK";
-  submitGoBack.className = "btn btn-secondary m-3";
-  submitGoBack.addEventListener("click", () => {
-    Redirect("/");
-  });
-  pageDiv.appendChild(submitGoBack);
-
-
   async function onSubmit(e) {
     e.preventDefault();
     const username = document.getElementById("username");
