@@ -51,7 +51,7 @@ function SinglePage() {
   if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
   //Buttons ======================================================
-  //Go back to 2 players
+  //Go back
   const submitGoBack = document.createElement("input");
   submitGoBack.value = "GO BACK";
   submitGoBack.className = "btn btn-secondary m-3";
