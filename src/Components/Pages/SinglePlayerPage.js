@@ -51,6 +51,16 @@ function SinglePage() {
   if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
   //Buttons ======================================================
+  //Go back to 2 players
+  const submitGoBack = document.createElement("input");
+  submitGoBack.value = "GO BACK";
+  submitGoBack.className = "btn btn-secondary m-3";
+  submitGoBack.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/");
+  });
+  pageDiv.appendChild(submitGoBack);
+
   //Go Home
   var submitHome = document.querySelector("#singleToHome");
   submitHome.addEventListener("click", () => {
