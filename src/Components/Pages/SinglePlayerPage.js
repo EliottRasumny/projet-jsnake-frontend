@@ -11,8 +11,11 @@ function SinglePage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
   <div id="navbar" class="mb-5">
-    TODO:
     <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
+    <button id="singleToScore" type="button" class="btn btn-secondary text-center active">Scoreboard</button>
+    <button id="singleToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
+    <button id="singleToTwoPlayers" type="button" class="btn btn-secondary text-center active">Two Players</button>
+
   </div>
   <h1 class="m-5">Single Player</h1>
   <div id="playGame" class="container justify-content-center mt-5 my-3"></div>`;
@@ -35,7 +38,7 @@ function SinglePage() {
   if (game) game.destroy(true, false);
   game = new Phaser.Game(config);
   //Buttons ======================================================
-  //TODO: EXEMPLE Go Home
+  //Go Home
   var submitHome = document.querySelector("#singleToHome");
   submitHome.addEventListener("click", () => {
     if (game) game.destroy(true);
@@ -54,33 +57,24 @@ function SinglePage() {
   pageDiv.appendChild(submitHome);
   */
   //Go to scoreboard
-  const submitScore = document.createElement("input");
-  submitScore.value = "< SCOREBOARD >";
-  submitScore.id = "button";
-  submitScore.className = "btn btn-secondary m-3";
+  var submitScore = document.querySelector("#singleToScore");
   submitScore.addEventListener("click", () => {
-    if (game) game.destroy(true, false);
+    if (game) game.destroy(true);
     Redirect("/scoreboardSingle");
   });
-  pageDiv.appendChild(submitScore);
+
   //Go to settings
-  const submitSettings = document.createElement("input");
-  submitSettings.value = "< SETTINGS >";
-  submitSettings.id = "button";
-  submitSettings.className = "btn btn-secondary m-3";
+  var submitSettings = document.querySelector("#singleToSettings");
   submitSettings.addEventListener("click", () => {
+    if (game) game.destroy(true);
     Redirect("/settings");
   });
-  pageDiv.appendChild(submitSettings);
+
   //Go to two players
-  const submitTwo = document.createElement("input");
-  submitTwo.value = "TWO PLAYERS >";
-  submitTwo.id = "button";
-  submitTwo.className = "btn btn-secondary m-3";
-  submitTwo.addEventListener("click", () => {
-    if (game) game.destroy(true, false);
+  var submitTwoPlayers = document.querySelector("#singleToTwoPlayers");
+  submitTwoPlayers.addEventListener("click", () => {
+    if (game) game.destroy(true);
     Redirect("/twoPlayers");
   });
-  pageDiv.appendChild(submitTwo);
 }
 export default SinglePage;

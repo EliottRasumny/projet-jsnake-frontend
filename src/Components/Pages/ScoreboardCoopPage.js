@@ -5,14 +5,18 @@ import { getSessionObject } from "../../utils/session";
 
 function ScoreboardCoopPage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div class="container">
-                          <div class="row">
-                              <div class="col" id="col1"> <h6 class="display-6 m-4"> Two Players </h6> </div>
-                          </div>
-                          <div class="row">
-                              <div class="col" id="col2"> <h6 class="display-6 m-4"> My scores </h6> </div>
-                          </div>
-                      </div>`;
+  pageDiv.innerHTML = `
+  <div id="navbar" class="mb-5">
+    <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col" id="col1"> <h6 class="display-6 m-4"> Two Players </h6> </div>
+      </div>
+      <div class="row">
+      <div class="col" id="col2"> <h6 class="display-6 m-4"> My scores </h6> </div>
+    </div>
+  </div>`;
   score();
   UserScore();
   // create a login form
@@ -26,6 +30,14 @@ function ScoreboardCoopPage() {
    Redirect("/coop");
   });
   pageDiv.appendChild(submit);
+
+
+//Buttons ======================================================
+  //Go Home
+  var submitHome = document.querySelector("#singleToHome");
+  submitHome.addEventListener("click", () => {
+    Redirect("/");
+  });
 }
 
 /**
@@ -57,12 +69,10 @@ function ScoreboardCoopPage() {
     thead.appendChild(header);
     const header1 = document.createElement("th");
     header1.innerText = "Score";
-    header1.scope="col";
     const header2 = document.createElement("th");
     header2.innerText = "Player 1";
     const header3 = document.createElement("th");
     header3.innerText = "Player 2";
-    header1.scope="col";
     header.appendChild(header1);
     header.appendChild(header2);
     header.appendChild(header3);
