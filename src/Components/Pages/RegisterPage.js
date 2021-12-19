@@ -77,7 +77,7 @@ function RegisterPage() {
         notification.innerText = "This pseudo already exist, please choose another one."
       }
       else{
-        consolr.log("test");
+        console.log("test");
         const user = await response.json(); // json() returns a promise => we wait for the data
         console.log("user",user);
         // call the HomePage via the Router
