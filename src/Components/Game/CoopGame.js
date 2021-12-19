@@ -10,7 +10,7 @@ import appleAssetB from '../../assets/img/MagentaApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
 import { SQUARE_SIZE, GRID_KEY } from '../../constant';
-import { getSessionObject } from "../../utils/session";
+import { getSessionObject, setSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
 const APPLE1_KEY = 'apple1', APPLE2_KEY = 'apple2', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
@@ -343,16 +343,16 @@ class CoopGame extends Phaser.Scene
   {
     let user1 = getSessionObject("user1");
     let user2 = getSessionObject("user2");
-
-    if(!user1 || !user2)
-    {}
-    else{
+    if(user1 && user2){
+      //Personnal best coop score player1
       if (this.score > user1.bestScoreCoop){
         changePlayer1ScoreCoop(score);
       }
+      //Personnal best coop score player2
       if (this.score > user2.bestScoreCoop){
         changePlayer2ScoreCoop(score);
       }
+      //TopScore
       if (this.score > user1.bestScoreCoop || score > user2.bestScoreCoop){
         changeBestScoresCoop(score);
       }
@@ -381,6 +381,7 @@ class CoopGame extends Phaser.Scene
         console.error("error: ", error);
       }
       user1.bestScoreCoop = score;
+      setSessionObject("user1",user1);
       console.log("user after update : ", user1);
     }
 
@@ -407,6 +408,7 @@ class CoopGame extends Phaser.Scene
         console.error("error: ", error);
       }
       user2.bestScoreCoop = score;
+      setSessionObject("user2",user2);
       console.log("user after update : ", user2);
     }
 

@@ -7,7 +7,7 @@ import Snake from './Snake';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/GreenSnake32.png';
-import { getSessionObject } from "../../utils/session";
+import { getSessionObject, setSessionObject } from "../../utils/session";
 import { SQUARE_SIZE, GRID_KEY } from '../../constant';
 
 //Constants for DRY principle
@@ -201,9 +201,7 @@ class SingleGame extends Phaser.Scene
   callBackend(score)
   {
     let user = getSessionObject("user1");
-    if(!user)
-    {}
-    else{
+    if(user){
       if (score > user.bestScoreSingle){
         changeScore(score);
       }
@@ -230,7 +228,9 @@ class SingleGame extends Phaser.Scene
       }catch (error) {
         console.error("error: ", error);
       }
+      
       user.bestScoreSingle = score;
+      setSessionObject("user1",user);
       //update the bestscoreSingle
       try {
         const options = {
@@ -243,7 +243,7 @@ class SingleGame extends Phaser.Scene
             "Content-Type": "application/json",
           },
         };
-        const response = await fetch(`/api/single/bestscoressingle/`, options); // fetch return a promise => we wait for the response
+        const response = await fetch(`/api/single/bestscoressingle`, options); // fetch return a promise => we wait for the response
         if (!response.ok) {
           throw new Error(
             "fetch error : " + response.status + " : " + response.statusText
@@ -251,6 +251,7 @@ class SingleGame extends Phaser.Scene
         }
       } catch (error) {
         console.error("LoginPage::error: ", error);
+
       }
     }
   }
