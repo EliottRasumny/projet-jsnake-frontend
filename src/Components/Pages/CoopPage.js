@@ -17,6 +17,7 @@ function CoopPage() {
     <button id="coopToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
 
   </div>
+  <h1 class="m-5">COOP</h1>
   <div id="coopGame" class="container justify-content-center my-3"></div>`;
 
   const config = {

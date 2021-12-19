@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import endGameSoundAsset from '../../assets/sounds/end_game_long.mp3'
-import { KEY_END_SOUND } from '../../constant';
+import Transition from '../../assets/sounds/transition.mp3'
+import { KEY_END_SOUND, KEY_TRANSITION } from '../../constant';
 
 
 export default class GameOver extends Phaser.Scene
@@ -8,6 +9,7 @@ export default class GameOver extends Phaser.Scene
   constructor() {
     super("game-over");
     this.endGameSound = undefined;
+    this.transition = undefined;
   }
 
 
@@ -16,6 +18,7 @@ export default class GameOver extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio(KEY_TRANSITION, Transition);
     this.load.audio(KEY_END_SOUND, endGameSoundAsset);
   }
 
@@ -28,6 +31,18 @@ export default class GameOver extends Phaser.Scene
         mute: false,
         volume: 1,
         rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
+    //Sound for the transition
+    this.transition = this.sound.add(KEY_TRANSITION,
+      {
+        mute: false,
+        volume: 1,
+        rate: 2,
         detune: 0,
         seek: 0,
         loop: false,
@@ -98,6 +113,7 @@ export default class GameOver extends Phaser.Scene
     button.on('pointerover', () => { button.setFontSize(48);});
     button.on('pointerout', () => { button.setFontSize(32);});
     button.on('pointerdown', () => {
+      this.transition.play();
       this.endSound.stop();
       this.scene.stop('ui-score');
       this.scene.start('game-scene');

@@ -16,6 +16,7 @@ function BattlePage() {
     <button id="battleToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
 
   </div>
+  <h1 class="m-5">BATTLE</h1>
   <div id="battleGame" class="container justify-content-center my-3"></div>`;
 
   const config = {

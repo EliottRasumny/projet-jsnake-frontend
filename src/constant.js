@@ -6,4 +6,6 @@ const GRID_KEY = 'grid';
 const KEY_EAT_SOUND = 'eatsound';
 //Key for the endGame sound
 const KEY_END_SOUND = 'endsound';
-export { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND, KEY_END_SOUND };
+//Key for the transition sound
+const KEY_TRANSITION = 'transition';
+export { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND, KEY_END_SOUND, KEY_TRANSITION };

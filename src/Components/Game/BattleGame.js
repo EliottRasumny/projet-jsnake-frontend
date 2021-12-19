@@ -5,6 +5,7 @@ import eventsCenter from './EventCenter';
 import Snake from './Snake';
 //import assets
 import eatSoundAsset from '../../assets/sounds/apple_crunch2.mp3';
+import startSoundAsset from '../../assets/sounds/battle_start.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
 import magentaSnakeAsset from '../../assets/img/BlueSnake32.png';
@@ -33,6 +34,7 @@ class BattleGame extends Phaser.Scene
     this.controls2 = undefined;
     this.speed = null;
     this.eatSound = undefined;
+    this.startSound = undefined;
     //!this.upB = 'z';
     //!this.downB = 's';
     //!this.leftB = 'q';
@@ -45,6 +47,7 @@ class BattleGame extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio('startSound', startSoundAsset);
     this.load.audio(KEY_EAT_SOUND, eatSoundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
@@ -62,6 +65,19 @@ class BattleGame extends Phaser.Scene
    */
   create()
   {
+    //Sound at start
+    this.startSound = this.sound.add('startSound',
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
+    this.startSound.play();
     //Sound while eating
     this.eatSound = this.sound.add(KEY_EAT_SOUND,
       {
@@ -231,6 +247,8 @@ class BattleGame extends Phaser.Scene
    */
   shutdown(winner)
   {
+    //Ending playing sounds
+    this.startSound.stop();
     this.eatSound.stop();
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-score');
