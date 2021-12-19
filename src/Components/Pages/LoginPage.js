@@ -66,7 +66,6 @@ function LoginPage() {
       }
       else{
         const user = await response.json(); // json() returns a promise => we wait for the data
-        console.log("user authenticated", user);
         // save the user into the localStorage
         setSessionObject("user1", user);
   

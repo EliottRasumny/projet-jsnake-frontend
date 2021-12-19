@@ -88,7 +88,6 @@ function score() {
 function UserScore() {
   const user = getSessionObject("user1");
   const col = document.querySelector("#col2");
-  console.log("user : ", user);
   
     // create a wrapper to provide a responsive table
     const tableWrapper = document.createElement("div");

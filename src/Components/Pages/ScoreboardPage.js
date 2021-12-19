@@ -152,7 +152,6 @@ function ScoreboardPage() {
 function UserScore() {
   const user = getSessionObject("user1");
   const col = document.querySelector("#col3");
-  console.log("user : ", user);
   
     // create a wrapper to provide a responsive table
     const tableWrapper = document.createElement("div");
