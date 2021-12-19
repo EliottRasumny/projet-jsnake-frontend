@@ -139,7 +139,8 @@ class SingleGame extends Phaser.Scene
     this.callBackend(this.score);
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-single-score');
-    this.scene.start('game-over', this.score, null);
+    if (this.score == 0) this.score = -1; //To display score properly
+    this.scene.start('game-over', [this.score, null]);
   };
 
   /**

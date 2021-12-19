@@ -198,10 +198,12 @@ class BattleGame extends Phaser.Scene
    */
   shutdown()
   {
-    //Create event to display the final score
-    eventsCenter.emit('game-over');
     //Closing gamescene and open GameOver scene
-    this.scene.start('game-over');
+    this.scene.stop('ui-score');
+    //Closing gamescene and open GameOver scene
+    if (this.score1 == 0) this.score1 = -1; //To display score properly
+    if (this.score2 == 0) this.score2 = -1; //To display score properly
+    this.scene.start('game-over', [this.score1, this.score2]);
   };
 
 
