@@ -137,10 +137,9 @@ class SingleGame extends Phaser.Scene
   shutdown()
   {
     this.callBackend(this.score);
-    //Create event to display the final score
-    eventsCenter.emit('game-over-score');
     //Closing gamescene and open GameOver scene
-    this.scene.start('game-over');
+    this.scene.stop('ui-single-score');
+    this.scene.start('game-over', this.score, null);
   };
 
   /**
@@ -231,7 +230,6 @@ class SingleGame extends Phaser.Scene
         console.error("error: ", error);
       }
       user.bestScoreSingle = score;
-      console.log("user after update : ", user);
       //update the bestscoreSingle
       try {
         const options = {

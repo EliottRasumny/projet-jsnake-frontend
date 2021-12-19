@@ -69,7 +69,6 @@ function SinglePage() {
   submitSettings.id = "button";
   submitSettings.className = "btn btn-secondary m-3";
   submitSettings.addEventListener("click", () => {
-    if (game) game.destroy(true, false);
     Redirect("/settings");
   });
   pageDiv.appendChild(submitSettings);
