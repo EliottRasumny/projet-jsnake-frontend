@@ -46,6 +46,17 @@ function RegisterPage() {
   form.addEventListener("submit", onSubmit);
   pageDiv.appendChild(form);
 
+
+  //Go back
+  const submitGoBack = document.createElement("input");
+  submitGoBack.value = "GO BACK";
+  submitGoBack.className = "btn btn-secondary m-3";
+  submitGoBack.addEventListener("click", () => {
+    Redirect("/");
+  });
+  pageDiv.appendChild(submitGoBack);
+
+
   async function onSubmit(e) {
     e.preventDefault();
     const username = document.getElementById("username");
@@ -96,17 +107,6 @@ function RegisterPage() {
   }
 
 
-  // create a login form
-  const goBack = document.createElement("input");
-  goBack.value = "GO BACK";
-  // Example on how to use Bootstrap to style a Button
-  goBack.className = "btn btn-secondary mt-3";
-  // Example on how to add an event handler : when the button is clicked, redirect
-  // to the HomePage
-  goBack.addEventListener("click", () => {
-   Redirect("/coop");
-  });
-  pageDiv.appendChild(goBack);
 }
 
 export default RegisterPage;
