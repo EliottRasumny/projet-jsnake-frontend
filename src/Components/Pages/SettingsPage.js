@@ -30,7 +30,6 @@ function SettingsPage() {
   function updatePage(){
     
     if(!user){
-      console.log("Not Connected !");
       upKey1 = "Z";
       rightKey1 = "D";
       downKey1 = "S";
@@ -41,7 +40,6 @@ function SettingsPage() {
       leftKey2 = "K";  
 
     }else{
-      console.log("In the session : ", user);
       upKey1 = user.keyUp1;
       rightKey1 = user.keyRight1;
       downKey1 = user.keyDown1;
@@ -107,7 +105,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyUp1(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -142,7 +139,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyRight1(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -177,7 +173,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyDown1(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -213,7 +208,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyLeft1(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -249,7 +243,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyUp2(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -284,7 +277,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyRight2(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -319,7 +311,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyDown2(e){
-    console.log(e.code);
 
     try {
       const options = {
@@ -355,7 +346,6 @@ function SettingsPage() {
     updatePage();
   }
   async function changeKeyLeft2(e){
-    console.log(e.code);
 
     try {
       const options = {
