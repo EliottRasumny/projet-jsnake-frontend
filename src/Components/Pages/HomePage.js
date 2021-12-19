@@ -12,12 +12,12 @@ const HomePage = () => {
   <div class="wrapper">
     <div class="row">
       <div class="col-md-6 "> 
-        <img src="${oneSnake}" class="rounded" alt="Blue Snake" style="width:100% ;heigth:auto" >
+        <img src="${oneSnake}" class="rounded" alt="Blue Snake" style="width:80% ;heigth:auto" >
         <button id="btnToSingle" type="button" class="btn p-3 m-5 text-center active">Single Player</button>
       </div>
 
       <div class="col-md-6"> 
-        <img src="${twoSnakes}" class="rounded" alt="Two Snakes" style="width:100% ;heigth:auto"> 
+        <img src="${twoSnakes}" class="rounded" alt="Two Snakes" style="width:80% ;heigth:auto"> 
         <button id="btnToDual" type="button" class="btn p-3 m-5 text-center active">Two Players</button>
       </div>
     </div>
