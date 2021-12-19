@@ -90,7 +90,7 @@ function RegisterPage() {
         console.log(user1);
   
         // call the HomePage via the Router
-        Redirect("/logout");  
+        Redirect("/");  
       }
     } catch (error) {
       console.error("RegisterPage::error: ", error);
