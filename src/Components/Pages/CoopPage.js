@@ -10,13 +10,29 @@ var game;
 function CoopPage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
-  <div id="navbar" class="mb-5">
-    <button id="coopToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
-    <button id="coopToScore" type="button" class="btn btn-secondary text-center active">Scoreboard</button>
-    <button id="coopToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
-    <button id="coopToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
-
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a id="coopToHome" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a id="coopToScore" class="nav-link">Scoreboard</a>
+          </li>
+          <li class="nav-item">
+            <a id="coopToSettings" class="nav-link">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a id="coopToSinglePlayer" class="nav-link">Single Player</a>
+          </li>
+          <li class="nav-item">
+            <a id="coopToTwoPlayer" class="nav-link">Two Players</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <h1 class="m-5">COOP</h1>
   <div id="coopGame" class="container justify-content-center my-3"></div>`;
 
@@ -47,8 +63,15 @@ function CoopPage() {
     Redirect("/twoPlayers");
   });
   pageDiv.appendChild(submitGoBack);
+
+  //Go twoPlayers
+  var submitGoTwoPlayer = document.querySelector("#coopToTwoPlayer");
+  submitGoTwoPlayer.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/twoPlayers");
+  });
  
-   //Go Home
+  //Go Home
   var submitHome = document.querySelector("#coopToHome");
   submitHome.addEventListener("click", () => {
     if (game) game.destroy(true);
