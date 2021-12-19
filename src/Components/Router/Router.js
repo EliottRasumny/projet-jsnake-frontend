@@ -17,7 +17,6 @@ import Lougout from "../Logout/Logout";
 // Configure your routes here
 const routes = {
   "/": HomePage,
-  "/game": GamePage,
   "/singlePlayer": SinglePlayer,
   "/twoPlayers": TwoPlayer,
   "/scoreboardSingle": ScoreboardSinglePage,
@@ -30,6 +29,7 @@ const routes = {
   "/login2": LoginPage2,
   "/register": RegisterPage,
   "/logout": Lougout,
+  "/game": GamePage, //EASTER EGG ;
 };
 
 /**
