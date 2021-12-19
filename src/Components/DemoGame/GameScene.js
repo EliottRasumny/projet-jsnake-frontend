@@ -5,11 +5,11 @@ const STAR_KEY = "star";
 const BOMB_KEY = "bomb";
 import ScoreLabel from "./ScoreLabel.js";
 import BombSpawner from "./BombSpawner.js";
-import skyAsset from "../../assets/sky.png";
-import platformAsset from "../../assets/platform.png";
-import starAsset from "../../assets/star.png";
-import bombAsset from "../../assets/bomb.png";
-import dudeAsset from "../../assets/dude.png";
+import skyAsset from "./assets/img/sky.png";
+import platformAsset from "./assets/img/platform.png";
+import starAsset from "./assets/img/star.png";
+import bombAsset from "./assets/img/bomb.png";
+import dudeAsset from "./assets/img/dude.png";
 
 class GameScene extends Phaser.Scene {
   constructor() {
