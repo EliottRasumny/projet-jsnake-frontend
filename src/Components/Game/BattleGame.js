@@ -4,11 +4,12 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
+import eatSoundAsset from '../../assets/sounds/apple_crunch2.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
 import magentaSnakeAsset from '../../assets/img/BlueSnake32.png';
 import orangeSnakeAsset from '../../assets/img/RedSnake32.png';
-import { SQUARE_SIZE, GRID_KEY } from '../../constant';
+import { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND } from '../../constant';
 
 //Constants for DRY principle
 const APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
@@ -31,6 +32,7 @@ class BattleGame extends Phaser.Scene
     this.controls1 = undefined;
     this.controls2 = undefined;
     this.speed = null;
+    this.eatSound = undefined;
     //!this.upB = 'z';
     //!this.downB = 's';
     //!this.leftB = 'q';
@@ -43,6 +45,7 @@ class BattleGame extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio(KEY_EAT_SOUND, eatSoundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
     this.load.spritesheet(SNAKE1_KEY,
@@ -59,6 +62,18 @@ class BattleGame extends Phaser.Scene
    */
   create()
   {
+    //Sound while eating
+    this.eatSound = this.sound.add(KEY_EAT_SOUND,
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
     //directions
     this.direction1 = 'right';
     this.direction2 = 'left';
@@ -244,6 +259,7 @@ class BattleGame extends Phaser.Scene
    */
   eatFood(player)
   {
+    this.eatSound.play();
     //Updating score
     if (player == this.snake1)
     {

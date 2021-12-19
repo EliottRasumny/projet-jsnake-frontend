@@ -4,11 +4,12 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
+import eatSoundAsset from '../../assets/sounds/apple_crunch1.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/GreenSnake32.png';
 import { getSessionObject } from "../../utils/session";
-import { SQUARE_SIZE, GRID_KEY } from '../../constant';
+import { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND } from '../../constant';
 
 //Constants for DRY principle
 const APPLE_KEY = 'apple', SNAKE_KEY = 'snake';
@@ -27,6 +28,7 @@ class SingleGame extends Phaser.Scene
     this.score = null;
     this.controls = undefined;
     this.speed = null;
+    this.eatSound = undefined;
   };
 
 
@@ -35,6 +37,7 @@ class SingleGame extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio(KEY_EAT_SOUND, eatSoundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
     this.load.spritesheet(SNAKE_KEY,
@@ -48,6 +51,17 @@ class SingleGame extends Phaser.Scene
    */
   create()
   {
+    //Sound while eating
+    this.eatSound = this.sound.add(KEY_EAT_SOUND,
+    {
+      mute: false,
+      volume: 1,
+      rate: 1,
+      detune: 0,
+      seek: 0,
+      loop: false,
+      delay: 0
+    });
     //Score player' score
     this.score = 0;
     //Velocity of the snakes
@@ -172,6 +186,7 @@ class SingleGame extends Phaser.Scene
 
   eatFood()
   {
+    this.eatSound.play();
     //Updating score
     this.score++;
     //The snake grow up
