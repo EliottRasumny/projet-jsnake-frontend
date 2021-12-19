@@ -86,7 +86,7 @@ function RegisterPage() {
         }
   
         // call the HomePage via the Router
-        Redirect("/");  
+        Redirect("/logout");  
       }
     } catch (error) {
       console.error("RegisterPage::error: ", error);
