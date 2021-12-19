@@ -23,15 +23,15 @@ const Navbar = () => {
 
   if (!user1) {
     navbar = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a id="btnToLogin1" class="nav-link">Login</a>
+              <a id="btnToLogin1" class="nav-link active"><u>Login</u></a>
             </li>
             <li class="nav-item">
-              <a id="btnToRegister" class="nav-link">Register</a>
+              <a id="btnToRegister" class="nav-link active"><u>Register</u></a>
             </li>
           </ul>
         </div>
@@ -53,18 +53,18 @@ const Navbar = () => {
 
   } else if (!user2) {
     navbar = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a id="btnToLogin2" class="nav-link">Login Second Player</a>
+              <a id="btnToLogin2" class="nav-link"><u>Login Second Player</u></a>
             </li>
             <li class="nav-item">
-              <a id="btnToLogout" class="nav-link">Logout</a>
+              <a id="btnToLogout" class="nav-link"><u>Logout</u></a>
             </li>
             <li class="nav-item">
-              <a id="btnToRegister" class="nav-link">Register</a>
+              <a id="btnToRegister" class="nav-link"><u>Register</u></a>
             </li>
           </ul>
           <div class="d-flex">
@@ -93,12 +93,12 @@ const Navbar = () => {
 
   } else {
     navbar = `
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a id="btnToLogout" class="nav-link">Logout</a>
+              <a id="btnToLogout" class="nav-link"><u>Logout</u></a>
             </li>
           </ul>
           <div class="d-flex">

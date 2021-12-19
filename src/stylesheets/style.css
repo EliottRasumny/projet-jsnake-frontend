@@ -28,7 +28,6 @@ body {
 
 #btnToSingle{
     background-color: #a3d977;
-    
 }
 #btnToSingle:hover{
     background-color: #e3caac;
@@ -91,5 +90,74 @@ body {
     
 }
 #btnToScoreboardCoop:hover{
+    background-color: #e3caac;
+}
+
+
+/* ========================= second navbar ========================= */
+/* Single button */
+#singleToHome{
+    cursor: pointer;
+}
+#singleToScore{
+    cursor: pointer;
+}
+#singleToSettings{
+    cursor: pointer;
+}
+#singleToTwoPlayers{
+    cursor: pointer;
+}
+/* COOP button */
+#coopToHome{
+    cursor: pointer;
+}
+#coopToScore{
+    cursor: pointer;
+}
+#coopToSettings{
+    cursor: pointer;
+}
+#coopToSinglePlayer{
+    cursor: pointer;
+}
+#coopToTwoPlayer{
+    cursor: pointer;
+}
+/* two player button */
+#toHome{
+    cursor: pointer;
+}
+#toSinglePlayer{
+    cursor: pointer;
+}
+/* battle button */
+#battleToHome{
+    cursor: pointer;
+}
+#battleToSettings{
+    cursor: pointer;
+}
+#battleToSinglePlayer{
+    cursor: pointer;
+}
+#battleToTwoPlayer{
+    cursor: pointer;
+}
+/* top navbar button */
+#btnToLogin1{
+    cursor: pointer;
+}
+#btnToRegister{
+    cursor: pointer;
+}
+#btnToLogin2{
+    cursor: pointer;
+}
+#btnToLogout{
+    cursor: pointer;
+}
+
+#navbar{
     background-color: #e3caac;
 }
