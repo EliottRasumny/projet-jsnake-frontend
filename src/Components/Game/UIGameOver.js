@@ -98,6 +98,7 @@ export default class GameOver extends Phaser.Scene
     button.on('pointerover', () => { button.setFontSize(48);});
     button.on('pointerout', () => { button.setFontSize(32);});
     button.on('pointerdown', () => {
+      this.endSound.stop();
       this.scene.stop('ui-score');
       this.scene.start('game-scene');
     });

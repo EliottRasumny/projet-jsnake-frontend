@@ -231,6 +231,7 @@ class BattleGame extends Phaser.Scene
    */
   shutdown(winner)
   {
+    this.eatSound.stop();
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-score');
     //Closing gamescene and open GameOver scene

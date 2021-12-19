@@ -53,15 +53,16 @@ class SingleGame extends Phaser.Scene
   {
     //Sound while eating
     this.eatSound = this.sound.add(KEY_EAT_SOUND,
-    {
-      mute: false,
-      volume: 15,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0
-    });
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
     //Score player' score
     this.score = 0;
     //Velocity of the snakes
@@ -150,6 +151,7 @@ class SingleGame extends Phaser.Scene
    */
   shutdown()
   {
+    this.eatSound.stop();
     this.callBackend(this.score);
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-single-score');
