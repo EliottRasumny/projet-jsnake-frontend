@@ -16,14 +16,21 @@ function ScoreboardPage() {
                         </div>`;
     ScoreboardSingleTable();
     ScoreboardCoopTable();
-    UserScore();
-    // create a login form
+    if (getSessionObject("user1"))
+    {
+      UserScore();
+    }
+    else //permet de ne pas afficher 'My scores'
+    {
+      let div = document.querySelector("#col3");
+      div.innerText = "";
+      pageDiv.appendChild(div);
+    }
+
+    //Go back button
     const submit = document.createElement("input");
     submit.value = "GO BACK";
-    // Example on how to use Bootstrap to style a Button
     submit.className = "btn btn-secondary mt-3";
-    // Example on how to add an event handler : when the button is clicked, redirect
-    // to the HomePage
     submit.addEventListener("click", () => {
      Redirect("/");
     });
