@@ -78,7 +78,7 @@ function RegisterPage() {
       }
       else{
         const user = await response.json(); // json() returns a promise => we wait for the data
-        console.log(user);
+        console.log("user",user);
         // call the HomePage via the Router
         Redirect("/");  
       }
