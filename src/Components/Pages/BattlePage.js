@@ -9,7 +9,14 @@ var game;
 
 function BattlePage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div id="battleGame" class="container justify-content-center my-3"></div>`;
+  pageDiv.innerHTML = `
+  <div id="navbar" class="mb-5">
+    <button id="battleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
+    <button id="battleToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
+    <button id="battleToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
+
+  </div>
+  <div id="battleGame" class="container justify-content-center my-3"></div>`;
 
   const config = {
     type: Phaser.AUTO,
@@ -27,42 +34,36 @@ function BattlePage() {
   // therefore destroy any started game prior to recreate it
   if (game) game.destroy(true);
   game = new Phaser.Game(config);
-  //button=========================================
+  //button==================================================
   //Go back to 2 players
   const submitGoBack = document.createElement("input");
-  submitGoBack.value = "< GO BACK";
+  submitGoBack.value = "GO BACK";
   submitGoBack.className = "btn btn-secondary m-3";
   submitGoBack.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/twoPlayers");
   });
   pageDiv.appendChild(submitGoBack);
-  //To Home
-  const submitHome = document.createElement("input");
-  submitHome.value = "< GO HOME >";
-  submitHome.className = "btn btn-secondary m-3";
+ 
+   //Go Home
+  var submitHome = document.querySelector("#battleToHome");
   submitHome.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/");
   });
-  pageDiv.appendChild(submitHome);
-  //To settings
-  const submitSettings = document.createElement("input");
-  submitSettings.value = "< SETTINGS >";
-  submitSettings.className = "btn btn-secondary m-3";
+
+  //Go to settings
+  var submitSettings = document.querySelector("#battleToSettings");
   submitSettings.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/settings");
   });
-  pageDiv.appendChild(submitSettings);
-  //To Single Player
-  const submitSingle = document.createElement("input");
-  submitSingle.value = "TO SINGLE PLAYER >";
-  submitSingle.className = "btn btn-secondary m-3";
-  submitSingle.addEventListener("click", () => {
+
+  //Go to two players
+  var submitTwoPlayers = document.querySelector("#battleToSinglePlayer");
+  submitTwoPlayers.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/singlePlayer");
   });
-  pageDiv.appendChild(submitSingle);
 }
 export default BattlePage;
