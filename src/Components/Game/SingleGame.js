@@ -55,7 +55,7 @@ class SingleGame extends Phaser.Scene
     this.eatSound = this.sound.add(KEY_EAT_SOUND,
     {
       mute: false,
-      volume: 1,
+      volume: 15,
       rate: 1,
       detune: 0,
       seek: 0,
@@ -154,7 +154,7 @@ class SingleGame extends Phaser.Scene
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-single-score');
     if (this.score == 0) this.score = -1; //To display score properly
-    this.scene.start('game-over', [this.score, null]);
+    this.scene.start('game-over', [this.score, null, null]);
   };
 
   /**

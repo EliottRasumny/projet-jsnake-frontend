@@ -192,18 +192,36 @@ class BattleGame extends Phaser.Scene
       if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
         this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
       {
-        this.shutdown();
+        this.shutdown(2);
       }
       //collision with a wall : Snake2
-      else if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+      else if (this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
         this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
       {
-        this.shutdown();
+        this.shutdown(1);
       }
       //collision with themselfs
-      else if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      else if (this.snake1.eatItself())
+      {
+        this.shutdown(2);
+      }
+      else if (this.snake2.eatItself())
+      {
+        this.shutdown(1);
+      }
       //collision with each other
-      else if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
+      else if (this.eatOtherSnake(this.snake1,this.snake2) && this.eatOtherSnake(this.snake2,this.snake1))
+      {
+        this.shutdown(0);
+      }
+      else if (this.eatOtherSnake(this.snake1,this.snake2))
+      {
+        this.shutdown(2);
+      }
+      else if (this.eatOtherSnake(this.snake2,this.snake1))
+      {
+        this.shutdown(1);
+      }
     }
   };
 
@@ -211,14 +229,14 @@ class BattleGame extends Phaser.Scene
  /**
    * Shutting down the scene
    */
-  shutdown()
+  shutdown(winner)
   {
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-score');
     //Closing gamescene and open GameOver scene
     if (this.score1 == 0) this.score1 = -1; //To display score properly
     if (this.score2 == 0) this.score2 = -1; //To display score properly
-    this.scene.start('game-over', [this.score1, this.score2]);
+    this.scene.start('game-over', [this.score1, this.score2, winner]);
   };
 
 
