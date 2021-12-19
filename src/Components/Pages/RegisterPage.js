@@ -64,6 +64,7 @@ function RegisterPage() {
       };
 
       let user1 = getSessionObject("user1");
+      console.log(user1);
       var response = null;
       if(!user1){
         response = await fetch("/api/auths/register1", options); // fetch return a promise => we wait for the response
@@ -77,7 +78,7 @@ function RegisterPage() {
       }
       else{
         const user = await response.json(); // json() returns a promise => we wait for the data
-  
+        console.log(user);
         // call the HomePage via the Router
         Redirect("/");  
       }
