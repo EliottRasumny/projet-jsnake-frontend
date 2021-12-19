@@ -105,6 +105,19 @@ function RegisterPage() {
       console.error("RegisterPage::error: ", error);
     }
   }
+
+
+  // create a login form
+  const goBack = document.createElement("input");
+  goBack.value = "GO BACK";
+  // Example on how to use Bootstrap to style a Button
+  goBack.className = "btn btn-secondary mt-3";
+  // Example on how to add an event handler : when the button is clicked, redirect
+  // to the HomePage
+  goBack.addEventListener("click", () => {
+   Redirect("/coop");
+  });
+  pageDiv.appendChild(goBack);
 }
 
 export default RegisterPage;

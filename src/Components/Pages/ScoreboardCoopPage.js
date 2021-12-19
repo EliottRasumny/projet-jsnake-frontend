@@ -11,12 +11,12 @@ function ScoreboardCoopPage() {
       <div class="col" id="col1"> <h6 class="display-6 m-4"> Two Players </h6> </div>
       </div>
       <div class="row">
-      <div class="col" id="col2"> <h6 class="display-6 m-4"> My scores </h6> </div>
+      <div class="col" id="col2"></div>
     </div>
   </div>`;
   score();
   UserScore();
-  // create a login form
+  // create a go back btn
   const submit = document.createElement("input");
   submit.value = "GO BACK";
   // Example on how to use Bootstrap to style a Button
@@ -94,8 +94,9 @@ function ScoreboardCoopPage() {
 function UserScore() {
   const user = getSessionObject("user1");
   const col = document.querySelector("#col2");
-  
-    // create a wrapper to provide a responsive table
+    if(user){
+      col.innerHTML = ` <h6 class="display-6 m-4"> My scores </h6> `;
+      // create a wrapper to provide a responsive table
     const tableWrapper = document.createElement("div");
     tableWrapper.className = "table-responsive pt-5";
     // create an HTMLTableElement dynamically, based on the scores data (Array of Objects)
@@ -133,6 +134,8 @@ function UserScore() {
     table.appendChild(tbody);
       // add the HTMLTableElement to the main, within the #page div
       col.appendChild(tableWrapper);
+    
+    } 
     
 }
 

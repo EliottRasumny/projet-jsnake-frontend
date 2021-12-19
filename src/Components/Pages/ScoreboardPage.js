@@ -11,7 +11,7 @@ function ScoreboardPage() {
                                 <div class="col" id="col2"> <h6 class="display-6 m-4"> Two Players </h6> </div>
                             </div>
                             <div class="row">
-                                <div class="col" id="col3"> <h6 class="display-6 m-4"> My scores </h6> </div>
+                                <div class="col" id="col3"> </div>
                             </div>
                         </div>`;
     ScoreboardSingleTable();
@@ -159,7 +159,8 @@ function ScoreboardPage() {
 function UserScore() {
   const user = getSessionObject("user1");
   const col = document.querySelector("#col3");
-  
+  if(user){
+    col.innerHTML = `<h6 class="display-6 m-4"> My scores </h6>`;
     // create a wrapper to provide a responsive table
     const tableWrapper = document.createElement("div");
     tableWrapper.className = "table-responsive pt-5";
@@ -198,6 +199,7 @@ function UserScore() {
     table.appendChild(tbody);
       // add the HTMLTableElement to the main, within the #page div
       col.appendChild(tableWrapper);
+  }
     
 }
 
