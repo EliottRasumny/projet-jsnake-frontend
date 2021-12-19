@@ -345,15 +345,15 @@ class CoopGame extends Phaser.Scene
     let user2 = getSessionObject("user2");
     if(user1 && user2){
       //Personnal best coop score player1
-      if (this.score > user1.bestScoreCoop){
+      if (score > user1.bestScoreCoop){
         changePlayer1ScoreCoop(score);
       }
       //Personnal best coop score player2
-      if (this.score > user2.bestScoreCoop){
+      if (score > user2.bestScoreCoop){
         changePlayer2ScoreCoop(score);
       }
       //TopScore
-      if (this.score > user1.bestScoreCoop || score > user2.bestScoreCoop){
+      if (score > user1.bestScoreCoop || score > user2.bestScoreCoop){
         changeBestScoresCoop(score);
       }
     }
