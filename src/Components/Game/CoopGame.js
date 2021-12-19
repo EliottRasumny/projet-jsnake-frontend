@@ -4,12 +4,13 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
+import eatSoundAsset from '../../assets/sounds/apple_crunch1.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAssetR from '../../assets/img/OrangeApple.png';
 import appleAssetB from '../../assets/img/MagentaApple.png';
 import magentaSnakeAsset from '../../assets/img/MagentaSnake32.png';
 import orangeSnakeAsset from '../../assets/img/OrangeSnake32.png'
-import { SQUARE_SIZE, GRID_KEY } from '../../constant';
+import { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND } from '../../constant';
 import { getSessionObject, setSessionObject } from "../../utils/session";
 
 //Constants for DRY principle
@@ -33,6 +34,7 @@ class CoopGame extends Phaser.Scene
     this.controls1 = undefined;
     this.controls2 = undefined;
     this.speed = null;
+    this.eatSound = undefined;
   };
 
 
@@ -41,6 +43,7 @@ class CoopGame extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio(KEY_EAT_SOUND, eatSoundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE1_KEY, appleAssetB);
     this.load.image(APPLE2_KEY, appleAssetR);
@@ -58,6 +61,18 @@ class CoopGame extends Phaser.Scene
    */
   create()
   {
+    //Sound while eating
+    this.eatSound = this.sound.add(KEY_EAT_SOUND,
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
     //Enable to render the snake properly
     this.keyFrameValue = 0;
     //directions
@@ -206,11 +221,12 @@ class CoopGame extends Phaser.Scene
    */
   shutdown()
   {
+    this.eatSound.stop();
     this.callBackend(this.score);
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-single-score');
     if (this.score == 0) this.score = -1; //To display score properly
-    this.scene.start('game-over', [this.score, null]);
+    this.scene.start('game-over', [this.score, null, null]);
   };
 
 
@@ -252,6 +268,7 @@ class CoopGame extends Phaser.Scene
    */
   eatFood(player, apple)
   {
+    this.eatSound.play();
     //Updating score
     if (player === this.snake1)
     {

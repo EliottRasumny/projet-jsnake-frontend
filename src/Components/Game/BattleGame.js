@@ -4,11 +4,13 @@ import eventsCenter from './EventCenter';
 //import classes
 import Snake from './Snake';
 //import assets
+import eatSoundAsset from '../../assets/sounds/apple_crunch2.mp3';
+import startSoundAsset from '../../assets/sounds/battle_start.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/GoldenApple.png';
 import magentaSnakeAsset from '../../assets/img/BlueSnake32.png';
 import orangeSnakeAsset from '../../assets/img/RedSnake32.png';
-import { SQUARE_SIZE, GRID_KEY } from '../../constant';
+import { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND } from '../../constant';
 
 //Constants for DRY principle
 const APPLE_KEY = 'apple', SNAKE1_KEY = 'snake1', SNAKE2_KEY = 'snake2';
@@ -31,6 +33,8 @@ class BattleGame extends Phaser.Scene
     this.controls1 = undefined;
     this.controls2 = undefined;
     this.speed = null;
+    this.eatSound = undefined;
+    this.startSound = undefined;
     //!this.upB = 'z';
     //!this.downB = 's';
     //!this.leftB = 'q';
@@ -43,6 +47,8 @@ class BattleGame extends Phaser.Scene
    */
   preload()
   {
+    this.load.audio('startSound', startSoundAsset);
+    this.load.audio(KEY_EAT_SOUND, eatSoundAsset);
     this.load.image(GRID_KEY, gridAsset);
     this.load.image(APPLE_KEY, appleAsset);
     this.load.spritesheet(SNAKE1_KEY,
@@ -59,6 +65,31 @@ class BattleGame extends Phaser.Scene
    */
   create()
   {
+    //Sound at start
+    this.startSound = this.sound.add('startSound',
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
+    this.startSound.play();
+    //Sound while eating
+    this.eatSound = this.sound.add(KEY_EAT_SOUND,
+      {
+        mute: false,
+        volume: 1,
+        rate: 1,
+        detune: 0,
+        seek: 0,
+        loop: false,
+        delay: 0
+      }
+    );
     //directions
     this.direction1 = 'right';
     this.direction2 = 'left';
@@ -177,18 +208,36 @@ class BattleGame extends Phaser.Scene
       if(this.snake1.getBody().getAt(0).x <= -32 || this.snake1.getBody().getAt(0).x >= 736 ||
         this.snake1.getBody().getAt(0).y <= -32 || this.snake1.getBody().getAt(0).y >= 544)
       {
-        this.shutdown();
+        this.shutdown(2);
       }
       //collision with a wall : Snake2
-      else if(this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
+      else if (this.snake2.getBody().getAt(0).x <= -32 || this.snake2.getBody().getAt(0).x >= 736 ||
         this.snake2.getBody().getAt(0).y <= -32 || this.snake2.getBody().getAt(0).y >= 544)
       {
-        this.shutdown();
+        this.shutdown(1);
       }
       //collision with themselfs
-      else if(this.snake1.eatItself() || this.snake2.eatItself()) this.shutdown();
+      else if (this.snake1.eatItself())
+      {
+        this.shutdown(2);
+      }
+      else if (this.snake2.eatItself())
+      {
+        this.shutdown(1);
+      }
       //collision with each other
-      else if(this.eatOtherSnake(this.snake1,this.snake2) || this.eatOtherSnake(this.snake2,this.snake1)) this.shutdown();
+      else if (this.eatOtherSnake(this.snake1,this.snake2) && this.eatOtherSnake(this.snake2,this.snake1))
+      {
+        this.shutdown(0);
+      }
+      else if (this.eatOtherSnake(this.snake1,this.snake2))
+      {
+        this.shutdown(2);
+      }
+      else if (this.eatOtherSnake(this.snake2,this.snake1))
+      {
+        this.shutdown(1);
+      }
     }
   };
 
@@ -196,14 +245,17 @@ class BattleGame extends Phaser.Scene
  /**
    * Shutting down the scene
    */
-  shutdown()
+  shutdown(winner)
   {
+    //Ending playing sounds
+    this.startSound.stop();
+    this.eatSound.stop();
     //Closing gamescene and open GameOver scene
     this.scene.stop('ui-score');
     //Closing gamescene and open GameOver scene
     if (this.score1 == 0) this.score1 = -1; //To display score properly
     if (this.score2 == 0) this.score2 = -1; //To display score properly
-    this.scene.start('game-over', [this.score1, this.score2]);
+    this.scene.start('game-over', [this.score1, this.score2, winner]);
   };
 
 
@@ -244,6 +296,7 @@ class BattleGame extends Phaser.Scene
    */
   eatFood(player)
   {
+    this.eatSound.play();
     //Updating score
     if (player == this.snake1)
     {
