@@ -77,17 +77,6 @@ function RegisterPage() {
       }
       else{
         const user = await response.json(); // json() returns a promise => we wait for the data
-        
-        // save the user into the localStorage
-        // AND rerender the navbar for an authenticated user : temporary step prior to deal with token
-        if(!user1){
-          setSessionObject("user1", user);
-          Navbar({ isAuthenticated1: true });
-        } else {
-          setSessionObject("user2", user);
-          Navbar({ isAuthenticated2: true });
-        }
-        console.log(user1);
   
         // call the HomePage via the Router
         Redirect("/");  
