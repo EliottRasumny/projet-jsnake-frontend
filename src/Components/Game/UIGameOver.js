@@ -25,7 +25,6 @@ export default class GameOver extends Phaser.Scene
       color: '#665847',
       fontStyle: 'bold'
     }).setOrigin(0.5);
-    console.log(tabScore[1]);
     if (tabScore[1] != null)
     {
       this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 + 16, `Score : ${tabScore[1]}`, {
