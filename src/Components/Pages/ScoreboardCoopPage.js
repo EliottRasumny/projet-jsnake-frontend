@@ -6,9 +6,6 @@ import { getSessionObject } from "../../utils/session";
 function ScoreboardCoopPage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
-  <div id="navbar" class="mb-5">
-    <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
-  </div>
   <div class="container">
     <div class="row">
       <div class="col" id="col1"> <h6 class="display-6 m-4"> Two Players </h6> </div>
@@ -30,14 +27,6 @@ function ScoreboardCoopPage() {
    Redirect("/coop");
   });
   pageDiv.appendChild(submit);
-
-
-//Buttons ======================================================
-  //Go Home
-  var submitHome = document.querySelector("#singleToHome");
-  submitHome.addEventListener("click", () => {
-    Redirect("/");
-  });
 }
 
 /**

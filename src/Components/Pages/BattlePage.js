@@ -10,12 +10,26 @@ var game;
 function BattlePage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
-  <div id="navbar" class="mb-5">
-    <button id="battleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
-    <button id="battleToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
-    <button id="battleToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
-
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a id="battleToHome" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a id="battleToSettings" class="nav-link">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a id="battleToSinglePlayer" class="nav-link">Single Player</a>
+          </li>
+          <li class="nav-item">
+            <a id="battleToTwoPlayer" class="nav-link">Two Players</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <h1 class="m-5">BATTLE</h1>
   <div id="battleGame" class="container justify-content-center my-3"></div>`;
 
@@ -46,6 +60,13 @@ function BattlePage() {
   });
   pageDiv.appendChild(submitGoBack);
  
+  //Go two players
+  var submitGoTwoPlayer = document.querySelector("#battleToTwoPlayer");
+  submitGoTwoPlayer.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/twoPlayers");
+  });
+
    //Go Home
   var submitHome = document.querySelector("#battleToHome");
   submitHome.addEventListener("click", () => {
@@ -60,7 +81,7 @@ function BattlePage() {
     Redirect("/settings");
   });
 
-  //Go to two players
+  //Go to Single players
   var submitTwoPlayers = document.querySelector("#battleToSinglePlayer");
   submitTwoPlayers.addEventListener("click", () => {
     if (game) game.destroy(true);

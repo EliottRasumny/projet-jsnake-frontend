@@ -10,13 +10,26 @@ var game;
 function SinglePage() {
   const pageDiv = document.querySelector("#page");
   pageDiv.innerHTML = `
-  <div id="navbar" class="mb-5">
-    <button id="singleToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
-    <button id="singleToScore" type="button" class="btn btn-secondary text-center active">Scoreboard</button>
-    <button id="singleToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
-    <button id="singleToTwoPlayers" type="button" class="btn btn-secondary text-center active">Two Players</button>
-
-  </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a id="singleToHome" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a id="singleToScore" class="nav-link">Scoreboard</a>
+          </li>
+          <li class="nav-item">
+            <a id="singleToSettings" class="nav-link">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a id="singleToTwoPlayers" class="nav-link">Two Players</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <h1 class="m-5">Single Player</h1>
   <div id="playGame" class="container justify-content-center mt-5 my-3"></div>`;
 
@@ -44,18 +57,6 @@ function SinglePage() {
     if (game) game.destroy(true);
     Redirect("/");
   });
-  //TODO: a supprimer ce qui suit et faire comme dans 'EXEMPLE'
-  /*
-  const submitHome = document.createElement("input");
-  submitHome.value = "< GO HOME";
-  submitHome.id = "button";
-  submitHome.className = "btn btn-secondary m-3";
-  submitHome.addEventListener("click", () => {
-    if (game) game.destroy(true, false);
-    Redirect("/");
-  });
-  pageDiv.appendChild(submitHome);
-  */
   //Go to scoreboard
   var submitScore = document.querySelector("#singleToScore");
   submitScore.addEventListener("click", () => {

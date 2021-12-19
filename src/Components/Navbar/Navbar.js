@@ -23,19 +23,20 @@ const Navbar = () => {
 
   if (!user1) {
     navbar = `
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container ">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-            <div class="d-flex">
-                <button id="btnToLogin1" type="button" class="btn btn-light ms-3 active">Login</button>
-                <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a id="btnToLogin1" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+              <a id="btnToRegister" class="nav-link">Register</a>
+            </li>
+          </ul>
         </div>
-    </div>
-  </nav>
+      </div>
+    </nav>
   `;  
   navbarWrapper.innerHTML = navbar;
 
@@ -52,23 +53,26 @@ const Navbar = () => {
 
   } else if (!user2) {
     navbar = `
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container ">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-              <div class="d-flex">
-                <button id="btnToLogin2" type="button" class="btn btn-light ms-3 active">Login Second Player</button>
-                <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
-                <button id="btnToRegister" type="button" class="btn btn-light ms-3 active">Register</button>
-              </div>
-              <div class="d-flex">
-                <span class="ms-3">${user1.username1}</span>
-              </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a id="btnToLogin2" class="nav-link">Login Second Player</a>
+            </li>
+            <li class="nav-item">
+              <a id="btnToLogout" class="nav-link">Logout</a>
+            </li>
+            <li class="nav-item">
+              <a id="btnToRegister" class="nav-link">Register</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <span class="ms-3">${user1.username1}</span>
           </div>
+        </div>
       </div>
-  </nav>
+    </nav>
     `;  
     navbarWrapper.innerHTML = navbar;
 
@@ -89,20 +93,19 @@ const Navbar = () => {
 
   } else {
     navbar = `
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container ">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse text-white navbar-dark" id="navbarNavDropdown">
-            <div class="d-flex">
-                <button id="btnToLogout" type="button" class="btn btn-light ms-3 active">Logout</button>
-            </div>
-            <div class="d-flex">
-              <span class="ms-3">${user1.username1}</span>
-              <span class="ms-3">${user2.username1}</span>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a id="btnToLogout" class="nav-link">Logout</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <span class="ms-3">${user1.username1}</span>
+            <span class="ms-3">${user2.username1}</span>
           </div>
+        </div>
       </div>
     </nav>
     `;  
