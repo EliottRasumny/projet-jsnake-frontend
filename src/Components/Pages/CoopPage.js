@@ -9,7 +9,15 @@ var game;
 
 function CoopPage() {
   const pageDiv = document.querySelector("#page");
-  pageDiv.innerHTML = `<div id="coopGame" class="container justify-content-center my-3"></div>`;
+  pageDiv.innerHTML = `
+  <div id="navbar" class="mb-5">
+    <button id="coopToHome" type="button" class="btn btn-secondary text-center active">JSnake</button>
+    <button id="coopToScore" type="button" class="btn btn-secondary text-center active">Scoreboard</button>
+    <button id="coopToSettings" type="button" class="btn btn-secondary text-center active">Settings</button>
+    <button id="coopToSinglePlayer" type="button" class="btn btn-secondary text-center active">Single Player</button>
+
+  </div>
+  <div id="coopGame" class="container justify-content-center my-3"></div>`;
 
   const config = {
     type: Phaser.AUTO,
@@ -31,49 +39,41 @@ function CoopPage() {
   //button==================================================
   //Go back to 2 players
   const submitGoBack = document.createElement("input");
-  submitGoBack.value = "< GO BACK";
+  submitGoBack.value = "GO BACK";
   submitGoBack.className = "btn btn-secondary m-3";
   submitGoBack.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/twoPlayers");
   });
   pageDiv.appendChild(submitGoBack);
-  //To Home
-  const submitHome = document.createElement("input");
-  submitHome.value = "< GO HOME >";
-  submitHome.className = "btn btn-secondary m-3";
+ 
+   //Go Home
+  var submitHome = document.querySelector("#coopToHome");
   submitHome.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/");
   });
-  pageDiv.appendChild(submitHome);
-  //To settings
-  const submitSettings = document.createElement("input");
-  submitSettings.value = "< SETTINGS >";
-  submitSettings.className = "btn btn-secondary m-3";
+
+  //Go to scoreboard
+  var submitScore = document.querySelector("#coopToScore");
+  submitScore.addEventListener("click", () => {
+    if (game) game.destroy(true);
+    Redirect("/scoreboardCoop");
+  });
+
+  //Go to settings
+  var submitSettings = document.querySelector("#coopToSettings");
   submitSettings.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/settings");
   });
-  pageDiv.appendChild(submitSettings);
-  //To Scoreboard
-  const submitScoreBoard = document.createElement("input");
-  submitScoreBoard.value = "< SCOREBOARD >";
-  submitScoreBoard.className = "btn btn-secondary m-3";
-  submitScoreBoard.addEventListener("click", () => {
-    if (game) game.destroy(true);
-    Redirect("/scoreboardCoop");
-  });
-  pageDiv.appendChild(submitScoreBoard);
-  //To Single Player
-  const submitSingle = document.createElement("input");
-  submitSingle.value = "TO SINGLE PLAYER >";
-  submitSingle.className = "btn btn-secondary m-3";
-  submitSingle.addEventListener("click", () => {
+
+  //Go to two players
+  var submitTwoPlayers = document.querySelector("#coopToSinglePlayer");
+  submitTwoPlayers.addEventListener("click", () => {
     if (game) game.destroy(true);
     Redirect("/singlePlayer");
   });
-  pageDiv.appendChild(submitSingle);
 }
 
 export default CoopPage;
