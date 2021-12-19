@@ -8,13 +8,8 @@ import eatSoundAsset from '../../assets/sounds/apple_crunch1.mp3';
 import gridAsset from '../../assets/img/Grid32_1024x768.png'
 import appleAsset from '../../assets/img/RedApple.png';
 import magentaSnakeAsset from '../../assets/img/GreenSnake32.png';
-<<<<<<< HEAD
-import { getSessionObject } from "../../utils/session";
 import { SQUARE_SIZE, GRID_KEY, KEY_EAT_SOUND } from '../../constant';
-=======
 import { getSessionObject, setSessionObject } from "../../utils/session";
-import { SQUARE_SIZE, GRID_KEY } from '../../constant';
->>>>>>> 2d4212aabd0c22064d68942f4933dcf51ab8bd14
 
 //Constants for DRY principle
 const APPLE_KEY = 'apple', SNAKE_KEY = 'snake';
