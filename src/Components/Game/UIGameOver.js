@@ -20,19 +20,27 @@ export default class GameOver extends Phaser.Scene
       }
     ).setOrigin(0.5);
     //Displayscore
-    this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 - 16, `Score : ${tabScore[0]}`, {
-      fontSize: 32,
-      color: '#665847',
-      fontStyle: 'bold'
-    }).setOrigin(0.5);
-    if (tabScore[1] != null)
+    if(tabScore[1] == null)
     {
-      this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 + 16, `Score : ${tabScore[1]}`, {
+      this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 - 16, `Score : ${tabScore[0]}`, {
         fontSize: 32,
         color: '#665847',
         fontStyle: 'bold'
       }).setOrigin(0.5);
     }
+    else{
+      this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 - 16, `Player 1 : ${tabScore[0]}`, {
+        fontSize: 32,
+        color: '#665847',
+        fontStyle: 'bold'
+      }).setOrigin(0.5);
+      this.add.text(this.scale.width * 0.5, this.scale.height * 0.5 + 16, `Player 2 : ${tabScore[1]}`, {
+        fontSize: 32,
+        color: '#665847',
+        fontStyle: 'bold'
+      }).setOrigin(0.5);
+    }
+    
     //Button to restart the game
     const button = this.add.text(centerX, centerY + 100, 'Restart',
       {

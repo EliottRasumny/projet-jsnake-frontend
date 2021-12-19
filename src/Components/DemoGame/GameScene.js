@@ -130,8 +130,8 @@ class GameScene extends Phaser.Scene {
   createStars() {
     const stars = this.physics.add.group({
       key: STAR_KEY,
-      repeat: 12,
-      setXY: { x: 10, y: 0, stepX: 70 },
+      repeat: 1110,
+      setXY: { x: 10, y: 0, stepX: 0.7 },
     });
 
     stars.children.iterate((child) => {
